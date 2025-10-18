@@ -1,0 +1,25 @@
+{
+  "name": "vscodecreo",
+  "displayName": "vscodeCreo",
+  "description": "vscode extension to provide support for Creo config files, mapkeys.pro, and ModelCHECK",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.105.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [{
+      "id": "pro",
+      "aliases": ["Creo Pro", "pro"],
+      "extensions": [".pro",".sup"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "pro",
+      "scopeName": "source.pro",
+      "path": "./syntaxes/pro.tmLanguage.json"
+    }]
+  }
+}
