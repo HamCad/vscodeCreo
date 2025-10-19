@@ -1,12 +1,11 @@
 // src/extension.ts
 import * as vscode from 'vscode';
-import { MapkeySemanticTokensProvider } from './semanticTokens';
+import { MapkeySemanticTokensProvider } from './semanticTokenizer';
 
 export function activate(context: vscode.ExtensionContext) {
     // Document selector for Creo Mapkey files
     const selector: vscode.DocumentSelector = [
-        { language: 'pro', scheme: 'file' },
-        { language: 'mapkey', scheme: 'file' }
+        { language: 'pro', scheme: 'file' }
     ];
 
     // 1) Register Semantic Tokens Provider

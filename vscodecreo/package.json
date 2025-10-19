@@ -10,17 +10,32 @@
     "Programming Languages"
   ],
   "contributes": {
-    "languages": [{
-      "id": "pro",
-      "aliases": ["Creo Pro", "pro"],
-      "extensions": [".pro",".sup"],
-      "configuration": "./language-configuration.json"
-    }],
-    "grammars": [{
-      "language": "pro",
-      "scopeName": "source.pro",
-      "path": "./syntaxes/pro.tmLanguage.json"
-    }]
+    "languages": [
+      {
+        "id": "pro",
+        "aliases": [
+          "Creo Pro",
+          "pro"
+        ],
+        "extensions": [
+          ".pro",
+          ".sup"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "pro",
+        "scopeName": "source.pro",
+        "path": "./syntaxes/pro.tmLanguage.json"
+      }
+    ]
   },
-  "main": "./out/extension.js"
+  "main": "./out/extension.js",
+  "devDependencies": {
+    "@types/node": "^24.8.1",
+    "@types/vscode": "^1.105.0",
+    "typescript": "^5.9.3"
+  }
 }
