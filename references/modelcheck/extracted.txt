@@ -1,0 +1,6630 @@
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/accuracy_info.html...
+----------------------------------------
+==== Heading_2 ====
+ACCURACY_INFO (Accuracy Information)
+
+==== Body ====
+Reports the type of accuracy (relative or absolute) and its value. It also reports whether the value set is within an acceptable range. The acceptable limits are set using the following constant configuration options:
+Creo ModelCHECK automatically determines the type of accuracy and uses the appropriate values. If the accuracy is not properly set, it can be changed from Creo ModelCHECK. If the ModelUPDATE mode is enabled, this check automatically changes the accuracy value and type according to the MU_ACCURACY option in the start configuration file.
+
+==== List_1 ====
+• ACCURACY_LOW and ACCURACY_UPP for relative accuracy
+• MIN_ABS_ACCURACY and MAX_ABS_ACCURACY for absolute accuracy
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+W
+W
+W
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/add_chk_param.html...
+----------------------------------------
+==== Heading_2 ====
+ADD_CHK_PARAM (Add a Parameter)
+
+==== Body ====
+Adds or updates a parameter in the model that stores the outcome of another check. The PRT_ADD_CHK_PARAM, ASM_ADD_CHK_PARAM, and DRW_ADD_CHK_PARAM configuration options in the start configuration file are used to specify the parameters to create.
+Examples of where parameters can be used include material name, model name, or model units.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N
+
+==== Table_Cell ====
+Y
+Y
+N
+Y
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/ae_gtol_duplicate.html...
+----------------------------------------
+==== Heading_2 ====
+AE_GTOL_DUPLICATE (Duplicate Geometric Tolerance Annotation Elements)
+
+==== Body ====
+Reports whether duplicate geometric tolerance annotation elements exist in the part. Geometric tolerance annotation elements are duplicate if they have the same references (dimension, surface, and edge placement) and are of the same type. Moreover, additional options, if you have specified any, must be the same. Placement references are not considered while determining duplicate geometric tolerance annotation elements.
+You can highlight the duplicate annotation element in the Model Tree as well as in the Creo Parametric graphics window. Creo ModelCHECK also allows you to redefine or delete the duplicate annotation element.
+You can also access the Global Reference Viewer from the Creo ModelCHECK report to view all references to and from the reported duplicate geometric tolerance annotation elements.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+Y
+Y
+Y
+Y
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/ae_missingrefs.html...
+----------------------------------------
+==== Heading_2 ====
+AE_MISSINGREFS (Annotation Elements with Missing References)
+
+==== Body ====
+Reports all annotation elements that have all user-defined references missing.
+You can highlight the annotation element with missing references in the Model Tree as well as in the Creo Parametric graphics window. Creo ModelCHECK also allows you to redefine the annotation feature or delete the annotation element with missing references.
+You can also access the Global Reference Viewer from the Creo ModelCHECK report to view all references to and from the annotation element with missing references.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+W
+W
+W
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/ae_sf_duplicate.html...
+----------------------------------------
+==== Heading_2 ====
+AE_SF_DUPLICATE (Duplicate Surface Finish Annotation Elements)
+
+==== Body ====
+Reports whether duplicate surface finish annotation elements exist in the part. Surface finish annotation elements are duplicate if they have at least one common surface reference.
+You can highlight the duplicate annotation element in the Model Tree as well as in the Creo Parametric graphics window. Creo ModelCHECK also allows you to redefine or delete the duplicate annotation element.
+You can also access the Global Reference Viewer from the Creo ModelCHECK report to view all references to and from the reported duplicate surface finish annotation elements.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+Y
+Y
+Y
+Y
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/af_incomplete.html...
+----------------------------------------
+==== Heading_2 ====
+AF_INCOMPLETE (Incomplete Annotation Features)
+
+==== Body ====
+Reports whether the annotation feature in the part is incomplete. The annotation feature is incomplete when strong references of an annotation element are missing.
+Creo ModelCHECK allows you to highlight and fix the annotation features in the Creo Parametric window. In addition, it also allows you to delete annotation elements. You can also invoke the Global Reference Viewer for an incomplete annotation feature from the Creo ModelCHECK report.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+W
+W
+W
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/anntn_inactive.html...
+----------------------------------------
+==== Heading_2 ====
+ANNTN_INACTIVE (Inactive Annotations)
+
+==== Body ====
+Checks for inactive annotations within a model and allows you to redefine the annotation feature that has the annotations. Creo ModelCHECK also allows you to delete the inactive annotation element.
+You can also access the Global Reference Viewer from the Creo ModelCHECK report to view all references to and from the annotation feature which contains the inactive annotation.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+W
+W
+W
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/anntn_missing_surf_ref.html...
+----------------------------------------
+==== Heading_2 ====
+ANNTN_MISSING_SURF_REF (Annotations Not Referencing Any Surface)
+
+==== Body ====
+Reports the GTOLs, dimensions, datum targets, and datum feature symbols that do not reference any surface as placement and non placement reference. This check also reports annotations, such as notes, symbols, and surface finishes, that do not reference any surface as the placement reference.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/E/W
+
+==== Table_Cell ====
+E
+E
+W
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/anntn_not_on_comb_state.html...
+----------------------------------------
+==== Heading_2 ====
+ANNTN_NOT_ON_COMB_STATE (Annotations Missing On Combined State)
+
+==== Body ====
+Reports the GTOLS, dimensions, datum targets, datum feature symbols, notes, symbols, and surface finishes, that are not displayed in any combination states.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/E/W
+
+==== Table_Cell ====
+E
+E
+W
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/anntn_on_mult_comb_state.html...
+----------------------------------------
+==== Heading_2 ====
+ANNTN_ON_MULT_COMB_STATE(Annotations in Multiple Combination States)
+
+==== Body ====
+Reports the GTOLS, dimensions, datum targets, datum feature symbols, notes, symbols, and surface finishes that are displayed in multiple combination states.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/E/W
+
+==== Table_Cell ====
+E
+E
+W
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/anntn_sem_ref_text_verify.html...
+----------------------------------------
+==== Heading_2 ====
+ANNTN_SEM_REF_TEXT_VERIFY
+
+==== Body ====
+Reports inconsistency when the number of references specified in the additional text of the GTOL, dimension, or datum feature symbol does not match the surfaces referenced in the model.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/E/W
+
+==== Table_Cell ====
+E
+E
+E
+E
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/asm_bom.html...
+----------------------------------------
+==== Heading_2 ====
+ASM_BOM (Assembly Bill of Materials)
+
+==== Body ====
+Displays the bill of materials of the assembly. You must set this check to Y for an all-level check on an assembly.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N
+
+==== Table_Cell ====
+Y
+Y
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/asm_features.html...
+----------------------------------------
+==== Heading_2 ====
+ASM_FEATURES (Assembly Features)
+
+==== Body ====
+Reports any assembly features, other than datums, in the model.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+Y
+Y
+Y
+Y
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/body_info.html...
+----------------------------------------
+==== Heading_2 ====
+BODY_INFO (Body Information)
+
+==== Body ====
+Reports bodies in the model.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N
+
+==== Table_Cell ====
+Y
+Y
+Y
+Y
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/bound_info.html...
+----------------------------------------
+==== Heading_2 ====
+BOUND_INFO (Boundary Information)
+
+==== Body ====
+Checks that no views, entities, dimensions, symbols, notes, and tables lie outside the boundary of a drawing. If any are found, you can highlight the reported views or details in the Creo Parametric window.
+
+==== List_1 ====
+• This check considers the boundary of the drawing and not the boundary of the format. If an item lies outside the boundary of the format but within the boundary of the drawing, Creo ModelCHECK does not report it as a problem.
+• If a drawing has no valid views, Creo ModelCHECK does not check for views, entities, dimensions, symbols, notes, and tables lying outside the boundary of the drawing.
+• This check does not consider symbols that have groups.
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+W
+W
+W
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/bulk_items.html...
+----------------------------------------
+==== Heading_2 ====
+BULK_ITEMS (Bulk Items)
+
+==== Body ====
+Reports any bulk items found in the assembly.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+Y
+Y
+N
+Y
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/buried_feat.html...
+----------------------------------------
+==== Heading_2 ====
+BURIED_FEAT (Buried Features)
+
+==== Body ====
+Reports any buried features in the model. If any are found, you can highlight them in the Creo Parametric window. Buried features are completely enveloped by another feature.
+You can also access the Global Reference Viewer from the Creo ModelCHECK report to view all references to and from the reported features.
+If the ModelUPDATE mode is enabled, buried features are automatically deleted.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+E
+E
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/buried_suspect.html...
+----------------------------------------
+==== Heading_2 ====
+BURIED_SUSPECT (Buried Features with Children)
+
+==== Body ====
+Reports the child features of buried features in the model. Creo ModelCHECK reports BURIED_FEAT when the buried features do not have child features.
+You can also access the Global Reference Viewer from the Creo ModelCHECK report to view all references to and from the reported features.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+W
+W
+W
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/c7_self_dist.html...
+----------------------------------------
+==== Heading_2 ====
+C7_SELF_DIST (Distance from Itself)
+
+==== Body ====
+GeomIntegrityCHECK checks the proximity of the boundary-curve bounded surfaces to appurtenant surfaces. It reports the boundary curve if the curve extends beyond the parameter range of the surface.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/chamfer_child.html...
+----------------------------------------
+==== Heading_2 ====
+CHAMFER_CHILD (Children of Chamfers)
+
+==== Body ====
+Reports any features that are children of chamfers. If any are found, you can highlight them in the Creo Parametric window.
+You can also access the Global Reference Viewer from the Creo ModelCHECK report to view all references to and from the reported features.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+E
+E
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/child_ext_failed_components.html...
+----------------------------------------
+==== Heading_2 ====
+CHILD_EXT_FAILED_COMPONENTS (Children of External Failed Components)
+
+==== Body ====
+Reports components that are children of external failed components. Children of external failed components are components with one or more external parents that are failed components or children of failed components.
+You can access the Reference Viewer from the Creo ModelCHECK report to view all references to and from the reported children of external failed components.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+Y
+E
+Y
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/child_ext_failed_features.html...
+----------------------------------------
+==== Heading_2 ====
+CHILD_EXT_FAILED_FEATURES (Children of External Failed Features)
+
+==== Body ====
+Reports features that are children of external failed features. Children of external failed features are features with one or more external parents that are failed features or children of failed features.
+You can access the Reference Viewer from the Creo ModelCHECK report to view all references to and from the reported children of external failed features.
+You can choose to ignore a child of external failed feature.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+Y
+E
+Y
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/child_failed_components.html...
+----------------------------------------
+==== Heading_2 ====
+CHILD_FAILED_COMPONENTS (Children of Failed Components)
+
+==== Body ====
+Reports components that are children of failed components. Children of failed components are components with one or more parents that are failed components.
+You can access the Reference Viewer from the Creo ModelCHECK report to view all references to and from the reported children of failed components.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+Y
+E
+Y
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/child_failed_features.html...
+----------------------------------------
+==== Heading_2 ====
+CHILD_FAILED_FEATURES (Children of Failed Features)
+
+==== Body ====
+Reports features that are children of failed features. Children of failed features are features with one or more parents that are failed features.
+You can access the Reference Viewer from the Creo ModelCHECK report to view all references to and from the reported children of failed features.
+You can choose to ignore a child of failed feature.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+Y
+E
+Y
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/children_exist.html...
+----------------------------------------
+==== Heading_2 ====
+CHILDREN_EXIST (Standard Children)
+
+==== Body ====
+Checks for the existence of a set of standard named features. If they are found, Creo ModelCHECK checks for the existence of standard named children.
+If the parent features do not exist in the model, Creo ModelCHECK does not check for the children.
+Parent features and their children are listed using the PRT_CHILD_EXIST and ASM_CHILD_EXIST configuration options.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+E
+E
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/circular_refs.html...
+----------------------------------------
+==== Heading_2 ====
+CIRCULAR_REFS (Circular References)
+
+==== Body ====
+Checks for any circular references in the assembly. Circular references occur when an assembly contains a number of cross references that form a loop.
+Creo ModelCHECK reports all the circular references. You can highlight the features or components involved.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+Y
+Y
+Y
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/comb_state_name.html...
+----------------------------------------
+==== Heading_2 ====
+COMB_STATE_NAME (Combination State Name Specification Errors)
+
+==== Body ====
+Verifies that the name of combination state conform to the standard naming conventions defined by the PRT_COMB_STATE_NAME and ASM_COMB_STATE_NAME start configuration options.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/E/W
+
+==== Table_Cell ====
+E
+E
+E
+E
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/cosmetic_feat.html...
+----------------------------------------
+==== Heading_2 ====
+COSMETIC_FEAT (Cosmetic Features)
+
+==== Body ====
+Lists the cosmetic features in the model.
+You can also access the Global Reference Viewer from the Creo ModelCHECK report to view all references to and from the reported features.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N
+
+==== Table_Cell ====
+Y
+Y
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/create_view.html...
+----------------------------------------
+==== Heading_2 ====
+CREATE_VIEW (Create Views)
+
+==== Body ====
+Creates views as specified by the PRT_CREATE_VIEW and the ASM_CREATE_VIEW options in the start configuration file.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/cyl_cut_slots.html...
+----------------------------------------
+==== Heading_2 ====
+CYL_CUT_SLOTS (Cuts and Slots That Should Be Holes)
+
+==== Body ====
+Reports any circular cuts or slots in the model that could have been modeled using holes instead. If any are found, you can highlight the features in question in the Creo Parametric window. This check ignores cylindrical features that have been created using the Revolve command.
+You can also access the Global Reference Viewer from the Creo ModelCHECK report to view all references to and from the reported features.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+W
+W
+W
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/cyl_diams.html...
+----------------------------------------
+==== Heading_2 ====
+CYL_DIAMS (Circular Cut Diameters)
+
+==== Body ====
+Reports any circular cuts in the model without standard diameters. If any are found, you can highlight the features in question in the Creo Parametric window.
+You can also access the Global Reference Viewer from the Creo ModelCHECK report to view all references to and from the reported features.
+Standard cut diameters are listed in a text file specified by the STD_HOLE_DIAM_FILE start configuration option (The same file is used for hole diameters.)
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+E
+E
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/d28_iges_text.html...
+----------------------------------------
+==== Heading_2 ====
+D28_IGES_TEXT (IGES Conform Text)
+
+==== Body ====
+In drawings, GeomIntegrityCHECK reports text that does not conform to IGES fonts.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/datum_rename.html...
+----------------------------------------
+==== Heading_2 ====
+DATUM_RENAME (Renaming Datums)
+
+==== Body ====
+If this check is enabled and a specified datum is found in the model, Creo ModelCHECK renames it as specified. Datum names to be renamed are specified using the PRT_DATUM_RENAME and ASM_DATUM_RENAME start configuration options.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+W
+W
+N
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/def_density.html...
+----------------------------------------
+==== Heading_2 ====
+DEF_DENSITY (Model Density)
+
+==== Body ====
+Reports when the density of the master material or the density of the material assigned to a body is missing.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+W
+W
+N
+E
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/default_child.html...
+----------------------------------------
+==== Heading_2 ====
+DEFAULT_CHILD (Children of the Default Datum Planes)
+
+==== Body ====
+Reports the number of features that are direct children of the default datum planes.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N
+
+==== Table_Cell ====
+Y
+Y
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/default_views.html...
+----------------------------------------
+==== Heading_2 ====
+DEFAULT_VIEWS (Views with the Default Hidden Line Display Mode)
+
+==== Body ====
+Reports any views with the hidden line display mode set to the default (and not the other options, namely, Wireframe, Hidden Line, and No Hidden) in a drawing.
+If any views are found, you can be highlight them from the report.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+W
+W
+N
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/dependent_feature.html...
+----------------------------------------
+==== Heading_2 ====
+DEPENDENT_FEATURE (Dependent Features)
+
+==== Body ====
+Checks for the existence of dependent features. A dependent feature is created when you copy a feature by translating, rotating, or mirroring it. The copied as well as the original features are reported and can be highlighted.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+N
+N
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/designated_attr.html...
+----------------------------------------
+==== Heading_2 ====
+DESIGNATED_ATTR (Designated Attributes)
+
+==== Body ====
+Reports the designated parameters in a model. Designated parameters are identified for use as attributes in a PDM system.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+N
+N
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/dim_overwrite.html...
+----------------------------------------
+==== Heading_2 ====
+DIM_OVERWRITE (Overwritten Dimensions)
+
+==== Body ====
+Reports any dimensions modified using @O, which breaks their associations with the model, allowing you to enter whatever value you choose.
+If any overwritten dimensions are found, you can highlight the features in question in the Creo Parametric window.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+E
+E
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/draft_angles.html...
+----------------------------------------
+==== Heading_2 ====
+DRAFT_ANGLES (Standard Draft Angles)
+
+==== Body ====
+Reports whether any draft features in the model do not have standard draft angles. If any are found, you can highlight the features in question in the Creo Parametric window.
+You can also access the Global Reference Viewer from the Creo ModelCHECK report to view all references to and from the reported features.
+Standard draft angles are listed in a text file specified by the STD_DRAFT_ANGLES_FILE start configuration option.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+E
+E
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/draft_child.html...
+----------------------------------------
+==== Heading_2 ====
+DRAFT_CHILD (Children of Draft)
+
+==== Body ====
+Lists the features that are children of draft features. If any are found, you can highlight them in the Creo Parametric window.
+You can also access the Global Reference Viewer from the Creo ModelCHECK report to view all references to and from the reported features.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+E
+E
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/draft_geom.html...
+----------------------------------------
+==== Heading_2 ====
+DRAFT_GEOM (Draft Geometry not Associated to a View)
+
+==== Body ====
+Reports any draft geometry in the model that is not associated with a view. No draft entities are reported when there are no views in the drawing.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+W
+W
+W
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/drawing_layers.html...
+----------------------------------------
+==== Heading_2 ====
+DRAWING_LAYERS (Drawing Layers)
+
+==== Body ====
+Adds all layer functionality from Part and Assembly modes to Drawing mode.
+If the ModelUPDATE mode is enabled, Creo ModelCHECK automatically performs the STARTCHECK, LAYER_PLACE, LAYER_STATUS, LATER_MOVE, EXTRA_LAYERS, and LAYER_UNWANTED checks.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+W
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/drawing_name.html...
+----------------------------------------
+==== Heading_2 ====
+DRAWING_NAME (Drawing Name)
+
+==== Body ====
+Verifies that the name of the drawing conforms to the standard naming conventions defined by the DRW_MODEL_NAME start configuration option.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+W
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/drawing_params.html...
+----------------------------------------
+==== Heading_2 ====
+DRAWING_PARAMS (Parameter Checks)
+
+==== Body ====
+Enables the following parameter checks in Drawing mode:
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+Missing parameters
+STARTCHECK
+Parameter errors
+PARAMCHECK
+Spelling errors
+PARAM_SPELL
+Rename specifications
+PARAM_RENAME
+Parameters not included in start list
+EXTRA_PARAMS
+E
+E
+W
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/dtm_axes_info.html...
+----------------------------------------
+==== Heading_2 ====
+DTM_AXES_INFO (Datum Axis Information)
+
+==== Body ====
+Lists all datum axes found in the model.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N
+
+==== Table_Cell ====
+Y
+Y
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/dtm_csys_info.html...
+----------------------------------------
+==== Heading_2 ====
+DTM_CSYS_INFO (Coordinate System Information)
+
+==== Body ====
+Lists all datum coordinate systems found in the model.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N
+
+==== Table_Cell ====
+Y
+Y
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/dtm_curve_info.html...
+----------------------------------------
+==== Heading_2 ====
+DTM_CURVE_INFO (Datum Curve Information)
+
+==== Body ====
+Lists all datum curves found in the model.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N
+
+==== Table_Cell ====
+Y
+Y
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/dtm_plane_info.html...
+----------------------------------------
+==== Heading_2 ====
+DTM_PLANE_INFO (Datum Plane Information)
+
+==== Body ====
+Lists all datum planes found in the model.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N
+
+==== Table_Cell ====
+Y
+Y
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/dtm_point_info.html...
+----------------------------------------
+==== Heading_2 ====
+DTM_POINT_INFO (Datum Point Information)
+
+==== Body ====
+Lists all datum points found in the model.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N
+
+==== Table_Cell ====
+Y
+Y
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/duplicate_models.html...
+----------------------------------------
+==== Heading_2 ====
+DUPLICATE_MODELS (Duplicate Models)
+
+==== Body ====
+Lists the models in the shape indexing database that are similar in shape to the model being checked.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+W
+W
+W
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/early_chamfer.html...
+----------------------------------------
+==== Heading_2 ====
+EARLY_CHAMFER (Early Chamfers)
+
+==== Body ====
+Lists the chamfers in the early features of the model. Early features appear within a specified percentage of all the features in the model starting from the top of the Model Tree. The percentage is defined by the PERC_EARLY_CHAMF start configuration option.
+If any are found, you can highlight the features in question in the Creo Parametric window.
+You can also access the Global Reference Viewer from the Creo ModelCHECK report to view all references to and from the reported features.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+E
+E
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/early_cosmetic.html...
+----------------------------------------
+==== Heading_2 ====
+EARLY_COSMETIC (Early Cosmetic Features)
+
+==== Body ====
+Lists cosmetic features in the early features of the model. Early features appear within a specified percentage of all the features in the model starting from the top of the Model Tree. The percentage is defined by the PERC_EARLY_COSMETIC start configuration option.
+If any are found, you can highlight them in the Creo Parametric window.
+You can also access the Global Reference Viewer from the Creo ModelCHECK report to view all references to and from the reported features.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+W
+W
+W
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/early_draft.html...
+----------------------------------------
+==== Heading_2 ====
+EARLY_DRAFT (Early Draft)
+
+==== Body ====
+Lists the drafts in the early features of the model. Early features appear within a specified percentage of all the features in the model starting from the top of the Model Tree. The percentage is defined by the PERC_EARLY_DRAFT start configuration option.
+If any are found, you can highlight the features in question in the Creo Parametric window.
+You can also access the Global Reference Viewer from the Creo ModelCHECK report to view all references to and from the reported features.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+E
+E
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/early_round.html...
+----------------------------------------
+==== Heading_2 ====
+EARLY_ROUND (Early Rounds)
+
+==== Body ====
+Lists rounds in the early features of the model. Early features appear within a specified percentage of all the features in the model starting from the top of the Model Tree. The percentage is defined by the PERC_EARLY_ROUND start configuration option.
+If any are found, you can highlight the features in question in the Creo Parametric window.
+You can also access the Global Reference Viewer from the Creo ModelCHECK report to view all references to and from the reported features.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+E
+E
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/edge_references.html...
+----------------------------------------
+==== Heading_2 ====
+EDGE_REFERENCES (Features That Reference Edges)
+
+==== Body ====
+Lists features that have been created using edges as dimension reference points. If any are found, you can highlight them in the Creo Parametric window.
+You can also access the Global Reference Viewer from the Creo ModelCHECK report to view all references to and from the reported features.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+E
+E
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/erased_views.html...
+----------------------------------------
+==== Heading_2 ====
+ERASED_VIEWS (Erased Views)
+
+==== Body ====
+Checks for erased views in the drawing. Erased views exist in the drawing until they are deleted.
+If any erased views are found, you can highlight, delete, or resume them from the Creo ModelCHECK report. If the ModelUPDATE mode is enabled, the erased views are automatically deleted from the drawing.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+E
+E
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/external_deps.html...
+----------------------------------------
+==== Heading_2 ====
+EXTERNAL_DEPS (External Dependencies)
+
+==== Body ====
+Lists all the external dependencies of a model. The names of the assemblies in which the external dependencies exist are also listed. You can highlight the external dependencies.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+Y
+N
+Y
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/extra_layers.html...
+----------------------------------------
+==== Heading_2 ====
+EXTRA_LAYERS (Extra Layers)
+
+==== Body ====
+Lists any extra layers in the model. Extra layers are not listed in the start part.
+If any are found, you can highlight the features in question in the Creo Parametric window.
+If the ModelUPDATE mode is enabled, this check automatically deletes the extra layers.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+W
+W
+W
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/extra_params.html...
+----------------------------------------
+==== Heading_2 ====
+EXTRA_PARAMS (Extra Parameters)
+
+==== Body ====
+Reports extra parameters in the model. Extra parameters are not listed in the start part. If any are found, you can highlight the features in question in the Creo Parametric window.
+If the ModelUPDATE mode is enabled, this check automatically deletes the extra parameters.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+W
+W
+W
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/f14_bound_dist.html...
+----------------------------------------
+==== Heading_2 ====
+F14_BOUND_DIST (Penetration or Distance of Boundaries)
+
+==== Body ====
+GeomIntegrityCHECK reports instances of penetration or contact of boundary curves caused by using values lower than the minimum distance tolerance.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/f15_surf_dist.html...
+----------------------------------------
+==== Heading_2 ====
+F15_SURF_DIST (Proximity of a Boundary Curve to its Surface)
+
+==== Body ====
+In bounded surfaces, GeomIntegrityCHECK reports boundary curves with too great a distance to the surface (normal or lateral). It also reports boundary curves that extend beyond the parameter range of the surface.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/f16_sim_orient.html...
+----------------------------------------
+==== Heading_2 ====
+F16_SIM_ORIENT (Parallel Path or Similar Orientation)
+
+==== Body ====
+GeomIntegrityCHECK reports boundary curves that are not parallel, because they can lead to unwanted self-penetration and face degeneration in some systems.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/f17_num_seg.html...
+----------------------------------------
+==== Heading_2 ====
+F17_NUM_SEG (Number of Segments in a Boundary Curve)
+
+==== Body ====
+GeomIntegrityCHECK reports cases of disproportionately large numbers of segments within a boundary curve.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/failed_components.html...
+----------------------------------------
+==== Heading_2 ====
+FAILED_COMPONENTS (Failed Components)
+
+==== Body ====
+Reports failed components in an assembly. You can access the Reference Viewer from the Creo ModelCHECK report to view all references to and from the reported failed components.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+Y
+E
+Y
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/failed_features.html...
+----------------------------------------
+==== Heading_2 ====
+FAILED_FEATURES (Failed Features)
+
+==== Body ====
+Reports failed features in the model. You can access the Reference Viewer from the Creo ModelCHECK report to view all references to and from the reported failed features.
+You can choose to ignore a failed feature.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+Y
+E
+Y
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/family_info.html...
+----------------------------------------
+==== Heading_2 ====
+FAMILY_INFO (Family Table Information)
+
+==== Body ====
+Identifies a model as either generic or not. If the model is generic, this check reports the instances with their names, and whether the instances have been successfully verified.
+An instance is marked with one of the following verification states:
+Successfully verified—Verified and regenerates successfully.
+Unsuccessfully verified—Verified but does not regenerate successfully.
+Not verified—Not verified because one or more of the following cases is true.
+
+==== List_1 ====
+• The geometry of the generic model has changed after the family table was last verified.
+• The instance has been modified after it was last verified.
+• The instance was never verified since it was created.
+• A new item has been added to the family table after the family table was last verified.
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+W
+W
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/feature_info.html...
+----------------------------------------
+==== Heading_2 ====
+FEATURE_INFO (Feature Information)
+
+==== Body ====
+Lists the types and number of features used in the model.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N
+
+==== Table_Cell ====
+Y
+Y
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/file_size.html...
+----------------------------------------
+==== Heading_2 ====
+FILE_SIZE (File Size)
+
+==== Body ====
+Displays the disk space that is used to store the model.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N
+
+==== Table_Cell ====
+Y
+Y
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/fixed_components.html...
+----------------------------------------
+==== Heading_2 ====
+FIXED_COMPONENTS (Fixed Components)
+
+==== Body ====
+Reports fixed components used in an assembly. You can access the Reference Viewer from the Creo ModelCHECK report to view all references to and from the reported fixed components.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+Y
+Y
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/flex_components.html...
+----------------------------------------
+==== Heading_2 ====
+FLEX_COMPONENTS (Flexible Components)
+
+==== Body ====
+Reports flexible components used in an assembly. You can access the Reference Viewer from the Creo ModelCHECK report to view all references to and from the reported flexible components.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+Y
+Y
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/format_name.html...
+----------------------------------------
+==== Heading_2 ====
+FORMAT_NAME (Drawing Format Name)
+
+==== Body ====
+Checks that the drawing format is from the standard list of acceptable formats. Standard formats are defined by the DRW_FORMAT start configuration option. If the drawing does not have a format, Creo ModelCHECK prompts you to add one.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+W
+W
+N
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/freeform.html...
+----------------------------------------
+==== Heading_2 ====
+FREEFORM (Freeform Surfaces)
+
+==== Body ====
+Reports the number of freeform features in the model.
+You can also access the Global Reference Viewer from the Creo ModelCHECK report to view all references to and from the reported features.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+Y
+Y
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/frz_components.html...
+----------------------------------------
+==== Heading_2 ====
+FRZ_COMPONENTS (Frozen Components)
+
+==== Body ====
+Checks for frozen components in the assembly.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+E
+E
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/ft_def_vals.html...
+----------------------------------------
+==== Heading_2 ====
+FT_DEF_VALS (Family Table Default Values)
+
+==== Body ====
+If the model has a family table, this check makes sure that no instances have default values [there are no asterisks (*) in the table].
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+W
+W
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/ft_std_parms.html...
+----------------------------------------
+==== Heading_2 ====
+FT_STD_PARMS (Family Table Standard Parameters)
+
+==== Body ====
+Ensures that the standard parameters have been added to models with family tables. Standard parameters are set in the start configuration file using the PRT_FT_PARAMETER and ASM_FT_PARAMETER configuration options.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+W
+W
+W
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/gen_components.html...
+----------------------------------------
+==== Heading_2 ====
+GEN_COMPONENTS (Generic Components)
+
+==== Body ====
+Reports the components in an assembly in which the generic of a family table, rather than an instance, was assembled.
+You can also access the Global Reference Viewer from the Creo ModelCHECK report to view all references to and from the reported components.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+W
+W
+W
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/geom_checks.html...
+----------------------------------------
+==== Heading_2 ====
+GEOM_CHECKS (Geometry Checks)
+
+==== Body ====
+Reports if there are any geometry checks in the model. If any are found, the features in question can be highlighted in the Creo Parametric window.
+You can also access the Global Reference Viewer from the Creo ModelCHECK report to view all references to and from the reported features.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+N
+E
+N
+E
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/geometric_tol.html...
+----------------------------------------
+==== Heading_2 ====
+GEOMETRIC_TOL (Geometric Tolerances)
+
+==== Body ====
+Reports all geometric tolerances associated with parts, assemblies, and drawings.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N
+
+==== Table_Cell ====
+Y
+Y
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/global_intf.html...
+----------------------------------------
+==== Heading_2 ====
+GLOBAL_INTF (Assembly Global Interference)
+
+==== Body ====
+Checks the number of days since the last global interference check was run and whether it was within the acceptable period or not.
+When you run a global interference check on an assembly, Creo ModelCHECK creates a parameter in the assembly. Creo ModelCHECK uses the parameter the next time a report is generated to determine when the last interference check was run.
+The GLOBAL_INTF_DAYS configuration option in the constant configuration file sets the maximum number of days between interference checks. Creo ModelCHECK reports whether an interference check was done recently or not.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+E
+E
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/hole_diams.html...
+----------------------------------------
+==== Heading_2 ====
+HOLE_DIAMS (Standard Hole Diameters)
+
+==== Body ====
+Reports any holes in the model that do not have standard diameters. If any are found, you can highlight the features in question in the Creo Parametric window.
+You can also access the Global Reference Viewer from the Creo ModelCHECK report to view all references to and from the reported features.
+Standard hole diameters are listed in a text file specified by the STD_HOLE_DIAM_FILE start configuration option.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+E
+E
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/hole_lightwt.html...
+----------------------------------------
+==== Heading_2 ====
+HOLE_LIGHTWT (Lightweight Holes)
+
+==== Body ====
+Reports errors or warnings, if the model has lightweight holes.
+You can access the Global Reference Viewer from the ModelCHECK report to view all references to and from the reported features.
+
+==== List_1 ====
+
+==== Preformatted ====
+
+==== Table_Cell ====
+E
+E
+E
+E
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/ignore_anntn.html...
+----------------------------------------
+==== Heading_2 ====
+IGNORE_ANNTN (Ignore Annotations)
+
+==== Body ====
+You can set IGNORE_ANNTN to Y to list and highlight ignored annotations in the Creo ModelCHECK report. You can also see the names of the users who ignored the annotations and their comments. From the report, the status of the ignored annotations can be reset so that Creo ModelCHECK resumes warnings about the problem.
+You can set IGNORE_ANNTN to N to remove the list of ignored annotations from the Creo ModelCHECK report.
+Only applicable to Model Based Definition (MBD) checks.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N
+
+==== Table_Cell ====
+Y
+Y
+Y
+Y
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/ignore_feat.html...
+----------------------------------------
+==== Heading_2 ====
+IGNORE_FEAT (Problem Features That Should Be Ignored)
+
+==== Body ====
+You can set IGNORE_FEAT to Y to list and highlight ignored features in the Creo ModelCHECK report. You can also see the names of the users who ignored the features and their comments. From the report, the status of the ignored features can be reset so that Creo ModelCHECK resumes warnings about the problem.
+You can set IGNORE_FEAT to N to remove the list of ignored features from the Creo ModelCHECK report.
+You can also access the Reference Viewer from the Creo ModelCHECK report to view all references to and from the reported features.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N
+
+==== Table_Cell ====
+Y
+Y
+Y
+Y
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/ignore_sheets.html...
+----------------------------------------
+==== Heading_2 ====
+IGNORE_SHEETS (Sheets to Be Ignored)
+
+==== Body ====
+Specifies sheets that should be ignored. Use the DRW_IGNORE_SHEETS start configuration option to configure this check.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+W
+W
+N
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/import_feat.html...
+----------------------------------------
+==== Heading_2 ====
+IMPORT_FEAT (Imported Features)
+
+==== Body ====
+Reports the number of imported features in the model. If any are found, you can highlight the features in question in the Creo Parametric window.
+You can also access the Global Reference Viewer from the Creo ModelCHECK report to view all references to and from the reported features.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+Y
+Y
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/incomplete_feat.html...
+----------------------------------------
+==== Heading_2 ====
+INCOMPLETE_FEAT (Incomplete Features)
+
+==== Body ====
+Reports whether any incomplete features exist in the model. If any are found, you can highlight or delete them in the Creo Parametric window. Creo ModelCHECK regenerates the model if any incomplete features are deleted.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+W
+E
+N
+E
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/insert_mode.html...
+----------------------------------------
+==== Heading_2 ====
+INSERT_MODE (Insert Mode Left Active)
+
+==== Body ====
+Reports whether the Insert mode is active.
+If this is the case, you can deactivate the Insert mode through the Creo ModelCHECK report.
+If the ModelUPDATE mode is enabled, the Insert mode is automatically deactivated.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+N
+E
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/instance_name.html...
+----------------------------------------
+==== Heading_2 ====
+INSTANCE_NAME (Instance Name)
+
+==== Body ====
+Verifies that the names of family table instances conform to the standard naming conventions defined by the PRT_INSTANCE_NAME and ASM_INSTANCE_NAME start configuration options.
+This check can also be configured to verify that the names of instances begin with the same string as the generic.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+W
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/layer_dispstat.html...
+----------------------------------------
+==== Heading_2 ====
+LAYER_DISPSTAT (Layers That Are Set to Isolate)
+
+==== Body ====
+Checks that no layers are stored in the Isolate mode.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+W
+E
+N
+E
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/layer_dtm_blank.html...
+----------------------------------------
+==== Heading_2 ====
+LAYER_DTM_BLANK (Datum Features on Blanked Layers)
+
+==== Body ====
+Checks whether all datum features exist on layers (regardless of their names) and that the layers are blanked. Datum features that do not exist on layers can be highlighted.
+You can also access the Global Reference Viewer from the Creo ModelCHECK report to view all references to and from the reported features.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+W
+W
+W
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/layer_ext_items.html...
+----------------------------------------
+==== Heading_2 ====
+LAYER_EXT_ITEMS (Extra Features on Layers)
+
+==== Body ====
+Lists the layers containing features that do not belong to a given layer. For example, if a layer is designated as the datum plane layer and it contains features other than the datum planes, it is listed.
+The extra features can be removed from the layers.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+W
+W
+W
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/layer_info.html...
+----------------------------------------
+==== Heading_2 ====
+LAYER_INFO (Layer Information)
+
+==== Body ====
+Lists any layers found in the model and the features that are on each one.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N
+
+==== Table_Cell ====
+Y
+Y
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/layer_items.html...
+----------------------------------------
+==== Heading_2 ====
+LAYER_ITEMS (Items on Multiple Layers)
+
+==== Body ====
+Checks that features do not exist on multiple layers. If any are found, the entity IDs and their feature IDs are listed.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+W
+W
+W
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/layer_move.html...
+----------------------------------------
+==== Heading_2 ====
+LAYER_MOVE (Move Items from Old Layers to New Ones and Delete the Old One)
+
+==== Body ====
+Creates a new layer, takes all items from an existing layer, moves them to a new layer, and then deletes the old layer. To use this check, both the old and new layers must be named in the start configuration file using the PRT_LAYER_MOVE, ASM_LAYER_MOVE and DRW_LAYER_MOVE options.
+This check is available in the ModelUPDATE mode.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+E
+E
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/layer_place.html...
+----------------------------------------
+==== Heading_2 ====
+LAYER_PLACE (Layers Contain Standard Items)
+
+==== Body ====
+Checks whether the standard layers contain the standard features. If any items are found on wrong layers, you can have Creo ModelCHECK automatically move them on to correct ones.
+Standard features include:
+The PRT_LAYER and ASM_LAYER start configuration options define standard layers.
+If the ModelUPDATE mode is enabled, this check automatically moves items on wrong layers to the correct layers and moves items that are not placed on any layer to the appropriate layers.
+
+==== List_1 ====
+• axes
+• chamfers
+• components
+• cosmetic grooves
+• cosmetic sketches
+• cosmetic threads
+• coordinate systems
+• curves
+• cuts
+• bodies
+• datums
+• datum axes
+• datum coordinate systems
+• datum planes
+• datum points
+• datum quilts
+• datum surfaces
+• drafts
+• draft lines
+• groups
+• geometric tolerances
+• holes
+• notes
+• protrusions
+• rounds
+• shells
+• slots
+• symbols
+• threads
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+W
+E
+N
+E
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/layer_saved_status.html...
+----------------------------------------
+==== Heading_2 ====
+LAYER_SAVED_STATUS (Saved Layer Status)
+
+==== Body ====
+Checks the saved display status of the standard named layers. If any layers are not saved in the right display status, you can have Creo ModelCHECK automatically correct them. The PRT_LAYER and ASM_LAYER start configuration options define standard layers.
+If the ModelUPDATE mode is enabled, this check automatically updates the display status of the standard named layers.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+W
+E
+N
+E
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/layer_status.html...
+----------------------------------------
+==== Heading_2 ====
+LAYER_STATUS (Layer Status)
+
+==== Body ====
+Checks the display status of the standard named layers. If any layers are not displayed in the right display status, you can have Creo ModelCHECK automatically correct them. The PRT_LAYER and ASM_LAYER start configuration options define standard layers.
+If the ModelUPDATE mode is enabled, this check automatically updates the display status of the standard named layers.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+W
+E
+N
+E
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/layer_unwanted.html...
+----------------------------------------
+==== Heading_2 ====
+LAYER_UNWANTED (Unwanted Layers)
+
+==== Body ====
+Checks for unwanted layers and deletes them. Unwanted layers are specified in the start configuration file using the PRT_LAYER_UNWANTED, ASM_LAYER_UNWANTED, and DRW_LAYER_UNWANTED start configuration options. This check only works with the ModelUpdate mode.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/layout_info.html...
+----------------------------------------
+==== Heading_2 ====
+LAYOUT_INFO (Layout Information)
+
+==== Body ====
+Lists layouts associated with the model.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+Y
+Y
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/low_tolerance.html...
+----------------------------------------
+==== Heading_2 ====
+LOW_TOLERANCE (Lowest Allowable Tolerance)
+
+==== Body ====
+Reports the dimensions in the model in which the tolerance is lower than the standard minimum value. If any are found, you can highlight the features in question in the Creo Parametric window.
+The minimum allowable tolerance is set using the MIN_TOLERANCE constant configuration option.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+E
+E
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/m1_tiny_elmnt.html...
+----------------------------------------
+==== Heading_2 ====
+M1_TINY_ELMNT (Tiny Elements)
+
+==== Body ====
+
+==== List_1 ====
+• In wire geometry, GeomIntegrityCHECK reports the elements in your model that are smaller than specified in your configuration files.
+• In surfaces, GeomIntegrityCHECK reports the faces and face patches whose length in at least two opposing directions is smaller than specified in your configuration file.
+• GeomIntegrityCHECK reports bounded surfaces that are smaller than specified in your configuration file.
+• GeomIntegrityCHECK reports the solids whose expansion in two spatial directions is smaller than specified in your configuration file.
+• GeomIntegrityCHECK reports the drawing elements that are smaller than specified in your configuration file.
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/m2_identical_elmnt.html...
+----------------------------------------
+==== Heading_2 ====
+M2_IDENTICAL_ELMNT (Identical Elements)
+
+==== Body ====
+GeomIntegrityCHECK reports those wire, surface, and drawing elements that are identical to other elements in the same model.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/m3a_position_cont.html...
+----------------------------------------
+==== Heading_2 ====
+M3A_POSITION_CONT (Position Continuity)
+
+==== Body ====
+
+==== List_1 ====
+• In wire geometry, GeomIntegrityCHECK reports discontinuities in curve and curve-segment transition points that exceed the configuration tolerance.
+• GeomIntegrityCHECK checks individual bounded surfaces and their segments for continuity in position, gradient, and curvature at several points. It reports discontinuities.
+• In topologies, GeomIntegrityCHECK checks at several points the parity of two common boundary curves. If the gap between the curves exceeds the configuration tolerance, GeomIntegrityCHECK reports the affected face boundary.
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/m3b_tang_cont.html...
+----------------------------------------
+==== Heading_2 ====
+M3B_TANG_CONT (Tangential Continuity)
+
+==== Body ====
+
+==== List_1 ====
+• In wire geometry, GeomIntegrityCHECK reports the curve segments or curves whose tangential angles exceed the configuration angle value.
+• In surfaces, GeomIntegrityCHECK measures and compares tangential angles of two segments along a common border. If the maximum difference among the angles exceeds the configuration angle tolerance, the affected segment boundary is reported.
+• In topologies, the tangency angle or normal angles of two faces in a common boundary curve are checked at several points. If the angle difference exceeds the configuration angle tolerance, GeomIntegrityCHECK reports the affected boundary curve.
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/m3c_curv_cont.html...
+----------------------------------------
+==== Heading_2 ====
+M3C_CURV_CONT (Curvature Continuity)
+
+==== Body ====
+
+==== List_1 ====
+• In wire geometry, GeomIntegrityCHECK measures the curvature radii in curves and curve segments. It reports the curves and curve segments where the relative difference of the radii exceeds the configuration curvature tolerance.
+• In surfaces, GeomIntegrityCHECK checks the curvature radii of two segments at several points along the common border. If the maximum relative curvature difference is greater than the configuration curvature tolerance, the affected segment boundary is reported.
+• In topologies, GeomIntegrityCHECK checks the curvature radii of two faces at several points in a common boundary curve. If the relative curvature difference exceeds the configuration curvature tolerance, the affected boundary curve is reported.
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/m4_polyn_deg.html...
+----------------------------------------
+==== Heading_2 ====
+M4_POLYN_DEG (Polynomial Degree)
+
+==== Body ====
+
+==== List_1 ====
+• In wire geometry and drawings, GeomIntegrityCHECK reports the curves whose polynomial degrees exceed the upper limit specified in your configuration file.
+• GeomIntegrityCHECK reports the surfaces where the polynomial degree in at least one parameter direction exceeds the upper limit specified in your configuration file.
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/m5_waviness.html...
+----------------------------------------
+==== Heading_2 ====
+M5_WAVINESS (Waviness)
+
+==== Body ====
+Reports wavy curves and surfaces.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/m6_knot_dist.html...
+----------------------------------------
+==== Heading_2 ====
+M6_KNOT_DIST (Knot Distance)
+
+==== Body ====
+Reports the curves and faces having a knot clearance that is lower than the specified tolerance value.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/material_density.html...
+----------------------------------------
+==== Heading_2 ====
+MATERIAL_DENSITY (Material Card Density)
+
+==== Body ====
+Reports when the density of a part or the density of a body in the part is not the same as the density of the material specified in the material library.
+You must specify a location for the material library using the pro_material_dir configuration option in the config.pro file.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/E/W
+
+==== Table_Cell ====
+W
+W
+W
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/material_info.html...
+----------------------------------------
+==== Heading_2 ====
+MATERIAL_INFO (Material Type)
+
+==== Body ====
+Reports when the master material or the material assigned to a body in the part is not defined in the MATERIAL_NAME configuration option. Standard material names are listed in the start configuration file using the MATERIAL_NAME configuration option. This check also verifies that the defined material belongs to a valid list.
+If the ModelUPDATE mode is enabled and a material has not been assigned to a model, this check updates the model by automatically assigning a material from the material library. You must specify a location for the material library using the pro_material_dir configuration option in the Creo Parametric config.pro file.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+W
+W
+N
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/mech_components.html...
+----------------------------------------
+==== Heading_2 ====
+MECH_COMPONENTS (Mechanism Components)
+
+==== Body ====
+Reports mechanism constrained components used in an assembly. You can differentiate between truly under constrained (packaged) components and fully defined mechanism constrained components.
+You can access the Reference Viewer from the Creo ModelCHECK report to view all references to and from the reported mechanism components.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+Y
+Y
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/memory_space.html...
+----------------------------------------
+==== Heading_2 ====
+MEMORY_SPACE (Memory Space Used)
+
+==== Body ====
+Displays the memory space used while the model is in session. This check is available only in Batch mode.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N
+
+==== Table_Cell ====
+N
+Y
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/merge_feat.html...
+----------------------------------------
+==== Heading_2 ====
+MERGE_FEAT (Merged Features)
+
+==== Body ====
+Detects and lists all types of merge features. This includes features like merge or external inheritance, external merge, geometry mirror etc. in both assembly and part mode. The merge feature could have a material option of Add, Remove or Intersect. You can highlight the listed features in the Creo Parametric window.
+You can also access the Global Reference Viewer from the Creo ModelCHECK report to view all references to and from the reported features.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+E
+E
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/minmaxtol_info.html...
+----------------------------------------
+==== Heading_2 ====
+MINMAXTOL_INFO (Minimum and Maximum Tolerances)
+
+==== Body ====
+Reports the minimum and maximum linear tolerance used in the model. You can highlight the minimum and maximum tolerances in the Creo Parametric window.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N
+
+==== Table_Cell ====
+Y
+Y
+Y
+Y
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/mis_components.html...
+----------------------------------------
+==== Heading_2 ====
+MIS_COMPONENTS (Missing Components)
+
+==== Body ====
+Reports missing components. These occur when Creo Parametric does not know where a component, needed for an assembly, can be found on the disk.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+E
+E
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/model_name.html...
+----------------------------------------
+==== Heading_2 ====
+MODEL_NAME (Model Name Specification Errors)
+
+==== Body ====
+Verifies that the names of parts and assemblies conform to the standard naming conventions defined by the PRT_MODEL_NAME and ASM_MODEL_NAME start configuration options.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+W
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/model_name_str.html...
+----------------------------------------
+==== Heading_2 ====
+MODEL_NAME_STR (Model Name)
+
+==== Body ====
+Reports the name of the model. This check primarily creates a parameter that stores the name of the model. This is done using the ADD_CHK_PARAM start configuration option.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N
+
+==== Table_Cell ====
+Y
+Y
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/models_used.html...
+----------------------------------------
+==== Heading_2 ====
+MODELS_USED (Models Used in a Drawing)
+
+==== Body ====
+Lists the models used in a drawing.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N
+
+==== Table_Cell ====
+Y
+Y
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/multibody_model.html...
+----------------------------------------
+==== Heading_2 ====
+MULTIBODY_MODEL
+
+==== Body ====
+An error or warning message is reported for a model when it has more than a single body, regardless of the body category such as sheet metal, the geometry type such as a mixed representation, and the body state such as a body with contributing features or without contributing features.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+Y
+Y
+Y
+Y
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/named_feat.html...
+----------------------------------------
+==== Heading_2 ====
+NAMED_FEAT (Named Features)
+
+==== Body ====
+Reports the number of features that are named in parts and assemblies and calculates them as a percentage of all the features in the model. The check also lists the names of these features.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N
+
+==== Table_Cell ====
+Y
+Y
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/note_case.html...
+----------------------------------------
+==== Heading_2 ====
+NOTE_CASE (Note Case)
+
+==== Body ====
+Reports notes in lowercase in a model. You can highlight the notes and change them to uppercase. Any words that are to be ignored by this check must be written to a text file at the location specified by the IGNORE_NOTE_CASE_FILE option in the .mcs file. The syntax in the .mcs file is as follows:
+IGNORE_NOTE_CASE_FILE &lt;path to text file&gt;
+Write words that you want ignored by the note case check as one continuous string per line in the text file.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+W
+W
+N
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/note_font.html...
+----------------------------------------
+==== Heading_2 ====
+NOTE_FONT (Note Fonts)
+
+==== Body ====
+Reports any drawing notes using a font that is not from the list of approved fonts. Approved fonts are specified in the start configuration file using the DRW_NOTE_FONT configuration option.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+W
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/note_height.html...
+----------------------------------------
+==== Heading_2 ====
+NOTE_HEIGHT (Note Height)
+
+==== Body ====
+Reports any drawing notes with text that is not from the list of approved sizes. Approved sizes are specified in the start configuration file using the DRW_NOTE_HEIGHT configuration option.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+W
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/note_info.html...
+----------------------------------------
+==== Heading_2 ====
+NOTE_INFO (Drawing Note Information)
+
+==== Body ====
+Lists notes in the drawing with the sheets they are on.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N
+
+==== Table_Cell ====
+Y
+Y
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/note_spell.html...
+----------------------------------------
+==== Heading_2 ====
+NOTE_SPELL (Note Spelling Errors)
+
+==== Body ====
+Checks the drawing for spelling mistakes. If any mistakes are found you can highlight them or highlight and correct them. Also, you can add the word to the dictionary so that Creo ModelCHECK accepts it as correct.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+W
+E
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/note_unaccept.html...
+----------------------------------------
+==== Heading_2 ====
+NOTE_UNACCEPT (Unacceptable Notes)
+
+==== Body ====
+Verifies that no unacceptable text exists in any drawing notes or tables. Unacceptable text is defined in the start configuration file with the DRW_NOTE_UNACC configuration option.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+W
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/num_components.html...
+----------------------------------------
+==== Heading_2 ====
+NUM_COMPONENTS (Number of Components)
+
+==== Body ====
+Reports the total number of components in an assembly.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N
+
+==== Table_Cell ====
+Y
+Y
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/num_draw_sheets.html...
+----------------------------------------
+==== Heading_2 ====
+NUM_DRAW_SHEETS (Maximum Number of Drawing Sheets)
+
+==== Body ====
+Counts the number of sheets in a drawing and verifies that the number does not exceed the maximum.
+The maximum allowed is set using the MAX_DRAW_SHEETS configuration option in the constant configuration file.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+N
+E
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/overall_size.html...
+----------------------------------------
+==== Heading_2 ====
+OVERALL_SIZE (Overall Size)
+
+==== Body ====
+Reports the approximate length, width, and height of a box that would fit around the model.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N
+
+==== Table_Cell ====
+Y
+Y
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/overlap_info.html...
+----------------------------------------
+==== Heading_2 ====
+OVERLAP_INFO (Overlap Information)
+
+==== Body ====
+Checks for overlapping views in the drawing. If any are found, the features in question can be highlighted in the Creo Parametric window.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+W
+W
+W
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/pack_components.html...
+----------------------------------------
+==== Heading_2 ====
+PACK_COMPONENTS (Packaged Components)
+
+==== Body ====
+Reports any components that are not fully constrained or that are packaged.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+W
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/param_info.html...
+----------------------------------------
+==== Heading_2 ====
+PARAM_INFO (Model Parameters)
+
+==== Body ====
+Lists all parameters in the model and their values.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N
+
+==== Table_Cell ====
+Y
+Y
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/param_map.html...
+----------------------------------------
+==== Heading_2 ====
+PARAM_MAP (Parameter Mapping)
+
+==== Body ====
+Enables mapping the contents of one parameter to another parameter and deletes the first one, thus facilitating renaming of parameters. The parameters are specified in the start configuration file using the PRT_PARAM_MAP, ASM_PARAM_MAP, and DRW_PARAM_MAP start configuration options.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/param_note_req.html...
+----------------------------------------
+==== Heading_2 ====
+PARAM_NOTE_REQ (Required Parameter Notes)
+
+==== Body ====
+Checks that required parameter notes are present. This check is designed for Notes type parameters. Notes can be checked in the following way:
+Required parameter notes are designated in the start configuration file using the PRT_PARAM_NOTE_REQ and ASM_PARAM_NOTE_REQ configuration options.
+Use the following format in the start configuration file:
+where
+Example,
+
+==== List_1 ====
+• Does a specific parameter exist and does it contain the required text?
+• [MODE] is PRT, ASM, or DRW.
+• [parameter] is the name of the parameter to be created.
+• [file path]is the path of the file containing required texts.
+
+==== Preformatted ====
+Y/N/E/W
+[MODE]_ PARAM_NOTE_REQ [parameter] [file path]
+PRT_PARAM_NOTE_REQ PARAMETER text/notes.txt
+
+==== Table_Cell ====
+W
+W
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/param_note_unacc.html...
+----------------------------------------
+==== Heading_2 ====
+PARAM_NOTE_UNACC (Unacceptable Parameter Notes)
+
+==== Body ====
+Checks and marks the unacceptable parameter notes. This check is designed for Notes type parameters. Notes can be checked in the following way:
+Unacceptable parameter notes are designated in the start configuration file using the PRT_PARAM_NOTE_UNACC and ASM_PARAM_NOTE_UNACC configuration options.
+Use the following format in the start configuration file:
+where
+Example,
+
+==== List_1 ====
+• Does a specific parameter exist and does it contain any unacceptable text?
+• [MODE] is PRT, ASM, or DRW.
+• [parameter] is the name of the parameter to be created.
+• [text] is the unacceptable text.
+
+==== Preformatted ====
+Y/N/E/W
+[MODE]_PARAM_NOTE_UNACC [parameter] [text]
+PRT_PARAM_NOTE_UNACC PARAMETER "NO_VALUE"
+
+==== Table_Cell ====
+W
+W
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/param_rename.html...
+----------------------------------------
+==== Heading_2 ====
+PARAM_RENAME (Parameter Rename)
+
+==== Body ====
+If this check is enabled, Creo ModelCHECK can rename a specified parameter. Parameters to be renamed are specified using the PRT_PARAM_RENAME and ASM_PARAM_RENAME start configuration options.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+W
+W
+W
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/param_spell.html...
+----------------------------------------
+==== Heading_2 ====
+PARAM_SPELL (Parameter Spelling)
+
+==== Body ====
+Checks that parameter values have been spelled correctly. If any are spelled incorrectly, you can correct the spelling or add the value to the dictionary.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+W
+W
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/param_unused.html...
+----------------------------------------
+==== Heading_2 ====
+PARAM_UNUSED (Unused Parameters)
+
+==== Body ====
+Reports part parameters that are unused in relations and in family tables. It also allows deletion of these unused parameters.
+If the ModelUPDATE mode is enabled, this check automatically deletes part parameters that are unused in relations and in family tables.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+W
+N
+W
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/param_unwanted.html...
+----------------------------------------
+==== Heading_2 ====
+PARAM_UNWANTED (Unwanted Parameters)
+
+==== Body ====
+Checks for unwanted parameters and deletes them. Unwanted parameters are specified in the start configuration file using the PRT_PARAM_UNWANTED, ASM_PARAM_UNWANTED, and DRW_PARAM_UNWANTED start configuration options.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/paramcheck.html...
+----------------------------------------
+==== Heading_2 ====
+PARAMCHECK (Parameter Format Errors)
+
+==== Body ====
+Checks that all standard parameters are present in the model and that they are of an acceptable type and format. This check is used only for user defined parameters and not for reserved and system parameters.
+Standard parameters are defined by the PRT_PARAMETER and ASM_PARAMETER start configuration options.
+If the ModelUPDATE mode is enabled, this check automatically corrects the type and value of parameters, if required.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+W
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/params_exist.html...
+----------------------------------------
+==== Heading_2 ====
+PARAMS_EXIST (Drawing Parameters)
+
+==== Body ====
+Checks for drawing parameters in the model.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+E
+E
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/params_used.html...
+----------------------------------------
+==== Heading_2 ====
+PARAMS_USED (Drawing Parameters Used)
+
+==== Body ====
+Checks the drawing for the standard set of parameters that are driven from model parameters. Standard parameters are set using the DRW_PARAMETER configuration option in the start configuration file.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+E
+E
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/parent_diff.html...
+----------------------------------------
+==== Heading_2 ====
+PARENT_DIFF (Excessive Number of Parent References)
+
+==== Body ====
+Counts and reports the number of features with direct parent features. If the number of parent features is greater than or equal to the specified number, as determined by the PARENT_DIFF_MAX constant configuration option, this check reports a warning or a failure.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+W
+W
+W
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/prt_density.html...
+----------------------------------------
+==== Heading_2 ====
+PRT_DENSITY (Model Density)
+
+==== Body ====
+Reports when the density of a part or the density of a body in the part is not in the range of values defined in the DENSITY_LOW and DENSITY_UPP constant configuration options. If the density is not in the specified range, provides an option to update the density from the ModelCHECK report.
+The acceptable limits are set using the DENSITY_LOW and DENSITY_UPP constant configuration options.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+W
+W
+W
+E
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/plane_child.html...
+----------------------------------------
+==== Heading_2 ====
+PLANE_CHILD (Datum Planes without Children)
+
+==== Body ====
+Reports any datum planes in the model, other than default planes, with no children. In the start part list in the start configuration file, you can specify a list of required standard datum planes for a model. The PLANE_CHILD check does not check these standard datum planes.
+If any childless datum planes are found, you can highlight the features in question in the Creo Parametric window.
+Creo ModelCHECK cannot highlight items on blanked layers.
+You can also access the Global Reference Viewer from the Creo ModelCHECK report to view all references to and from the reported features.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+W
+E
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/plane_parent.html...
+----------------------------------------
+==== Heading_2 ====
+PLANE_PARENT (Datum Planes That Only Have One Parent)
+
+==== Body ====
+Reports the datum planes in the model that were created through other datum planes. If any are found, you can highlight the features in question in the Creo Parametric window. Creo ModelCHECK cannot highlight features on blanked layers.
+You can also access the Global Reference Viewer from the Creo ModelCHECK report to view all references to and from the reported features.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+W
+E
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/pro_version.html...
+----------------------------------------
+==== Heading_2 ====
+PRO_VERSION (Version of Creo Parametric)
+
+==== Body ====
+Reports the version of Creo Parametric that the model was last saved in. The following start configuration options are available:
+
+==== List_1 ====
+• PRT_PRO_VERSION
+• ASM_PRO_VERSION
+• DRW_PRO_VERSION
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+W
+W
+W
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/rc_incompleted.html...
+----------------------------------------
+==== Heading_2 ====
+RC_INCOMPLETED (RuleCHECK Rules That Are Not Complete)
+
+==== Body ====
+Checks to see if any RuleCHECK rules have been attached to the model. If so, it reports any rules in a pending or override state.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/reg_features.html...
+----------------------------------------
+==== Heading_2 ====
+REG_FEATURES (Resumed Features)
+
+==== Body ====
+Reports the number of features in the model that are resumed (not suppressed).
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N
+
+==== Table_Cell ====
+Y
+Y
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/regen_dims.html...
+----------------------------------------
+==== Heading_2 ====
+REGEN_DIMS (Dimensions That Cannot Regenerate)
+
+==== Body ====
+Reports any dimensions in the drawing that cannot be regenerated. This problem occurs if a dimension loses one of the entities it references. The entity may have been redefined or deleted. (only applies to ModelCHECK Regenerate).
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+E
+E
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/regen_errs.html...
+----------------------------------------
+==== Heading_2 ====
+REGEN_ERRS (Regeneration Errors)
+
+==== Body ====
+Reports any errors when a model is fully regenerated. These are typically problems that are reported in the Creo Parametric message window when a model is regenerated.
+The mc_regen.mcr configuration file is used to specify the messages to search for and to determine whether a message is an error or a warning message.
+Because this check can take considerable time, you run it with the ModelCHECK Regenerate command or in Batch mode.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/regen_sreps.html...
+----------------------------------------
+==== Heading_2 ====
+REGEN_SREPS (Regenerate Simplified Representations)
+
+==== Body ====
+Reports an error when you cannot fully regenerate simplified representations in the model. This check can take considerable time. Run it with the ModelCHECK Regenerate command or use the Batch mode.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/regen_wrns.html...
+----------------------------------------
+==== Heading_2 ====
+REGEN_WRNS (Regeneration Warnings)
+
+==== Body ====
+Reports any warnings when a model is fully regenerated. These are typically problems that are reported in the Creo Parametric message window when a model is regenerated.
+The mc_regen.mcr configuration file is used to specify the messages to search for and to determine whether a message is an error or a warning message.
+Because this check can take considerable time, you run it with the ModelCHECK Regenerate command or in Batch mode.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/regen_xsec.html...
+----------------------------------------
+==== Heading_2 ====
+REGEN_XSEC (Regenerate Cross-Sections)
+
+==== Body ====
+Reports an error when you cannot fully regenerate cross-sections in the model. This check can take considerable time. Run it with the ModelCHECK Regenerate command or use the Batch mode.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/rel_unwanted.html...
+----------------------------------------
+==== Heading_2 ====
+REL_UNWANTED (Unwanted Relations)
+
+==== Body ====
+Checks and removes unwanted relations in the model. Unwanted relations are specified in the start configuration file using the PRT_REL_UNWANTED and ASM_REL_UNWANTED start configuration options.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/relation_comm.html...
+----------------------------------------
+==== Heading_2 ====
+RELATION_COMM (Comments in Relations)
+
+==== Body ====
+Checks that every relation has at least one comment line.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+W
+W
+N
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/relation_errs.html...
+----------------------------------------
+==== Heading_2 ====
+RELATION_ERRS (Relation Errors)
+
+==== Body ====
+Checks for errors in the model’s relations and reports the relation lines containing errors.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+E
+E
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/relation_info.html...
+----------------------------------------
+==== Heading_2 ====
+RELATION_INFO (Relation Information)
+
+==== Body ====
+Reports all the assembly or part relations and their respective comments.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+Y
+Y
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/relation_miss.html...
+----------------------------------------
+==== Heading_2 ====
+RELATION_MISS (Relations That Are Missing)
+
+==== Body ====
+Checks for standard relations and their comments in parts and assemblies with those listed in the Creo ModelCHECK configuration files. Standard relations and comments are listed in the configuration files using the PRT_COMMENT, PRT_RELATION, ASM_COMMENT and ASM_RELATION start configuration options.
+If the ModelUPDATE mode is enabled, the RELATION_MISS check automatically adds any missing standard relations and their comments from the configuration files to the parts and assemblies.
+When using the RELATION_MISS check, Creo ModelCHECK supports Multi-line Relation blocks for the model such as:
+An example of conditional relational block is as follows:
+Multi-line Relations are listed in the configuration files using PRT_RELATION and ASM_RELATION start configuration options. You must define each line of Multi-line Relation using a start configuration option. For example:
+Multi-line Relations are saved in *.mct file in the Creo ModelCHECK report directory. These relations follow the same format as the example of conditional relational block shown earlier in this topic.
+
+==== List_1 ====
+• Conditional Relational blocks (IF|ELSE|ENDIF constructs)
+• Nested IF|ELSE|ENDIF blocks
+• SOLVE|FOR blocks
+
+==== Preformatted ====
+Y/N/E/W
+if a==0 b=5 else b=10 endif
+PRT_RELATION if a==0 PRT_RELATION b=5 PRT_RELATION else PRT_RELATION b=10 PRT_RELATION endif
+
+==== Table_Cell ====
+W
+W
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/relation_mult.html...
+----------------------------------------
+==== Heading_2 ====
+RELATION_MULT (Relations That Have Multiple Assignments)
+
+==== Body ====
+Checks that no dimensions and parameters have been assigned multiple times in the relations file.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/relation_update.html...
+----------------------------------------
+==== Heading_2 ====
+RELATION_UPDATE (Relations That Need Update)
+
+==== Body ====
+Checks for relations in the model that need to be updated. Relations are defined using the RELATION_UPDATE_FILE configuration option in the start configuration file.
+If the ModelUPDATE mode is enabled, this check automatically updates relations that need to be updated in the model.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/renamed_symbols.html...
+----------------------------------------
+==== Heading_2 ====
+RENAMED_SYMBOLS (Renamed Dimension Symbols)
+
+==== Body ====
+Lists the names of the part dimension symbols that have been renamed.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N
+
+==== Table_Cell ====
+Y
+N
+Y
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/round_child.html...
+----------------------------------------
+==== Heading_2 ====
+ROUND_CHILD (Children of Rounds)
+
+==== Body ====
+Lists the features that are children of rounds. If any are found, they can be highlighted in the Creo Parametric window.
+You can also access the Global Reference Viewer from the Creo ModelCHECK report to view all references to and from the reported features.
+This check ignores children of other rounds, because this is not considered poor modeling.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+E
+E
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/rulecheck_info.html...
+----------------------------------------
+==== Heading_2 ====
+RULECHECK_INFO (RuleCHECK Information)
+
+==== Body ====
+Runs RuleCHECK when Creo ModelCHECK runs and provides a link to the RuleCHECK report.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+Y
+Y
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/search_dup_models.html...
+----------------------------------------
+==== Heading_2 ====
+SEARCH_DUP_MODELS (Search for Duplicate Models)
+
+==== Body ====
+Provides a Search for duplicate models in the active Windchill server registered in Creo Parametric from the Creo ModelCHECK report. Click Search to search the server for duplicate models and their details.
+You can specify the tolerance percentage for the shape attributes using options in the constant configuration file (MCSI1_TOL through MCSI5_TOL). Only those models with all the attributes within the tolerance range are considered as duplicate models and are reported.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+W
+W
+W
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/sharp_edges.html...
+----------------------------------------
+==== Heading_2 ====
+SHARP_EDGES (Sharp Edges)
+
+==== Body ====
+Lists the sharp edges in the model. Sharp edges are defined by a specified angle between the two surfaces that intersect at the edge. The angle is set using the SHARP_ANGLE constant configuration option. If any are found, the features in question can be highlighted in the Creo Parametric window.
+You can also access the Global Reference Viewer from the Creo ModelCHECK report to view all references to and from the reported features.
+This check takes a relatively long time. If you are concerned about speed, turn it off.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/sheet_size_info.html...
+----------------------------------------
+==== Heading_2 ====
+SHEET_SIZE_INFO (Sheet Size Information)
+
+==== Body ====
+Lists the number of sheets in the drawing and their respective sizes.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+Y
+Y
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/shtmtl_bendtab.html...
+----------------------------------------
+==== Heading_2 ====
+SHTMTL_BENDTAB (Sheet Metal Bend Tables)
+
+==== Body ====
+Checks that the bend table used for a sheet metal part and body comes from a standard list. Standard bend tables are defined using the SHTMTL_BTNAME configuration option in the start configuration file.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N
+
+==== Table_Cell ====
+Y
+Y
+Y
+Y
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/shtmtl_fbendtab.html...
+----------------------------------------
+==== Heading_2 ====
+SHTMTL_FBENDTAB (Features with Assigned Sheet Metal Bend Tables)
+
+==== Body ====
+Specifies the number of features in the model with sheet metal bend table.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N
+
+==== Table_Cell ====
+Y
+Y
+Y
+Y
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/shtmtl_flat.html...
+----------------------------------------
+==== Heading_2 ====
+SHTMTL_FLAT (Sheet Metal Flat Patterns or Flat States)
+
+==== Body ====
+Reports the bodies missing the flat patterns or flat states.
+A flat state is a completely unbent copy of the sheet metal body. It streamlines the creation of flat patterns needed in manufacturing. You can create any number of flat states, at any time in your design process, whether your part is fully formed or fully flat. Flat states are managed with family tables.
+A flat pattern is a feature that shows the body in its flat state. It is always positioned as the last feature. When new features are added, the flat pattern automatically moves to the end of the feature list. Flat patterns allow you to start working on drawings before the sheet metal part is finished.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+W
+W
+Y
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/shtmtl_thick.html...
+----------------------------------------
+==== Heading_2 ====
+SHTMTL_THICK (Standard Sheet Metal Wall Thicknesses)
+
+==== Body ====
+Reports whether sheet metal parts or bodies have not been modeled using the standard wall thickness.
+Standard wall thicknesses are listed in a text file specified by the STD_SHTMTL_THICK_FILE start configuration option.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+E
+E
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/shtmtl_unbends.html...
+----------------------------------------
+==== Heading_2 ====
+SHTMTL_UNBENDS (Sheet Metal Unbends)
+
+==== Body ====
+Checks for consecutive unbend and bend-back (or vice versa) features in sheet metal parts. If any are found, delete these redundant features.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+W
+W
+W
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/shtmtl_kfactor.html...
+----------------------------------------
+==== Heading_2 ====
+SHTMTL_KFACTOR (Sheet Metal K-Factor)
+
+==== Body ====
+Reports the sheet metal K-Factor used for sheet metal parts and bodies.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N
+
+==== Table_Cell ====
+Y
+Y
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/shtmtl_yfactor.html...
+----------------------------------------
+==== Heading_2 ====
+SHTMTL_YFACTOR (Sheet Metal Y-Factor)
+
+==== Body ====
+Reports the sheet metal Y-Factor used for sheet metal parts and bodies.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N
+
+==== Table_Cell ====
+Y
+Y
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/simprep_info.html...
+----------------------------------------
+==== Heading_2 ====
+SIMPREP_INFO (Simplified Representations)
+
+==== Body ====
+Reports whether any simplified representations associated with the model exist.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N
+
+==== Table_Cell ====
+Y
+Y
+Y
+Y
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/simprep_master.html...
+----------------------------------------
+==== Heading_2 ====
+SIMPREP_MASTER (Simprep Master)
+
+==== Body ====
+Reports an error that ModelCHECK was run on the simplified representations and not on the master representations.
+
+==== List_1 ====
+
+==== Preformatted ====
+
+==== Table_Cell ====
+W
+W
+N
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/simprep_name.html...
+----------------------------------------
+==== Heading_2 ====
+SIMPREP_NAME (Simplified Representation Names)
+
+==== Body ====
+Checks that the name of simplified representations follows the standard naming convention defined by the PRT_SIMPREP_NAME and ASM_SIMPREP_NAME start configuration options.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+W
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/sketch_items.html...
+----------------------------------------
+==== Heading_2 ====
+SKETCH_ITEMS (Number of Entities in a Sketched Feature)
+
+==== Body ====
+Counts the number of geometric entities (lines, arcs, points) in a sketched feature and verifies that the number is less than a maximum value. Dimensions are not counted as entities. The maximum value can be defined with the MAX_SKETCH_ITEMS constant configuration option.
+If the number of entities in a feature exceeds the maximum value, the feature is reported and you can highlight it in the Creo Parametric window.
+You can also access the Global Reference Viewer from the Creo ModelCHECK report to view all references to and from the reported features.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+N
+N
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/sla_info.html...
+----------------------------------------
+==== Heading_2 ====
+SLA_INFO (SLA Information)
+
+==== Body ====
+Reports whether it is possible to generate an SLA output file of the model. This check takes a relatively long time. If you are concerned about speed, turn it off.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+W
+W
+N
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/small_cylsrf.html...
+----------------------------------------
+==== Heading_2 ====
+SMALL_CYLSRF (Small Cylindrical Surfaces)
+
+==== Body ====
+Lists the features that have cylindrical surfaces (such as rounds and holes) and small radii. You can define the minimum radius with the SMALL_RADIUS constant configuration option. If any are found, the features in question can be highlighted in the Creo Parametric window.
+You can also access the Global Reference Viewer from the Creo ModelCHECK report to view all references to and from the reported features.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+E
+E
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/so21_dist_vert_edge.html...
+----------------------------------------
+==== Heading_2 ====
+SO21_DIST_VERT_EDGE (Distance to Vertex Edge)
+
+==== Body ====
+GeomIntegrityCHECK reports the vertex and the edge in a solid if the distance between the two elements exceeds the tolerance value specified in your configuration file.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/so22_dist_vert_face.html...
+----------------------------------------
+==== Heading_2 ====
+SO22_DIST_VERT_FACE (Distance to Vertex Face)
+
+==== Body ====
+GeomIntegrityCHECK reports the vertex and the face in a solid if the distance between the two elements exceeds the tolerance value specified in your configuration file.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/so23_hist_delete.html...
+----------------------------------------
+==== Heading_2 ====
+SO23_HIST_DELETE (Deletion of History)
+
+==== Body ====
+GeomIntegrityCHECK reports the B-reps in a solid if they have been imported into the existing model.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/so24_extra_geom.html...
+----------------------------------------
+==== Heading_2 ====
+SO24_EXTRA_GEOM (Auxiliary Geometry)
+
+==== Body ====
+GeomIntegrityCHECK reports the solid elements that are hidden from view (for example, cut-off component part areas and dead branches).
+In addition, it reports added material in component part areas that are already filled with material, without altering the component part in any way (for example, addition of a ball or sphere to a rectangular solid).
+GeomIntegrityCHECK also reports geometrical elements that have no logical relationship to the given solid.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/so25_cavities.html...
+----------------------------------------
+==== Heading_2 ====
+SO25_CAVITIES (Cavities)
+
+==== Body ====
+GeomIntegrityCHECK reports solids that are fully contained in another solid and are to be fully subtracted from.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/so26_mult_body.html...
+----------------------------------------
+==== Heading_2 ====
+SO26_MULT_BODY (Multi-Body Solids)
+
+==== Body ====
+GeomIntegrityCHECK reports solids that contain two volumes that do not touch each other. It considers the two volumes to be separate bodies, which is unacceptable in a single solid.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/so27_mult_solid.html...
+----------------------------------------
+==== Heading_2 ====
+SO27_MULT_SOLID (Multi-Solid Parts)
+
+==== Body ====
+In an assembly environment, there is generally only one solid in one part. If there is more than one solid in a model, GeomIntegrityCHECK reports them as separate solids.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/srf_edges.html...
+----------------------------------------
+==== Heading_2 ====
+SRF_EDGES (Surface Gaps and Overlaps)
+
+==== Body ====
+Lists the edges with either gaps or overlaps between the surfaces that meet. If any are found, you can highlight the features in question in the Creo Parametric window.
+You can also access the Global Reference Viewer from the Creo ModelCHECK report to view all references to and from the reported features.
+This check takes a relatively long time. If you are concerned about speed, turn it off.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/srf_not_ref_by_anntn.html...
+----------------------------------------
+==== Heading_2 ====
+SRF_NOT_REF_BY_ANNTN (Surfaces Not Referenced By Any GTOL or Dimension)
+
+==== Body ====
+Reports the surfaces that are not referenced by any GTOL or dimension.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/E/W
+
+==== Table_Cell ====
+E
+E
+W
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/startcheck.html...
+----------------------------------------
+==== Heading_2 ====
+STARTCHECK (Start Part and Start Assembly Check)
+
+==== Body ====
+Verifies that the items in the start part and start assembly lists are in the model and have been created in the standard order (That is, default datum planes should be features 1, 2, and 3.) Start-part features can be datum planes, coordinate systems, curves, points, views, parameters, or layers.
+If any parameters or layers are missing, Creo ModelCHECK can automatically add them to the model.
+Start-part items are defined in the start configuration file with the following configuration options: PRT_DATUM_PLANE, PRT_DATUM_CSYS, PRT_DATUM_POINT, PRT_DATUM_CURVE, PRT_DATUM_POINT, PRT_VIEW, PRT_PARAMETER and PRT_LAYER.
+Tolerance types are checked as part of the start part. These are specified using the PRT_TOL_TYPE and ASM_TOL_TYPE start configuration options. The allowable types of tolerances are DIN/ISO or ANSI.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+W
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/startlayr.html...
+----------------------------------------
+==== Heading_2 ====
+STARTLAYR
+
+==== Body ====
+Verifies that the standard list of layers exists in the model. This check is automatically enabled when STARTCHECK is enabled.
+If any layers are missing, Creo ModelCHECK reports them as missing and can add them to the model. If the standard feature type for a layer (as specified in the start configuration file) does not exist in the model, Creo ModelCHECK reports the layer as missing.
+If the ModelUPDATE mode is enabled, this check automatically adds missing layers to the model.
+
+==== List_1 ====
+
+==== Preformatted ====
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/startparm.html...
+----------------------------------------
+==== Heading_2 ====
+STARTPARM
+
+==== Body ====
+Verifies that the standard list of parameters exists in the model. This check is automatically enabled when STARTCHECK is enabled.
+If any parameters are missing, Creo ModelCHECK can add them to the model. Creo ModelCHECK allows you to add string, boolean, real, and integer parameters for which values have not been defined in the .mcs start file.
+If the ModelUPDATE mode is enabled, this check automatically adds those missing parameters to the model that do not require manual interaction such as typing or selection.
+
+==== List_1 ====
+
+==== Preformatted ====
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/std_dtl_setup.html...
+----------------------------------------
+==== Heading_2 ====
+STD_DTL_SETUP (Drawing Detail File)
+
+==== Body ====
+Compares the current detail settings to a standard drawing detail file on disk. If any differences are found, Creo ModelCHECK can reset the detail settings to the values listed in the standard drawing detail file.
+Different standard drawing detail files can be specified for different formats using the STD_DRW_DTL_FILE start configuration option.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+W
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/std_notes_missing.html...
+----------------------------------------
+==== Heading_2 ====
+STD_NOTES_MISSING (Missing Standard Notes)
+
+==== Body ====
+Verifies that all standard model notes exist in the model and reports the number of missing notes. You can define the standard notes in the start configuration file using the PRT_STD_NOTE and ASM_STD_NOTE start configuration options.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+Y
+Y
+Y
+Y
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/std_symbols.html...
+----------------------------------------
+==== Heading_2 ====
+STD_SYMBOLS (Standard Drawing Symbols)
+
+==== Body ====
+Lists drawing symbols that are not found in the specified list of standard symbols. Standard drawing symbols are defined using the DRW_SYMBOL configuration option in the start configuration file.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+W
+W
+W
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/su10_bound_angle.html...
+----------------------------------------
+==== Heading_2 ====
+SU10_BOUND_ANGLE (Angle Between Edge Curves)
+
+==== Body ====
+GeomIntegrityCHECK checks whether the angle between the boundary curves of naturally bounded surfaces lies within the critical range around 0° or 180° or not. It measures the angles between the tangents of neighboring boundary curves and compares them with the specified configuration value.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/su11_norm_reversal.html...
+----------------------------------------
+==== Heading_2 ====
+SU11_NORM_REVERSAL (Reversal of Normals)
+
+==== Body ====
+GeomIntegrityCHECK reports the ranges of naturally bounded surfaces in which it finds a significant local change in the difference of the normal angle.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/su12_patch_dist.html...
+----------------------------------------
+==== Heading_2 ====
+SU12_PATCH_DIST (Patch Distribution)
+
+==== Body ====
+GeomIntegrityCHECK reports the surfaces on which the number of patches exceeds the number specified in your configuration file.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/su13_unoc_patch_row.html...
+----------------------------------------
+==== Heading_2 ====
+SU13_UNOC_PATCH_ROW (Unoccupied Patch Rows)
+
+==== Body ====
+GeomIntegrityCHECK reports the surfaces with unoccupied patch rows. That is, GeomIntegrityCHECK reports the patch rows on every outside boundary curve of a bounded surface with boundary curves.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/su8_tiny_seg_edge.html...
+----------------------------------------
+==== Heading_2 ====
+SU8_TINY_SEG_EDGE (Tiny Segment Edge)
+
+==== Body ====
+GeomIntegrityCHECK reports the faces and face patches whose extents are smaller in one parameter direction than specified in your configuration file.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/su9_tiny_curv_rad.html...
+----------------------------------------
+==== Heading_2 ====
+SU9_TINY_CURV_RAD (Minimum Curvature Radius)
+
+==== Body ====
+GeomIntegrityCHECK reports the ranges of naturally bounded surfaces in which the curvature radius is less than the value in your configuration file. It also reports the places in which the normal to a face is not defined and where no curvature radius can be determined.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/sup_components.html...
+----------------------------------------
+==== Heading_2 ====
+SUP_COMPONENTS (Suppressed Components)
+
+==== Body ====
+Checks for any suppressed components in the assembly.
+You can also access the Global Reference Viewer from the Creo ModelCHECK report to view all references to and from the reported components.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+W
+W
+N
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/sup_features.html...
+----------------------------------------
+==== Heading_2 ====
+SUP_FEATURES (Suppressed Features)
+
+==== Body ====
+Lists the types and IDs of the suppressed features in the model. Any features that are included in family tables or sheet metal flat-pattern features are ignored.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+W
+W
+N
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/symbol_info.html...
+----------------------------------------
+==== Heading_2 ====
+SYMBOL_INFO (Symbol Information)
+
+==== Body ====
+Lists the names of symbols in the drawing.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N
+
+==== Table_Cell ====
+Y
+Y
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/symbol_spell.html...
+----------------------------------------
+==== Heading_2 ====
+SYMBOL_SPELL (Spelling Mistakes in Symbols)
+
+==== Body ====
+Checks drawing symbols for spelling mistakes. This check tests the spelling of the values of the variable text associated with a drawing symbol. It does not check the spelling of the text that is displayed within the symbol. If any spelling errors are found, you can highlight them or highlight and correct them. You can also add the word to the dictionary so that Creo ModelCHECK accepts it as correct.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+W
+E
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/t18_num_face.html...
+----------------------------------------
+==== Heading_2 ====
+T18_NUM_FACE (Junction or Number of Faces Per Edge)
+
+==== Body ====
+GeomIntegrityCHECK checks for topological consistency (that is, the explicitness and the unity of surface groups) and absence of junctions. It reports the location of multiple junctions.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/t19_normal_orient.html...
+----------------------------------------
+==== Heading_2 ====
+T19_NORMAL_ORIENT (Orientation of Similar Normals)
+
+==== Body ====
+GeomIntegrityCHECK checks whether all the normals of neighboring faces in a group have the same orientation. It reports the faces with normals whose orientation differs from the orientation of the majority of normals in the same face.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/t20_knife_edges.html...
+----------------------------------------
+==== Heading_2 ====
+T20_KNIFE_EDGES (Knife Edge)
+
+==== Body ====
+GeomIntegrityCHECK reports the faces of composite surfaces whose angle between the tangential planes on a common boundary curve (or parts thereof) shows properties of a minute angle of nearly 0 degrees. At the restart points and fulcrums, GeomIntegrityCHECK calculates the angle between the tangential planes. GeomIntegrityCHECK reports all angles that are around 0 degrees.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/table_cells.html...
+----------------------------------------
+==== Heading_2 ====
+TABLE_CELLS (Table Cells)
+
+==== Body ====
+Verifies that specific table cells contain standard text. Standard table cell text is designated using the DRW_TABLE_CELLS configuration option in the start configuration file.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+W
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/template_datum_planes.html...
+----------------------------------------
+==== Heading_2 ====
+TEMPLATE_DATUM_PLANES (Datum Plane Check Based on Template Files)
+
+==== Body ====
+This check ensures that the orientation of the datum planes that are defined in the model are checked with reference to the standard datum planes defined in the start part and start assembly templates. You can use the following start part and start assembly templates in the .mcs start configuration file:
+You can type the values in a text editor or use the Link to Template File start configuration option in the ModelCheck Configuration Tool to update the start configuration file.
+When you run the TEMPLATE_DATUM_PLANES check, the Creo ModelCHECK report displays a list of datum planes with incorrect orientation. Click the Highlight button to highlight the incorrectly oriented datum planes in the model.
+
+==== List_1 ====
+• PRT_TEMPLATE part_tmp.prt
+• ASM_TEMPLATE asm_temp.asm
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+E
+E
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/title_info.html...
+----------------------------------------
+==== Heading_2 ====
+TITLE_INFO (Title Block Information)
+
+==== Body ====
+Reports any entries in the title block that are not driven by model parameters.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+W
+W
+W
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/title_spell.html...
+----------------------------------------
+==== Heading_2 ====
+TITLE_SPELL (Title Block Spelling Errors)
+
+==== Body ====
+Checks the title block for spelling mistakes. If any mistakes are found, you can highlight them or highlight and correct them. You can also add the word to the dictionary so that Creo ModelCHECK accepts it as correct.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+N
+E
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/udf_info.html...
+----------------------------------------
+==== Heading_2 ====
+UDF_INFO (UDF Information)
+
+==== Body ====
+Lists the UDFs found in the model and the groups to which they belong.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N
+
+==== Table_Cell ====
+Y
+Y
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/units_length.html...
+----------------------------------------
+==== Heading_2 ====
+UNITS_LENGTH (Length Units)
+
+==== Body ====
+Checks that the length units are from a standard list of acceptable units. Standard length unit types are designated in the start configuration file using the PRT_UNITS_LENGTH and ASM_UNITS_LENGTH configuration options.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+W
+W
+W
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/units_mass.html...
+----------------------------------------
+==== Heading_2 ====
+UNITS_MASS (Mass Units)
+
+==== Body ====
+Checks that the mass units are from a standard list of acceptable units. Standard mass unit types are designated in the start configuration file using the PRT_UNITS_MASS and ASM_UNITS_MASS configuration options.
+Mass types are case sensitive. Units must be properly defined using the following key words:
+
+==== List_1 ====
+• KILOGRAM
+• POUND
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+W
+W
+Y
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/unq_components.html...
+----------------------------------------
+==== Heading_2 ====
+UNQ_COMPONENTS (Unique Components)
+
+==== Body ====
+Reports the number of unique components in an assembly.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N
+
+==== Table_Cell ====
+Y
+Y
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/unused_models.html...
+----------------------------------------
+==== Heading_2 ====
+UNUSED_MODELS (Unused Models in Drawings)
+
+==== Body ====
+Checks for any models added to the drawing that have not been used in a view. If any are found, you can delete them from the drawing.
+If the ModelUPDATE mode is enabled, this check automatically deletes models that have not been used in a view from the drawing.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+N
+E
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/unused_sheets.html...
+----------------------------------------
+==== Heading_2 ====
+UNUSED_SHEETS (Empty Sheets)
+
+==== Body ====
+Checks for empty sheets in the drawing. If any are found, you can delete them from the drawing.
+If the ModelUPDATE mode is enabled, this check automatically deletes empty sheets from the drawing.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+N
+E
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/validate_dimensions.html...
+----------------------------------------
+==== Heading_2 ====
+VALIDATE_DIMENSIONS
+
+==== Body ====
+Some dimension values are incorrectly displayed in the model. Their value does not correspond to the actual nominal value. To display such dimensions with correct values, you must regenerate the models. The VALIDATE_DIMENSIONS check lists such dimension values.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+E
+E
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/validate_gtol_values.html...
+----------------------------------------
+==== Heading_2 ====
+VALIDATE_GTOL_VALUES (Validate Tolerance Values)
+
+==== Body ====
+Reports an error if the tolerancevalue of a GTOL is inconsistent with the tolerance value displayed in the Parameters dialog box.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+E
+E
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/validate_set_datum_and_sdta.html...
+----------------------------------------
+==== Heading_2 ====
+VALIDATE_SET_DATUM_AND_SDTA (Validate legacy Set datum and Set Datum Tag Annotation)
+
+==== Body ====
+Reports an error when model set datum or set datum tag annotation, or both, requires conversion to Datum Feature Symbol.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+E
+E
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/view_info.html...
+----------------------------------------
+==== Heading_2 ====
+VIEW_INFO (View Information)
+
+==== Body ====
+Lists any named views in the model.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N
+
+==== Table_Cell ====
+Y
+Y
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/view_scale.html...
+----------------------------------------
+==== Heading_2 ====
+VIEW_SCALE (Scale Assigned to Views)
+
+==== Body ====
+Checks for views in a drawing that have a scale assigned to them and reports the views that do not. The reported views can be highlighted.
+Suggested Settings
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+W
+W
+N
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/xsec_info.html...
+----------------------------------------
+==== Heading_2 ====
+XSEC_INFO (Cross Section Information)
+
+==== Body ====
+Lists all cross sections in the model.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N
+
+==== Table_Cell ====
+Y
+Y
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/add_config_parm.html...
+----------------------------------------
+==== Heading_2 ====
+ADD_CONFIG_PARM
+
+==== Body ====
+Creates or updates a parameter called MC_CONFIG in all models that are modified and checked. This parameter contains the names of the Creo ModelCHECK configuration files used for a final check of the model.
+
+==== List_1 ====
+
+==== Preformatted ====
+&lt;Y/N/A&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/add_date_parm.html...
+----------------------------------------
+==== Heading_2 ====
+ADD_DATE_PARM
+
+==== Body ====
+Creates or updates a parameter called MODEL_CHECK in the model files of all models that are modified and checked. This parameter contains the date and time when Creo ModelCHECK was last run.
+
+==== List_1 ====
+
+==== Preformatted ====
+&lt;Y/N&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/add_dup_info_auto.html...
+----------------------------------------
+==== Heading_2 ====
+ADD_DUP_INFO_AUTO
+
+==== Body ====
+Configures how duplicate model information is written to the directory specified by the DIR_MC_DUP_WRITE configuration option.
+When information is added to the directory, Creo ModelCHECK searches the directory for models with the same name. If a model with the same name is found, you can overwrite the existing data or cancel the addition.
+
+==== List_1 ====
+• Y—Always adds the model to the database.
+• N—Never adds the model information to the database.
+• A—Always asks the user before adding to or overwriting the existing information.
+• D—Adds the model information but does not overwrite the existing information.
+
+==== Preformatted ====
+&lt;Y/N/A/D&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/add_err_parm.html...
+----------------------------------------
+==== Heading_2 ====
+ADD_ERR_PARM
+
+==== Body ====
+Creates or updates a parameter called MC_ERRORS in all models that are modified and checked. This parameter contains the number of errors found in the model when Creo ModelCHECK was last run.
+
+==== List_1 ====
+
+==== Preformatted ====
+&lt;Y/N&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/add_mode_parm.html...
+----------------------------------------
+==== Heading_2 ====
+ADD_MODE_PARM
+
+==== Body ====
+Creates or updates a parameter called MC_MODE in all models that are modified and checked. This parameter contains the mode in which Creo ModelCHECK was run on the model.
+
+==== List_1 ====
+
+==== Preformatted ====
+&lt;Y/N/A&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/add_mu_stamp.html...
+----------------------------------------
+==== Heading_2 ====
+ADD_MU_STAMP
+
+==== Body ====
+Creates a read-only parameter called MODELUPDATE in the model to indicate the date and time that the model was last updated in the ModelUPDATE mode.
+
+==== List_1 ====
+
+==== Preformatted ====
+&lt;Y/N&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/add_verified_parm.html...
+----------------------------------------
+==== Heading_2 ====
+ADD_VERIFIED_PARM
+
+==== Body ====
+&lt;Y/N&gt;
+Creates or updates a parameter called MC_VERIFIED in all models that are modified and checked. This parameter verifies if the models have changed since the last Creo ModelCHECK run. It is set to yes when Creo ModelCHECK is run.
+Any change to the model results in regeneration which resets the value of MC_VERIFIED to no. Every Creo ModelCHECK run is preceded by a regeneration which also resets the value of MC_VERIFIED to no. Hence it may not be advisable to use MC_VERIFIED in the condition.mcc file.
+
+==== List_1 ====
+
+==== Preformatted ====
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/asm_batch_all.html...
+----------------------------------------
+==== Heading_2 ====
+ASM_BATCH_ALL
+
+==== Body ====
+Automatically recourses through all components of an assembly when Creo ModelCHECK is run in Batch mode. Every subassembly and part in the assembly is checked, and a separate report is generated for each of them.
+
+==== List_1 ====
+
+==== Preformatted ====
+&lt;Y/N&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/async_port.html...
+----------------------------------------
+==== Heading_2 ====
+ASYNC_PORT
+
+==== Body ====
+Specifies the communications port between Creo ModelCHECK and Creo Parametric to allow feature highlighting and updating. This port number can be from 1000 to 70000. The default is 3001.
+Creo ModelCHECK opens this port when Creo Parametric is started. This port remains in use for the duration of the session.
+If during startup Creo ModelCHECK detects another process using the default port, it increases the port number by 10 and tries again. Creo ModelCHECK repeats this procedure 5 times before displaying an error message and disabling Java.
+
+==== List_1 ====
+
+==== Preformatted ====
+&lt;integer&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/buried_advanced.html...
+----------------------------------------
+==== Heading_2 ====
+BURIED_ADVANCED
+
+==== Body ====
+
+==== List_1 ====
+• Y—Conducts a computation-intensive analysis of the model to confirm whether the features reported by the BURIED_FEAT check are actually buried features.
+• N—Uses only the BURIED_FEAT check to check for buried features.
+
+==== Preformatted ====
+&lt;Y/N&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/check_all_models.html...
+----------------------------------------
+==== Heading_2 ====
+CHECK_ALL_MODELS
+
+==== Body ====
+Specifies whether Creo ModelCHECK must check all the models of an assembly irrespective of whether the models have been changed after they were retrieved or the value of the MC_ERRORS parameter.
+
+==== List_1 ====
+• Y—Always checks all models ignoring the setting of the SKIP_MODELS configuration option.
+• N—Checks models according to the setting of the SKIP_MODELS configuration option.
+
+==== Preformatted ====
+&lt;Y/N&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/cnfg_select_auto.html...
+----------------------------------------
+==== Heading_2 ====
+CNFG_SELECT_AUTO
+
+==== Body ====
+Configures whether Creo ModelCHECK loads the configuration files automatically based on the rules in the condition.mcc file, or whether you can load the configuration files from the Load Config drop-down list in Creo Parametric (Click File &gt; Options to open the PTC Creo Parametric Options dialog box and then click Environment)
+The N option requires a file called setconf.mcc in the Creo ModelCHECK config directory. This file is used to name and specify the Creo Parametric menu commands for selecting configuration files.
+
+==== List_1 ====
+• Y—Creo ModelCHECK automatically chooses the configuration files.
+• N—Creo ModelCHECK requires you to choose the configuration files.
+• A—Creo ModelCHECK performs neither option Y nor option N automatically. Instead, Creo ModelCHECK prompts you to choose between having Creo ModelCHECK choose the configuration files or prompt you to choose the configuration files on starting Creo Parametric.
+
+==== Preformatted ====
+&lt;Y/N/A&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/density_mdlupdok.html...
+----------------------------------------
+==== Heading_2 ====
+DENSITY_MDLUPDOK
+
+==== Body ====
+Updates the model density if it is not defined.
+
+==== List_1 ====
+• Y— Automatically updates the density of the model, to the default density, if you have not defined the density.
+• N— Choose an appropriate option to update the density of a model if you have not defined the density.
+
+==== Preformatted ====
+&lt;Y/N&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/designate_mu_stamp.html...
+----------------------------------------
+==== Heading_2 ====
+DESIGNATE_MU_STAMP
+
+==== Body ====
+Designates the MODELUPDATE parameter which indicates the date and time that the model was last updated in the ModelUPDATE mode for use with a data management system.
+
+==== List_1 ====
+
+==== Preformatted ====
+&lt;Y/N&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/detail_userparam.html...
+----------------------------------------
+==== Heading_2 ====
+DETAIL_USERPARAM
+
+==== Body ====
+Set this option to the name of a user defined parameter. The value of this parameter will be displayed in the detailed Modelcheck report files in the mc_reports directory with the file extensions .dsumm.html and .dsumm.xml.
+The initialization option HTML_FILE_OUTPUT must be set to Y for the reports to be generated.
+
+==== List_1 ====
+
+==== Preformatted ====
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/dir_mc_backup_config.html...
+----------------------------------------
+==== Heading_2 ====
+DIR_MC_BACKUP_CONFIG
+
+==== Body ====
+Specifies the path to a directory in which earlier versions of the Creo ModelCHECK configuration files are stored. The format for the file names is &lt;filenamedatetime&gt;. For example, default_checks.mch200502111943, where the date is in the yyyymmdd format and the time is in the hhmm format.
+
+==== List_1 ====
+
+==== Preformatted ====
+&lt;directory path&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/dir_mc_backup_config_nt.html...
+----------------------------------------
+==== Heading_2 ====
+DIR_MC_BACKUP_CONFIG_NT
+
+==== Body ====
+Specifies the path on Windows NT to a directory in which earlier versions of the Creo ModelCHECK configuration files are stored. If this option is not set, the DIR_MC_BACKUP_CONFIG configuration option is used.
+
+==== List_1 ====
+
+==== Preformatted ====
+&lt;directory path&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/dir_mc_backup_config_u.html...
+----------------------------------------
+==== Heading_2 ====
+DIR_MC_BACKUP_CONFIG_U
+
+==== Body ====
+Specifies the path on UNIX to a directory in which earlier versions of the Creo ModelCHECK configuration files are stored. If this option is not set, the DIR_MC_BACKUP_CONFIG configuration option is used.
+
+==== List_1 ====
+
+==== Preformatted ====
+&lt;directory path&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/dir_mc_dup_read.html...
+----------------------------------------
+==== Heading_2 ====
+DIR_MC_DUP_READ
+
+==== Body ====
+Specifies the path to a directory from which duplicate model information is read. Creo ModelCHECK reads a file called mc_dup_model.bin from this location. The directory specified by the DIR_MC_DUP_READ configuration option should be a common directory for all users.
+Reuse this option up to 50 times to specify more than one location to read from. Use a new line for every location.
+
+==== List_1 ====
+
+==== Preformatted ====
+&lt;directory path&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/dir_mc_dup_read_nt.html...
+----------------------------------------
+==== Heading_2 ====
+DIR_MC_DUP_READ_NT
+
+==== Body ====
+Specifies the path on Windows NT to a directory from which duplicate model information is read. If this option is not set, the DIR_MC_DUP_READ configuration option is used.
+
+==== List_1 ====
+
+==== Preformatted ====
+&lt;directory path&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/dir_mc_dup_read_u.html...
+----------------------------------------
+==== Heading_2 ====
+DIR_MC_DUP_READ_U
+
+==== Body ====
+Specifies the path on UNIX to a directory from which duplicate model information is read. If this option is not set, the DIR_MC_DUP_READ configuration option is used.
+
+==== List_1 ====
+
+==== Preformatted ====
+&lt;directory path&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/dir_mc_dup_write.html...
+----------------------------------------
+==== Heading_2 ====
+DIR_MC_DUP_WRITE
+
+==== Body ====
+Specifies the path to a directory in which duplicate model information is written. The directory specified by the DIR_MC_DUP_WRITE configuration option should be a central directory for all users.
+Creo ModelCHECK writes a file called mc_dup_model.bin to this location when you exit Creo Parametric.
+
+==== List_1 ====
+
+==== Preformatted ====
+&lt;directory path&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/dir_mc_dup_write_nt.html...
+----------------------------------------
+==== Heading_2 ====
+DIR_MC_DUP_WRITE_NT
+
+==== Body ====
+Specifies the path on Windows NT to a directory in which duplicate model information is written. If this option is not set, the DIR_MC_DUP_WRITE configuration option is used.
+
+==== List_1 ====
+
+==== Preformatted ====
+&lt;directory path&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/dir_mc_dup_write_u.html...
+----------------------------------------
+==== Heading_2 ====
+DIR_MC_DUP_WRITE_U
+
+==== Body ====
+Specifies the path on UNIX to a directory in which duplicate model information is written. If this option is not set, the DIR_MC_DUP_WRITE configuration option is used.
+
+==== List_1 ====
+
+==== Preformatted ====
+&lt;directory path&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/dir_mc_preview.html...
+----------------------------------------
+==== Heading_2 ====
+DIR_MC_PREVIEW
+
+==== Body ====
+Specifies the path to a directory in which the temporary files created by the preview process are stored. The default path is c:\Temp (Windows NT) or /tmp (UNIX).
+
+==== List_1 ====
+
+==== Preformatted ====
+&lt;directory path&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/dir_mc_preview_nt.html...
+----------------------------------------
+==== Heading_2 ====
+DIR_MC_PREVIEW_NT
+
+==== Body ====
+Specifies the path on Windows NT to a directory in which the temporary files created by the preview process are stored. If this option is not set, the DIR_MC_PREVIEW configuration option is used.
+
+==== List_1 ====
+
+==== Preformatted ====
+&lt;directory path&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/dir_mc_preview_u.html...
+----------------------------------------
+==== Heading_2 ====
+DIR_MC_PREVIEW_U
+
+==== Body ====
+Specifies the path on UNIX to a directory in which the temporary files created by the preview process are stored. If this option is not set, the DIR_MC_PREVIEW configuration option is used.
+
+==== List_1 ====
+
+==== Preformatted ====
+&lt;directory path&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/dir_metrics.html...
+----------------------------------------
+==== Heading_2 ====
+DIR_METRICS
+
+==== Body ====
+Specifies the path to a directory in which metrics flat files are written. The directory specified by the DIR_METRICS configuration option should be a common directory for all users, for easy compilation and management of the flat files.
+For performance reasons, the flat file is initially written to the directory specified by the DIR_REPORT configuration option and is moved to the directory specified by the DIR_METRICS configuration option when you exit Creo Parametric.
+
+==== List_1 ====
+
+==== Preformatted ====
+&lt;directory path&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/dir_metrics_nt.html...
+----------------------------------------
+==== Heading_2 ====
+DIR_METRICS_NT
+
+==== Body ====
+Specifies the path on Windows NT to a directory in which metrics flat files are written. If this option is not set, the DIR_METRICS configuration option is used.
+
+==== List_1 ====
+
+==== Preformatted ====
+&lt;directory path&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/dir_metrics_u.html...
+----------------------------------------
+==== Heading_2 ====
+DIR_METRICS_U
+
+==== Body ====
+Specifies the path on UNIX to a directory in which metrics flat files are written. If this option is not set, the DIR_METRICS configuration option is used.
+
+==== List_1 ====
+
+==== Preformatted ====
+&lt;directory path&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/dir_report.html...
+----------------------------------------
+==== Heading_2 ====
+DIR_REPORT
+
+==== Body ====
+Specifies the path to a directory in which Creo ModelCHECK , including ModelUPDATE, reports are to be written. If the specified directory does not exist or is specified incorrectly, reports are placed in the directory from which Creo Parametric was started.
+If Creo ModelCHECK is running on a server and is used by many clients, it is suggested that each user have his or her own report directory. To do this, create a directory called mc_reports as a subdirectory of your home directory. Then set the DIR_REPORT configuration option to $HOME/mc_reports.
+To optimize Creo ModelCHECK for speed, place the directory specified by the DIR_REPORT configuration option on your machine.
+The reports generated in the ModelUPDATE mode have mu as a part of the filename.
+
+==== List_1 ====
+
+==== Preformatted ====
+&lt;directory path&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/dir_report_nt.html...
+----------------------------------------
+==== Heading_2 ====
+DIR_REPORT_NT
+
+==== Body ====
+Specifies the path on Windows NT to a directory in which Creo ModelCHECK, including ModelUPDATE, reports are to be written. If this option is not set, the DIR_REPORT configuration option is used.
+
+==== List_1 ====
+
+==== Preformatted ====
+&lt;directory path&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/dir_report_u.html...
+----------------------------------------
+==== Heading_2 ====
+DIR_REPORT_U
+
+==== Body ====
+Specifies the path on UNIX to a directory in which Creo ModelCHECK, including ModelUPDATE, reports are to be written. On a UNIX system, you can specify the /tmp directory to write the report files to, so that the directory is cleaned each time the machine is rebooted.
+If this option is not set, the DIR_REPORT configuration option is used.
+
+==== List_1 ====
+
+==== Preformatted ====
+&lt;directory path&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/drw_sheet_all.html...
+----------------------------------------
+==== Heading_2 ====
+DRW_SHEET_ALL
+
+==== Body ====
+Runs Creo ModelCHECK on drawings with multiple sheets.
+
+==== List_1 ====
+• Y
+• A
+• N
+
+==== Preformatted ====
+&lt;Y/N/A&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/force_update_mc_params_all.html...
+----------------------------------------
+==== Heading_2 ====
+FORCE_UPDATE_MC_PARAMS_ALL
+
+==== Body ====
+Specifies whether Creo ModelCHECK updates ModelCHECK parameters, regardless of any configuration or condition.
+
+==== List_1 ====
+• Y—Updates ModelCHECK parameter in the model.
+• N—This is the default. Checks conditions and configurations for updating the parameters.
+
+==== Preformatted ====
+&lt;N/Y&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/html_file_output.html...
+----------------------------------------
+==== Heading_2 ====
+HTML_FILE_OUTPUT
+
+==== Body ====
+Creates HTML-based summary reports and writes them to the directory specified by the DIR_REPORT configuration option.
+
+==== List_1 ====
+• Set this configuration option for each operating mode.
+• If the DETAIL_USERPARAM option in config_init.mc is set to a valid parameter, the parameter value is displayed in the HTML based summary report.
+
+==== Preformatted ====
+&lt;Y/N&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/html_file_output_repxsl.html...
+----------------------------------------
+==== Heading_2 ====
+HTML_FILE_OUTPUT_REPXSL
+
+==== Body ====
+Specifies the path to the XSL file.
+
+==== List_1 ====
+
+==== Preformatted ====
+&lt;path&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/html_max_days.html...
+----------------------------------------
+==== Heading_2 ====
+HTML_MAX_DAYS
+
+==== Body ====
+Specifies the maximum number of days that Creo ModelCHECK reports are kept.
+When you start Creo Parametric and Creo ModelCHECK is initialized, the directory specified by the DIR_REPORT configuration option is scanned for reports that are older than the specified number of days. If any are found, they are deleted.
+If the HTML_MAX_DAYS configuration option is not specified, the purge is not done.
+
+==== List_1 ====
+
+==== Preformatted ====
+&lt;Integer&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/mc_authorization_file.html...
+----------------------------------------
+==== Heading_2 ====
+MC_AUTHORIZATION_FILE
+
+==== Body ====
+Specifies whether an external text file (external_access.txt) is used to control access to the Creo ModelCHECK configuration files.
+
+==== List_1 ====
+
+==== Preformatted ====
+&lt;Y/N&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/mc_buried_feat_ignore_merge_feat.html...
+----------------------------------------
+==== Heading_2 ====
+MC_BURIED_FEAT_IGNORE_MERGE_FEAT
+
+==== Body ====
+Specifies whether to report the buried merged feature for the BURIED_FEAT check.
+
+==== List_1 ====
+• N—This is the default. Reports the buried merged features. If buried merged features are found, they are reported for the BURIED_FEAT check.
+• Y—Does not report the buried merged features. Even if buried merged features are found, they are not reported for the BURIED_FEAT check.
+
+==== Preformatted ====
+&lt;Y/N&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/mc_buried_ignorefwall.html...
+----------------------------------------
+==== Heading_2 ====
+MC_BURIED_IGNOREFWALL
+
+==== Body ====
+
+==== List_1 ====
+• Y—Reports the buried feature before the first wall in a sheetmetal model against the BURIED_FEAT check.
+• N—Ignores any buried feature that exists before the first wall of a sheetmetal model and does not report such features against the BURIED_FEAT check. Buried features are completely enveloped by other features or are enclosed within other features.
+
+==== Preformatted ====
+&lt;Y/N&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/mc_mbd_ignore_driving_dims.html...
+----------------------------------------
+==== Heading_2 ====
+MC_MBD_IGNORE_DRIVING_DIMS
+
+==== Body ====
+Applicable for the following checks:
+
+==== List_1 ====
+• Y—Ignores driving dimensions for the checks.
+• N—This is the default. Report all the dimensions, including driving dimensions.
+• ANNTN_NOT_ON_COMB_STATE
+• ANNTN_ON_MULT_COMB_STATE
+• ANNTN_MISSING_SURF_REF
+• ANNTN_SEM_REF_TEXT_VERIFY
+
+==== Preformatted ====
+&lt;Y/N&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/mc_check_all_level_mbd_anntns.html...
+----------------------------------------
+==== Heading_2 ====
+MC_CHECK_ALL_LEVEL_MBD_ANNTNS
+
+==== Body ====
+Applicable for the following checks:
+
+==== List_1 ====
+• Y—Reports annotations for all the features in the assembly.
+• N—This is the default. Reports annotations only for top level assembly.
+• ANNTN_NOT_ON_COMB_STATE
+• ANNTN_ON_MULT_COMB_STATE
+• ANNTN_MISSING_SURF_REF
+
+==== Preformatted ====
+&lt;Y/N&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/mc_custom_help_path.html...
+----------------------------------------
+==== Heading_2 ====
+MC_CUSTOM_HELP_PATH
+
+==== Body ====
+Specifies the path to the folder that contains customized ModelCHECK Help pages.
+The custom help file names must be in the &lt;check name&gt;.html format. For example, check ACCURACY_INFO file name, must be in ACCURACY_INFO .html format.
+
+==== List_1 ====
+
+==== Preformatted ====
+directory path
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/mc_date_param_gmt_format.html...
+----------------------------------------
+==== Heading_2 ====
+MC_DATE_PARAM_GMT_FORMAT
+
+==== Body ====
+Appends the GMT value of time to the gatekeeper parameter MODEL_CHECK if set to Y and if the configuration option ADD_DATE_PARM is also set to Y. Each time Creo ModelCHECK is run, the parameter MODEL_CHECK is updated with the date and time of the last run. When this option is set to the default value of N the GMT component of MODEL_CHECK is not appended to the value of MODEL_CHECK.
+
+==== List_1 ====
+
+==== Preformatted ====
+&lt;Y/N&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/mc_disable_ignore_in_future.html...
+----------------------------------------
+==== Heading_2 ====
+MC_DISABLE_IGNORE_IN_FUTURE
+
+==== Body ====
+Enables or disables Ignore in Future option in the ModelCheck report.
+
+==== List_1 ====
+• Y—Disable Ignore in Future option in the ModelCheck report.
+• N—This is the default. Enable Ignore in Future option for feature checks in the ModelCheck report.
+
+==== Preformatted ====
+&lt;Y/N&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/mc_dup_search_with_new_iba.html...
+----------------------------------------
+==== Heading_2 ====
+MC_DUP_SEARCH_WITH_NEW_IBA
+
+==== Body ====
+Specifies whether Creo ModelCHECK uses the new set of global attributes in which the string _NEW is appended to the attribute name when searching in the Winchill database for duplicate models.
+
+==== List_1 ====
+
+==== Preformatted ====
+&lt;Y/N&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/mc_dup_search_with_units.html...
+----------------------------------------
+==== Heading_2 ====
+MC_DUP_SEARCH_WITH_UNITS
+
+==== Body ====
+Specifies whether the Creo ModelCHECK searches for duplicate models in the Windchill database, using global attributes for which units are specified.
+
+==== List_1 ====
+
+==== Preformatted ====
+&lt;Y/N&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/mc_enable.html...
+----------------------------------------
+==== Heading_2 ====
+MC_ENABLE
+
+==== Body ====
+
+==== List_1 ====
+• Y—Enables Creo ModelCHECK all the time.
+• N—Disables Creo ModelCHECK.
+• A—Prompts you when Creo Parametric starts whether to enable Creo ModelCHECK or not.
+
+==== Preformatted ====
+&lt;Y/N/A&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/mc_export_xml_xsl_report.html...
+----------------------------------------
+==== Heading_2 ====
+MC_EXPORT_XML_XSL_REPORT
+
+==== Body ====
+The default is Y. Generates a model check report to a formatted XML file. The report is located in the working directory. The report contains a doughnut chart, and error, warning, pass, and information checks. You can view the report in any web browser, except, Internet Explorer.
+
+==== List_1 ====
+
+==== Preformatted ====
+&lt;Y/N&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/mc_get_version_from_meta_data.html...
+----------------------------------------
+==== Heading_2 ====
+MC_GET_VERSION_FROM_META_DATA
+
+==== Body ====
+Specifies whether Creo ModelCHECK gets the details for creating the model from a model file or from the meta data of the model.
+
+==== List_1 ====
+• Y—Gets details for model creation from the meta data for the model.
+• N—This is the default. Gets details for the model creation from the model file.
+
+==== Preformatted ====
+&lt;Y/N&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/mc_inteact_verify_inst_post.html...
+----------------------------------------
+==== Heading_2 ====
+MC_INTEACT_VERIFY_INST_POST
+
+==== Body ====
+The default is N.
+If set to Y, family table instances are checked during ModelCHECK Interactive mode, ModelCHECK parameters are propagated/updated to all instances. After running ModelCHECK, all instance of the current Model gets verified and ModelCHECK parameter gets propagated to all.
+
+==== List_1 ====
+
+==== Preformatted ====
+&lt;Y/N/Y&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/mc_save_xml_report_to_wc.html...
+----------------------------------------
+==== Heading_2 ====
+MC_SAVE_XML_REPORT_TO_WC
+
+==== Body ====
+If you set the MC_SAVE_XML_REPORT_TO_WC configuration option to Y and run ModelCHECK, Model Check report is generated to an XML file. The report is saved in Windchill in the Attachments section. To save this report as a formatted XML file, set the configuration option, MC_EXPORT_XML_XSL_REPORT to Y.
+
+==== List_1 ====
+
+==== Preformatted ====
+&lt;Y/N&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/mc_metrics.html...
+----------------------------------------
+==== Heading_2 ====
+MC_METRICS
+
+==== Body ====
+Specifies whether Creo ModelCHECK must generate metrics files for use in the metrics package.
+
+==== List_1 ====
+
+==== Preformatted ====
+&lt;Y/N&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/mc_search_last_in_cur_dir.html...
+----------------------------------------
+==== Heading_2 ====
+MC_SEARCH_LAST_IN_CUR_DIR
+
+==== Body ====
+
+==== List_1 ====
+• Y—ModelCHECK configuration files are searched last in the current directory.
+• N—This is the default. ModelCHECK configuration files are searched first in the current directory.
+
+==== Preformatted ====
+&lt;Y/N&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/mc_si_principal_mi.html...
+----------------------------------------
+==== Heading_2 ====
+MC_SI_PRINCIPAL_MI
+
+==== Body ====
+Specifies whether Creo ModelCHECK uses the moments of inertia relative to principal axis or to the default coordinate system for shape indexing of models in the Windchill database. The default value is Y and the moments of inertia are relative to the principal axis. When set to N, the moments of inertia that are used for shape indexing, are relative to the default coordinate system of the model.
+
+==== List_1 ====
+
+==== Preformatted ====
+&lt;Y/N&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/mc_skip_check_update.html...
+----------------------------------------
+==== Heading_2 ====
+MC_SKIP_CHECK_UPDATE
+
+==== Body ====
+Skips the auto updates of checks that are enabled for model updates. Skips the checks for model updates in the following stages:
+
+==== List_1 ====
+• Single check — Enter the check in box adjacent to the configuration option.
+• Multiple checks — Perform the following steps to skip multiple checks for model update:
+
+==== Preformatted ====
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/mc_skip_pattern_relation.html...
+----------------------------------------
+==== Heading_2 ====
+MC_SKIP_PATTERN_RELATION
+
+==== Body ====
+Specifies whether to skip relations that are reported by RELATION_MULTcheck and that are owned by a pattern.
+
+==== List_1 ====
+• Y —Processes RELATION_MULT check separately for pattern and model.
+• N—This is the default. Processes relations that are combined of model and pattern for RELATION_MULT check.
+
+==== Preformatted ====
+&lt;N/Y&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/mc_support_legacy_string.html...
+----------------------------------------
+==== Heading_2 ====
+MC_SUPPORT_LEGACY_STRING
+
+==== Body ====
+Specifies whether to convert the ModelCHECK configuration file to Unicode.
+
+==== List_1 ====
+• Y—Converts the ModelCHECK configuration file to Unicode.
+• N—This is the default. Do not convert ModelCHECK configuration file to Unicode. Use this option if you are editing configuration files from ModelCHECK Configuration Tool dialog box or other Unicode compliant editors.
+
+==== Preformatted ====
+&lt;Y/N&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/mc_support_legacy_def_density.html...
+----------------------------------------
+==== Heading_2 ====
+MC_SUPPORT_LEGACY_DEF_DENSITY
+
+==== Body ====
+Specifies whether to report the models or bodies with material not defined and density set to 1.0 for DEF_DENSITY check.
+
+==== List_1 ====
+• Y—Reports models or bodies with material not defined and density set to 1.0 as error.
+• N—This is the default. Does not report models or bodies with no material and material density set as 1.0.
+
+==== Preformatted ====
+&lt;Y/N&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/mc_skip_pattern_relation.html...
+----------------------------------------
+==== Heading_2 ====
+MC_SKIP_PATTERN_RELATION
+
+==== Body ====
+Specifies whether to skip relations that are reported by RELATION_MULTcheck and that are owned by a pattern.
+
+==== List_1 ====
+• Y —Processes RELATION_MULT check separately for pattern and model.
+• N—This is the default. Processes relations that are combined of model and pattern for RELATION_MULT check.
+
+==== Preformatted ====
+&lt;N/Y&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/mc_get_version_from_meta_data.html...
+----------------------------------------
+==== Heading_2 ====
+MC_GET_VERSION_FROM_META_DATA
+
+==== Body ====
+Specifies whether Creo ModelCHECK gets the details for creating the model from a model file or from the meta data of the model.
+
+==== List_1 ====
+• Y—Gets details for model creation from the meta data for the model.
+• N—This is the default. Gets details for the model creation from the model file.
+
+==== Preformatted ====
+&lt;Y/N&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/mc_use_old_regen.html...
+----------------------------------------
+==== Heading_2 ====
+MC_USE_OLD_REGEN
+
+==== Body ====
+
+==== List_1 ====
+• Y—Creo ModelCHECK regenerates the models using the old Pro/ENGINEER regeneration mechanism which is not actively supported. This is the default option.
+• N—Creo ModelCHECK regenerates the models using the standardizedCreo TOOLKIT based regeneration mechanism. This is the new and more reliable mechanism.
+
+==== Preformatted ====
+&lt;Y/N&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/mc_vda_run.html...
+----------------------------------------
+==== Heading_2 ====
+MC_VDA_RUN
+
+==== Body ====
+Runs the GeomIntegrityCHECK utility along with Creo ModelCHECK in all the Creo ModelCHECK operating modes.
+
+==== List_1 ====
+
+==== Preformatted ====
+&lt;Y/N&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/mc_verify_inst_post.html...
+----------------------------------------
+==== Heading_2 ====
+MC_VERIFY_INST_POST
+
+==== Body ====
+If set to Y, family table instances are checked during ModelCHECK Regeneration mode, ModelCHECK parameters are propagated to all instances. The default is N.
+
+==== List_1 ====
+
+==== Preformatted ====
+&lt;Y/N&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/mcregen_verify_ft_insts.html...
+----------------------------------------
+==== Heading_2 ====
+MCREGEN_VERIFY_FT_INSTS
+
+==== Body ====
+Verifies all instances during ModelCHECK Regenerate if the assembly is a generic representative of a family. The default is N.
+
+==== List_1 ====
+
+==== Preformatted ====
+&lt;Y/N&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/mode_run.html...
+----------------------------------------
+==== Heading_2 ====
+MODE_RUN
+
+==== Body ====
+Specifies the operating mode in which Creo ModelCHECK will run. Set to Y to run and to N to turn Creo ModelCHECK off in each mode.
+
+==== List_1 ====
+
+==== Preformatted ====
+&lt;Y/N&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/mode_update.html...
+----------------------------------------
+==== Heading_2 ====
+MODE_UPDATE
+
+==== Body ====
+Sets Creo ModelCHECK to allow updating of wrong items or adding missing items according to the settings in the start configuration file.
+
+==== List_1 ====
+
+==== Preformatted ====
+&lt;Y/N&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/mu_enabled.html...
+----------------------------------------
+==== Heading_2 ====
+MU_ENABLED
+
+==== Body ====
+Enables or disables the ModelUPDATE mode.
+
+==== List_1 ====
+
+==== Preformatted ====
+&lt;Y/N&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/mu_mass_recompute.html...
+----------------------------------------
+==== Heading_2 ====
+MU_MASS_RECOMPUTE
+
+==== Body ====
+Specifies whether to recompute mass property for the model during a model update.
+
+==== List_1 ====
+• Y—This is the default. Computes mass property during the model update that automatically occurs through ModelCHECK.
+• N—Do not compute mass property during the model update that automatically occurs through ModelCHECK.
+
+==== Preformatted ====
+&lt;Y/N&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/mu_regenerate.html...
+----------------------------------------
+==== Heading_2 ====
+MU_REGENERATE
+
+==== Body ====
+Regenerates the model after ModelUPDATE is complete.
+
+==== List_1 ====
+
+==== Preformatted ====
+&lt;Y/N&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/note_case_ignore_mixed_case.html...
+----------------------------------------
+==== Heading_2 ====
+NOTE_CASE_IGNORE_MIXED_CASE
+
+==== Body ====
+Specifies words to be ignored for NOTE_CASE check.
+
+==== List_1 ====
+• Y—Ignores words specified in file IGNORE_NOTE_CASE_FILEoption for NOTE_CASEcheck. This is the default.
+• N—Runs NOTE_CASE check without any restriction.
+
+==== Preformatted ====
+&lt;Y/N&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/num_items_long_list.html...
+----------------------------------------
+==== Heading_2 ====
+NUM_ITEMS_LONG_LIST
+
+==== Body ====
+Specifies the maximum number of items that a list can contain. If the number of items in the list exceeds the limit, Creo ModelCHECK does not display the list in the report and you cannot update any values which refer to the list. The default limit is 100 items.
+
+==== List_1 ====
+
+==== Preformatted ====
+&lt;Integer&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/program.html...
+----------------------------------------
+==== Heading_2 ====
+PROGRAM
+
+==== Body ====
+Specifies the command to start Creo Parametric. This option is used only in Batch mode.
+
+==== List_1 ====
+
+==== Preformatted ====
+&lt;PTC Creo Parametric start command&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/regen_dims_all_sheets.html...
+----------------------------------------
+==== Heading_2 ====
+REGEN_DIMS_ALL_SHEETS (Regenerate all sheets)
+
+==== Body ====
+Used to control the regeneration of drawings in ModelCHECK.
+
+==== List_1 ====
+• Y—Regenerates all the sheets in a drawing when using Creo ModelCHECK in regenerate mode.
+• N—Regenerates only the current sheet in a drawing, when using Creo ModelCHECK in regenerate mode.
+
+==== Preformatted ====
+&lt;Y/N&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/save_mc_pre.html...
+----------------------------------------
+==== Heading_2 ====
+SAVE_MC_PRE
+
+==== Body ====
+
+==== List_1 ====
+• Y—Runs Creo ModelCHECK before a save operation. This option must be set to Y to ensure that the parameters that Creo ModelCHECK writes to the model are saved with it.
+• N—Runs Creo ModelCHECK after the save operation.
+
+==== Preformatted ====
+&lt;Y/N&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/save_mu.html...
+----------------------------------------
+==== Heading_2 ====
+SAVE_MU
+
+==== Body ====
+Saves the models that have been updated in the ModelUPDATE mode.
+
+==== List_1 ====
+
+==== Preformatted ====
+&lt;Y/N&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/show_report.html...
+----------------------------------------
+==== Heading_2 ====
+SHOW_REPORT
+
+==== Body ====
+Configures whether the Creo ModelCHECK report should be displayed in the browser or not. The default is Y.
+
+==== List_1 ====
+
+==== Preformatted ====
+&lt;Y/N&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/skip_models.html...
+----------------------------------------
+==== Heading_2 ====
+SKIP_MODELS
+
+==== Body ====
+Specifies whether Creo ModelCHECK must skip the checking of models that have not changed after they were retrieved.
+
+==== List_1 ====
+• Y—Skips checking the model irrespective of the value of the MC_ERRORS parameter if the model has not changed after retrieval.
+• N—Skips checking the model only if the value of the MC_ERRORS parameter is 0 and the model has not changed after retrieval. This is the default.
+
+==== Preformatted ====
+&lt;Y/N&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/update_inter_asm.html...
+----------------------------------------
+==== Heading_2 ====
+UPDATE_INTER_ASM
+
+==== Body ====
+Updates interchange assemblies in the ModelUPDATE mode.
+
+==== List_1 ====
+
+==== Preformatted ====
+&lt;Y/N&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/update_mc_params.html...
+----------------------------------------
+==== Heading_2 ====
+UPDATE_MC_PARAMS
+
+==== Body ====
+Updates the gatekeeper parameters viz MC_ERRORS, MC_MODE, MODELCHECK, and MC_CONFIG when set to Y. The update takes place whenever the Creo ModelCHECK mode changes, even if there are no changes in the model. This option is set to N by default. When set to N, the gatekeeper parameters are not updated even if there are changes in the model.
+
+==== List_1 ====
+
+==== Preformatted ====
+&lt;Y/N&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/update_sheetmetal.html...
+----------------------------------------
+==== Heading_2 ====
+UPDATE_SHEETMETAL
+
+==== Body ====
+Updates sheet metal parts in the ModelUPDATE mode.
+
+==== List_1 ====
+
+==== Preformatted ====
+&lt;Y/N&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/update_skeleton.html...
+----------------------------------------
+==== Heading_2 ====
+UPDATE_SKELETON
+
+==== Body ====
+Updates skeleton parts in the ModelUPDATE mode.
+
+==== List_1 ====
+
+==== Preformatted ====
+&lt;Y/N&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/wc_dupinfo.html...
+----------------------------------------
+==== Heading_2 ====
+WC_DUPINFO
+
+==== Body ====
+Designates mass property parameters to store the shape information for models in the Windchill database. Creo ModelCHECK uses these parameters to search the Windchill database for duplicate models.
+
+==== List_1 ====
+
+==== Preformatted ====
+&lt;Y/N&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/accuracy_low.html...
+----------------------------------------
+==== Heading_2 ====
+ACCURACY_LOW
+
+==== Body ====
+Defines the minimum acceptable relative accuracy.
+
+==== List_1 ====
+
+==== Preformatted ====
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/accuracy_upp.html...
+----------------------------------------
+==== Heading_2 ====
+ACCURACY_UPP
+
+==== Body ====
+Defines the maximum acceptable relative accuracy.
+
+==== List_1 ====
+
+==== Preformatted ====
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/max_abs_accuracy.html...
+----------------------------------------
+==== Heading_2 ====
+MAX_ABS_ACCURACY
+
+==== Body ====
+Defines the maximum acceptable value for a model’s absolute accuracy. This is only used if the model’s accuracy is set to absolute.
+
+==== List_1 ====
+
+==== Preformatted ====
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/max_draw_sheets.html...
+----------------------------------------
+==== Heading_2 ====
+MAX_DRAW_SHEETS
+
+==== Body ====
+This defines the maximum number of drawing sheets allowed.
+
+==== List_1 ====
+
+==== Preformatted ====
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/max_sketch_items.html...
+----------------------------------------
+==== Heading_2 ====
+MAX_SKETCH_ITEMS
+
+==== Body ====
+Defines the maximum number of entities allowed in a sketched feature.
+
+==== List_1 ====
+
+==== Preformatted ====
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/mcsi1_tol.html...
+----------------------------------------
+==== Heading_2 ====
+MCSI1_TOL
+
+==== Body ====
+Defines the tolerance value, as a percentage, for the volume of a model. Creo ModelCHECK uses this value to search for duplicate models. The largest allowable value is 0.1, that is, 10%.
+
+==== List_1 ====
+
+==== Preformatted ====
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/mcsi2_tol.html...
+----------------------------------------
+==== Heading_2 ====
+MCSI2_TOL
+
+==== Body ====
+Defines the tolerance value, as a percentage, for the surface area of a model. Creo ModelCHECK uses this value to search for duplicate models. The largest allowable value is 0.1, that is, 10%.
+
+==== List_1 ====
+
+==== Preformatted ====
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/min_abs_accuracy.html...
+----------------------------------------
+==== Heading_2 ====
+MIN_ABS_ACCURACY
+
+==== Body ====
+Defines the minimum acceptable value for a model’s absolute accuracy. This option is only used if the model’s accuracy is set to absolute.
+
+==== List_1 ====
+
+==== Preformatted ====
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/min_tolerance.html...
+----------------------------------------
+==== Heading_2 ====
+MIN_TOLERANCE
+
+==== Body ====
+Specifies the maximum allowable dimensional tolerance in a model.
+
+==== List_1 ====
+
+==== Preformatted ====
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/parent_diff_max.html...
+----------------------------------------
+==== Heading_2 ====
+PARENT_DIFF_MAX
+
+==== Body ====
+Defines the maximum number of direct parent features allowed for a feature.
+
+==== List_1 ====
+
+==== Preformatted ====
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/perc_early_chamf.html...
+----------------------------------------
+==== Heading_2 ====
+PERC_EARLY_CHAMF
+
+==== Body ====
+Defines the percentage of all features in a model, starting from the top of the Model Tree, in which chamfers must not be present.
+
+==== List_1 ====
+
+==== Preformatted ====
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/perc_early_cosmetic.html...
+----------------------------------------
+==== Heading_2 ====
+PERC_EARLY_COSMETIC
+
+==== Body ====
+Defines the early cosmetic features as a percentage of all the features in a model.
+
+==== List_1 ====
+
+==== Preformatted ====
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/perc_early_draft.html...
+----------------------------------------
+==== Heading_2 ====
+PERC_EARLY_DRAFT
+
+==== Body ====
+Defines the percentage of all features in a model, starting from the top of the Model Tree, in which draft features must not be present.
+
+==== List_1 ====
+
+==== Preformatted ====
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/perc_early_round.html...
+----------------------------------------
+==== Heading_2 ====
+PERC_EARLY_ROUND
+
+==== Body ====
+Defines the percentage of all features in a model, starting from the top of the Model Tree, in which a round must not be present.
+
+==== List_1 ====
+
+==== Preformatted ====
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/rc_parameter_name.html...
+----------------------------------------
+==== Heading_2 ====
+RC_PARAMETER_NAME
+
+==== Body ====
+Determine the set of rules for RuleCHECK to apply to the model. If this line does not exist in the configuration file, the RC_MODEL_TYPE parameter is used by default.
+
+==== List_1 ====
+
+==== Preformatted ====
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/sharp_angle.html...
+----------------------------------------
+==== Heading_2 ====
+SHARP_ANGLE
+
+==== Body ====
+Defines the minimum angle between two surfaces that are considered sharp.
+
+==== List_1 ====
+
+==== Preformatted ====
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/small_radius.html...
+----------------------------------------
+==== Heading_2 ====
+SMALL_RADIUS
+
+==== Body ====
+Defines the minimum radius of cylindrical surfaces (for rounds, holes, and so on).
+
+==== List_1 ====
+
+==== Preformatted ====
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/BODY_INTF.html...
+----------------------------------------
+==== Heading_2 ====
+BODY_INTF(Interfering Bodies)
+
+==== Body ====
+Reports errors or warnings, if a part contains interfering bodies. The check displays interference between two bodies only. For example, when a part contains three intersecting bodies, the report lists pairs of interfering bodies.
+When you select the interfering bodies in the ModelCheck report, the corresponding interference volume is highlighted in the graphics window.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N
+
+==== Table_Cell ====
+W
+W
+W
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/flexible_modeling.html...
+----------------------------------------
+==== Heading_2 ====
+FLEXIBLE_MODELING_FEATURES (Identify Flexible Modeling Features)
+
+==== Body ====
+Identifies flexible modeling features in a part model.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+Y
+Y
+N
+N
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/mdl_setup.html...
+----------------------------------------
+==== Heading_2 ====
+MDL_STD_DTL_SETUP (Model Detail Setup)
+
+==== Body ====
+Compares the current model settings to a standard model file on disk. If any differences are found, Creo ModelCHECK can reset the model settings to the values listed in the standard model file.
+Different standard model files can be specified for different formats using the STD_MDL_DTL_FILE start configuration option.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+W
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/template_layer.html...
+----------------------------------------
+==== Heading_2 ====
+TEMPLATE_LAYERS (Layer Checks Based on Standard Layers in Template Files)
+
+==== Body ====
+This check ensures that the layers in the drawing, part, or assembly conform to the standard layers defined in the start templates. You can use the following format to specify the names of the start file templates in the start configuration .mcs file:
+You can type the values in a text editor or use the Link to Template File start configuration option in the ModelCheck Configuration Tool to update the start configuration file.
+When you run the TEMPLATE_LAYERS check, the Creo ModelCHECK report displays a list of errors for the layers in the model that do not conform to the layer rules defined in the template files. If you click the Reapply Standard button, the model is corrected and updated based on the standard layer rules defined in the template file.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+E
+E
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/valid_view_scale.html...
+----------------------------------------
+==== Heading_2 ====
+VALIDATE_VIEW_SCALE
+
+==== Body ====
+Reports any view scales in the drawing that are not specified in the view scale list. If any are found, you can highlight the features in question in the Creo Parametric window.
+List of valid view scale are listed in a text file specified by the STD_VIEW_SCALE_FILE start configuration option.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+E
+E
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/WEAK_SKETCHER_DIMS.html...
+----------------------------------------
+==== Heading_2 ====
+WEAK_SKETCHER_DIMS (Weak Sketcher Dimensions)
+
+==== Body ====
+Reports all weak sketcher dimensions. All sketcher dimensions are driving dimensions. When you click the dimension IDs in the ModelCheck report, only those dimensions that are shown using the Show Model Annotations command are highlighted in the model. To show driving dimensions, click Annotate &gt; Show Annotations.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/E/W
+
+==== Table_Cell ====
+W
+W
+W
+W
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/MC_ENABLE_EMPTY_PARAM.html...
+----------------------------------------
+==== Heading_2 ====
+MC_ENABLE_EMPTY_PARAM
+
+==== Body ====
+Allows to add parameter in ModelCHECK report without specifying any value.
+
+==== List_1 ====
+• Y—Allows to add parameter without specifying any value.
+• N—Addition of any parameter without specifying value gives report error.
+
+==== Preformatted ====
+&lt;Y/N/&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/MC_REPORT_CRC_ALL_LEVEL.html...
+----------------------------------------
+==== Heading_2 ====
+MC_REPORT_CRC_ALL_LEVEL
+
+==== Body ====
+Specifies whether to report the circular references for Top level, All Levels, or Sel Components options. These options are available on the Menu Manager when you run ModelCheck. Only applicable in assembly.
+
+==== List_1 ====
+• N—This is the default. Reports all level circular references.
+• Y—Reports circular references depending upon assembly level that you choose from the Menu Manager.
+
+==== Preformatted ====
+&lt;Y/N&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/MC_REGEN_TOP_ASM_ONLY.html...
+----------------------------------------
+==== Heading_2 ====
+MC_REGEN_TOP_ASM_ONLY
+
+==== Body ====
+In ModelCHECK Regeneration mode, specifies whether to regenerate the top level assembly or to force regeneration of all the features of an assembly.
+
+==== List_1 ====
+• Y—Regenerates only the top level assembly. This is the default.
+• N—Forces regeneration of all the features of an assembly.
+
+==== Preformatted ====
+&lt;Y/N&gt;
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/mcsi3_TOL.html...
+----------------------------------------
+==== Heading_2 ====
+MCSI3_TOL
+
+==== Body ====
+Defines the tolerance value, as a percentage, for the first principal moment of inertia of a model. Creo ModelCHECK uses this value to search for duplicate models. The largest allowable value is 0.1, that is, 10%.
+
+==== List_1 ====
+
+==== Preformatted ====
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/mcsi4_TOL.html...
+----------------------------------------
+==== Heading_2 ====
+MCSI4_TOL
+
+==== Body ====
+Defines the tolerance value, as a percentage, for the second principal moment of inertia of a model. Creo ModelCHECK uses this value to search for duplicate models. The largest allowable value is 0.1, that is, 10%.
+
+==== List_1 ====
+
+==== Preformatted ====
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/mcsi5_TOL.html...
+----------------------------------------
+==== Heading_2 ====
+MCSI5_TOL
+
+==== Body ====
+Defines the tolerance value, as a percentage, for the third principal moment of inertia of a model. Creo ModelCHECK uses this value to search for duplicate models. The largest allowable value is 0.1, that is, 10%.
+
+==== List_1 ====
+
+==== Preformatted ====
+
+==== Table_Cell ====
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/short_edges.html...
+----------------------------------------
+==== Heading_2 ====
+SHORT_EDGES (Short Edges)
+
+==== Body ====
+Lists the edges in the model with a length smaller than a specified limit. You can define the limit for the length using the SHORT_EDGE constant configuration option. If any short edges are found, the features in question can be highlighted in the Creo Parametric window.
+You can also access the Global Reference Viewer from the Creo ModelCHECK report to view all references to and from the reported features.
+The value for SHORT_EDGE can be set to CALCULATE. If this is the case, the value used to determine a short edge is based on the size of the model.
+
+==== List_1 ====
+
+==== Preformatted ====
+Y/N/E/W
+
+==== Table_Cell ====
+E
+E
+E
+E
+
+
+Processing https://support.ptc.com/help/creo/creo_pma/r11.0/usascii/model_analysis/modelcheck/SHORT_EDGE_and_SHORT_EDGE_BATCH.html...
+----------------------------------------
+==== Heading_2 ====
+SHORT_EDGE and SHORT_EDGE_BATCH
+
+==== Body ====
+Defines the minimum length of edges before Creo ModelCHECK considers them short.
+Two values are available for the SHORT_EDGE configuration option:
+
+==== List_1 ====
+• A numeric value.
+• The string CALCULATE. In Interactive mode, Creo ModelCHECK automatically calculates a suggested value for short edges and applies it to the model being checked.
+
+==== Preformatted ====
+
+==== Table_Cell ====
+
+

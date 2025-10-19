@@ -1,3 +1,6 @@
+# Used for testing extension files
+scratchpad/
+
 # Node modules
 node_modules/
 
