@@ -1,14 +1,12 @@
-// src/extension.ts
 import * as vscode from 'vscode';
 import { MapkeySemanticTokensProvider } from './semanticTokenizer';
+import { CreoHoverProvider } from './providers/hoverProvider';
 
 export function activate(context: vscode.ExtensionContext) {
-    // Document selector for Creo Mapkey files
     const selector: vscode.DocumentSelector = [
         { language: 'pro', scheme: 'file' }
     ];
 
-    // 1) Register Semantic Tokens Provider
     const semanticProvider = new MapkeySemanticTokensProvider();
     context.subscriptions.push(
         vscode.languages.registerDocumentSemanticTokensProvider(
@@ -18,25 +16,11 @@ export function activate(context: vscode.ExtensionContext) {
         )
     );
 
-    // 2) Register Hover Provider (minimal, shows first token in line as example)
+    // Pass the same tokenizer to HoverProvider
+    const hoverProvider = new CreoHoverProvider(semanticProvider);
     context.subscriptions.push(
-        vscode.languages.registerHoverProvider(selector, {
-            provideHover(document, position, token) {
-                const lineText = document.lineAt(position.line).text;
-                // naive example: highlight first command word in hover
-                const match = lineText.match(/(?:^\s*~\s*|^\s*mapkey(?:\(continued\))?\s*)?([A-Za-z_][A-Za-z0-9_]*)/);
-                if (match && match[1]) {
-                    return new vscode.Hover(`**Mapkey Command:** \`${match[1]}\``);
-                }
-                return undefined;
-            }
-        })
+        vscode.languages.registerHoverProvider(selector, hoverProvider)
     );
 
-    // 3) Optional: Status message on activation
-    vscode.window.showInformationMessage('Creo Mapkey extension activated with semantic highlighting.');
-}
-
-export function deactivate() {
-    // nothing to clean up for now
+    vscode.window.showInformationMessage('Creo Mapkey extension: semantic tokenizer + hover diagnostics active.');
 }
