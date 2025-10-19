@@ -7,24 +7,24 @@
     "mapkey-init":{
       "begin": "^(mapkey\\s+)([^;\\s]+[^;]*?)",
       "beginCaptures": { 
-        "1": { "name": "keyword.control.mapkey.name"},
-        "2": { "name": "markup.bold.mapkey.keystroke"}
+        "1": { "name": "keyword.control"},
+        "2": { "name": "markup.bold"}
       },
       "end": "\\s",
-      "name": "meta.mapkey.init.command"
+      "name": "meta"
     },
     "mapkey-definition": {
       "begin": "(@MAPKEY_LABEL|@MAPKEY_NAME)",
       "beginCaptures": {
-        "1": { "name": "keyword.control.mapkey.label" }
+        "1": { "name": "keyword.control" }
       },
       "end": "(?<!\\\\)$",
-      "name": "meta.mapkey.definition.command",
+      "name": "meta",
       "patterns": [
         {
           "match": "(.+)(?=\\\\$)",
           "captures": {
-            "1": { "name": "markup.bold.mapkey.description.partial" }
+            "1": { "name": "markup.bold" }
           }
         },
         {
@@ -35,50 +35,38 @@
             {
               "match": "(?!mapkey\\(continued\\))(.*)",
               "captures": {
-                "1": { "name": "markup.bold.mapkey.description" }
+                "1": { "name": "markup.bold." }
               }
             }
           ]
         }
       ]
-    },    
+    },
     "mapkey-continued": {
-      "begin": "^(mapkey\\(continued\\))\\s*~\\s*(\\w+)[\\s\\\\]*",
+      "match": "^mapkey\\(continued\\)",
+      "name": "entity.name.function"
+    },
+    "mapkey-syscmd": {
+      "match": "(@MANUAL_PAUSE|@SYSTEM)",
+      "name": "storage.modifier"
+    },   
+    "mapkey-body": {
+      "begin": "(~\\s\\w+|(?<=^mapkey\\(continued\\)\\s)`\\S+`?)([^;\\\\]+)(?=;|\\\\;|\\\\$)",
       "beginCaptures": {
-        "1": { "name": "entity.name.function.mapkey.prefix" },
-        "2": { "name": "entity.name.function.mapkey.verb" }
+        "1":{ "name": "string.regexp"},
+        "2":{ "name": "keyword.operator"}
       },
       "end": ";",
-      "name": "meta.mapkey.continued.command",
-      "patterns": [
-        {
-          "match": "`([^`]*)`",
-          "captures": {
-            "1": { "name": "string.quoted.other.mapkey.argument" }
-          }
-        },
-        {
-          "begin": ";~\\s*(\\w+)",
-          "beginCaptures": {
-            "1": { "name": "entity.name.function.mapkey.verb" }
-          },
-          "end": ";",
-          "patterns": [
-            {
-              "match": "`([^`]*)`",
-              "captures": {
-                "1": { "name": "string.quoted.other.mapkey.argument" }
-              }
-            }
-          ]
-        }
-      ]
+      "name": "meta.mapkey.content"    
     }
   },
-
   "patterns": [
+    { "name": "comment.line",      "match": "!.*$" },
+    { "name": "constant.numeric",  "match": "\\b\\-{0,1}\\d+\\b" },
     { "include": "#mapkey-init" },
     { "include": "#mapkey-definition" },
-    { "include": "#mapkey-continued" }
+    { "include": "#mapkey-continued" },
+    { "include": "#mapkey-syscmd" },
+    { "include": "#mapkey-body" }
   ]
 }
