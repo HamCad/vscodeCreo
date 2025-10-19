@@ -21,5 +21,6 @@
       "scopeName": "source.pro",
       "path": "./syntaxes/pro.tmLanguage.json"
     }]
-  }
+  },
+  "main": "./out/extension.js"
 }

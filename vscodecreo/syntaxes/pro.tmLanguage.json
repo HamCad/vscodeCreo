@@ -54,7 +54,7 @@
       "begin": "(~\\s\\w+|(?<=^mapkey\\(continued\\)\\s)`\\S+`?)([^;\\\\]+)(?=;|\\\\;|\\\\$)",
       "beginCaptures": {
         "1":{ "name": "string.regexp"},
-        "2":{ "name": "keyword.operator"}
+        "2":{ "name": "variable.parameter"}
       },
       "end": ";",
       "name": "meta.mapkey.content"    
