@@ -10,7 +10,6 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.languages.registerHoverProvider(selector, new CreoHoverProvider())
   );
 
-
    // // In extension.ts
    // vscode.languages.registerFoldingRangeProvider(selector, {
    //   provideFoldingRanges(document) {

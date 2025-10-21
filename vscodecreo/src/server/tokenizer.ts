@@ -1,8 +1,80 @@
 /**
- * Master Tokenizer for LSP
- * ------------------------
- * This defines all tokens used throughout your language server.
- * Each token includes a unique name and a regex.
+// SIMPLE TOKEN - Step 1 only
+{ type: "keyword", regex: /\bmapkey\b/g }
+
+// WITH GROUPS - Step 1 only
+{ 
+  type: "declaration", 
+  regex: /^(mapkey)\s+(\w+)/gm,
+  groups: [
+    { type: "keyword", index: 1 },
+    { type: "name", index: 2 }
+  ]
+}
+
+// MULTILINE - Step 1 + Step 2
+// Step 1: Define base token
+// Step 2: Add merging logic in addDerivedTokens()
+
+// DERIVED - Step 2 only
+// Extract content based on other tokens
+// SIMPLE TOKEN - Step 1 only
+{ type: "keyword", regex: /\bmapkey\b/g }
+
+// WITH GROUPS - Step 1 only
+{ 
+  type: "declaration", 
+  regex: /^(mapkey)\s+(\w+)/gm,
+  groups: [
+    { type: "keyword", index: 1 },
+    { type: "name", index: 2 }
+  ]
+}
+
+// MULTILINE - Step 1 + Step 2
+// Step 1: Define base token
+// Step 2: Add merging logic in addDerivedTokens()
+
+// DERIVED - Step 2 only
+// Extract content based on other tokens
+// SIMPLE TOKEN - Step 1 only
+{ type: "keyword", regex: /\bmapkey\b/g }
+
+// WITH GROUPS - Step 1 only
+{ 
+  type: "declaration", 
+  regex: /^(mapkey)\s+(\w+)/gm,
+  groups: [
+    { type: "keyword", index: 1 },
+    { type: "name", index: 2 }
+  ]
+}
+
+// MULTILINE - Step 1 + Step 2
+// Step 1: Define base token
+// Step 2: Add merging logic in addDerivedTokens()
+
+// DERIVED - Step 2 only
+// Extract content based on other tokensanguage server.
+// SIMPLE TOKEN - Step 1 only
+{ type: "keyword", regex: /\bmapkey\b/g }
+
+// WITH GROUPS - Step 1 only
+{ 
+  type: "declaration", 
+  regex: /^(mapkey)\s+(\w+)/gm,
+  groups: [
+    { type: "keyword", index: 1 },
+    { type: "name", index: 2 }
+  ]
+}
+
+// MULTILINE - Step 1 + Step 2
+// Step 1: Define base token
+// Step 2: Add merging logic in addDerivedTokens()
+
+// DERIVED - Step 2 only
+// Extract content based on other tokens
  */
 
 export interface TokenDefinition {
