@@ -170,8 +170,8 @@ function extractContentAfterTag(text: string, tagToken: Token, contentType: stri
     };
   }
   
-  // Remove trailing backslash from first line
-  content = content.replace(/\s*\\$/g, '').trim();
+  // Remove trailing backslash and whitespace from first line
+  content = content.replace(/\s*\\+\s*$/g, '').trim();
   
   // Check if line ends with backslash (continuation)
   let prevLineEnd = lineEnd;
@@ -209,8 +209,8 @@ function extractContentAfterTag(text: string, tagToken: Token, contentType: stri
       break;
     }
     
-    // No semicolon, add full line (removing trailing backslash)
-    const cleanLine = lineContent.replace(/\s*\\$/g, '').trim();
+    // No semicolon, add full line (removing trailing backslash and whitespace)
+    const cleanLine = lineContent.replace(/\s*\\+\s*$/g, '').trim();
     if (cleanLine) {
       content += ' ' + cleanLine;
     }
