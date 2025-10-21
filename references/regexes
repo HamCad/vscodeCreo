@@ -1,0 +1,21 @@
+``` pro commands with arguments = (?<=`)ProCmd\w*(?=`\s+(?:`[^`]*`|\w+)\s*;) ```
+``` pro commands with arguments improved = (?<=`)ProCmd\w*(?=`\s+(?:(?:`[^`]*`|\w+)\s*)+;) ```
+
+``` pro command with 2 args = (?<=`)ProCmd\w*(?=`(\s+(?:\w+\s+)*(`[^`]*`)(?:\s+`([^`]*)`)*)\s*;) ```
+``` pro command with 2 args = (?<=`)ProCmd\w*(?=`(\s+(?:\w+\s+)*(`[^`]*`)(?:\s+`([^`]*)`)*)\s*;) ```
+``` pro command with 2 args improved = `(ProCmd\w*)`\s+(\w*)\s`([^`]*)` ```
+
+
+#### Inner Mapkey Stuff
+``` (;\\$|\\$)\n(^mapkey\(continued\)) ```
+- Match 1 = `;\` or `\`
+- Match 2 = mapkey(continued)
+
+#### ProCmd
+``` pro commands without arguments = (?<=`)ProCmd\w*(?=`\s;) ```
+
+#### ProCmd (args compatible)
+``` `(ProCmd\w*)`(?:\s+(\w+))?(?:\s+`([^`]*)`)? ```
+- Match 1 = ProCmd
+- Match 2 = non-backtick arg
+- Match 3 = backtick arg

@@ -77,6 +77,16 @@
 // Extract content based on other tokens
  */
 
+/**
+  
+  {
+    type: "",
+    regex: //
+  },
+
+ */
+
+
 export interface TokenDefinition {
   type: string;
   regex: RegExp;
@@ -126,6 +136,23 @@ export const TOKEN_DEFINITIONS: TokenDefinition[] = [
     type: "mapkey.tag.name",
     regex: /@MAPKEY_NAME/g,
   },
+  {
+    type: "mapkey.nested",
+    regex: /(?<=%)[^;]*(?=;)/
+  },
+  {
+    type: "mapkey.procmd",
+    regex: /`(ProCmd\w*)`(?:\s+(\w+))?(?:\s+`([^`]*)`)?/,
+    groups: [
+      {type: "mapkey.procmd.func", index: 0},
+      {type: "mapkey.procmd.arg.default", index: 1},
+      {type: "mapkey.procmd.arg.user_input", index: 2},
+    ]
+  },
+//  {
+//    type: "",
+//    regex: //
+//  },
   {
     type: "comment.line",
     regex: /!.*$/gm,
