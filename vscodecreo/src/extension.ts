@@ -1,25 +1,15 @@
 import * as vscode from 'vscode';
-import { TokenAdapter } from './providers/tokenAdapter';
 import { CreoHoverProvider } from './providers/hoverProvider';
 
 export function activate(context: vscode.ExtensionContext) {
   const selector: vscode.DocumentSelector = [{ language: 'pro', scheme: 'file' }];
 
-  const tokenizer = new TokenAdapter();
-
+  // Register hover provider only
   context.subscriptions.push(
-    vscode.languages.registerDocumentSemanticTokensProvider(
-      selector,
-      tokenizer,
-      tokenizer.getLegend()
-    )
+    vscode.languages.registerHoverProvider(selector, new CreoHoverProvider())
   );
 
-  context.subscriptions.push(
-    vscode.languages.registerHoverProvider(selector, new CreoHoverProvider(tokenizer))
-  );
-
-  vscode.window.showInformationMessage('Creo Mapkey extension active: LSP tokenizer + hover ready.');
+  vscode.window.showInformationMessage('Creo Mapkey extension active: hover ready.');
 }
 
 export function deactivate() {}

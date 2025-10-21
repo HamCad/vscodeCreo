@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Set variables
-OUTPUT_FILE="extension-structure.txt"
+OUTPUT_FILE="extension-structure.env"
 ROOT_DIR="$HOME/vscodeCreo/vscodecreo"
 SKIP_DIRS=(".vscode" "node_modules" "out") # Directories to skip
 INCLUDE_EXTENSIONS=("ts" "js" "json")      # File extensions to include

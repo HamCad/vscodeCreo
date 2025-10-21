@@ -1,49 +1,78 @@
 import * as vscode from 'vscode';
-import { TokenAdapter } from './tokenAdapter';
+import { tokenize, Token } from '../server/tokenizer';
 
 export class CreoHoverProvider implements vscode.HoverProvider {
-  private tokenizer: TokenAdapter;
 
-  constructor(tokenizer: TokenAdapter) {
-    this.tokenizer = tokenizer;
-  }
-
-  async provideHover(
+  provideHover(
     document: vscode.TextDocument,
     position: vscode.Position,
-    token: vscode.CancellationToken
-  ): Promise<vscode.Hover | null> {
-    const semanticTokens = await this.tokenizer.provideDocumentSemanticTokens(document, token);
-    if (!semanticTokens) return null;
+    _token: vscode.CancellationToken
+  ): vscode.ProviderResult<vscode.Hover> {
+    const text = document.getText();
+    const offset = document.offsetAt(position);
 
-    const legend = this.tokenizer.getLegend();
-    const data = semanticTokens.data;
-
-    let currentLine = 0;
-    let currentChar = 0;
-
-    for (let i = 0; i < data.length; i += 5) {
-      currentLine += data[i];
-      currentChar = data[i] === 0 ? currentChar + data[i + 1] : data[i + 1];
-      const length = data[i + 2];
-      const tokenTypeIndex = data[i + 3];
-      const tokenType = legend.tokenTypes[tokenTypeIndex];
-
-      const start = new vscode.Position(currentLine, currentChar);
-      const end = new vscode.Position(currentLine, currentChar + length);
-      const range = new vscode.Range(start, end);
-
-      if (range.contains(position)) {
-        const tokenText = document.getText(range);
-        const hoverMessage = new vscode.MarkdownString();
-        hoverMessage.appendCodeblock(tokenText, 'plaintext');
-        hoverMessage.appendMarkdown(`**Token:** \`${tokenType}\`\n`);
-        hoverMessage.appendMarkdown(`Line: ${currentLine}, Col: ${currentChar}`);
-
-        return new vscode.Hover(hoverMessage, range);
-      }
+    let token: Token | null = null;
+    try {
+      token = this.getTokenAtOffset(text, offset);
+    } catch (err) {
+      console.error('Error tokenizing document for hover:', err);
+      const md = new vscode.MarkdownString();
+      md.appendCodeblock('⚠ Error tokenizing document');
+      return new vscode.Hover(md);
     }
 
-    return null;
+    if (!token) {
+      // Optionally show info if no token is found
+      const md = new vscode.MarkdownString();
+      md.appendMarkdown('_No token found at this position_');
+      return new vscode.Hover(md, new vscode.Range(position, position));
+    }
+
+    // Safety check for invalid token positions
+    if (
+      token.start < 0 ||
+      token.end > text.length ||
+      token.end <= token.start
+    ) {
+      const md = new vscode.MarkdownString();
+      md.appendMarkdown('_Token has invalid position_');
+      md.appendMarkdown(`\n**Debug:** ${JSON.stringify(token)}`);
+      return new vscode.Hover(md, new vscode.Range(position, position));
+    }
+
+    const startPos = document.positionAt(token.start);
+    const endPos = document.positionAt(token.end);
+    const range = new vscode.Range(startPos, endPos);
+
+    const md = new vscode.MarkdownString();
+    md.appendCodeblock(token.value, 'plaintext');
+    md.appendMarkdown(`\n**Token type:** \`${token.type}\``);
+    md.appendMarkdown(`  \nLine: ${startPos.line + 1}, Col: ${startPos.character + 1}`);
+
+    // Append debug info for all tokens around this position
+    const surroundingTokens = this.getTokensAroundOffset(text, offset);
+    if (surroundingTokens.length > 0) {
+      md.appendMarkdown('\n\n**Nearby tokens (debug):**\n');
+      surroundingTokens.forEach(t => {
+        md.appendMarkdown(`- [${t.type}] "${t.value}" (start=${t.start}, end=${t.end})\n`);
+      });
+    }
+
+    md.isTrusted = true; // allow links if needed
+
+    return new vscode.Hover(md, range);
+  }
+
+  private getTokenAtOffset(text: string, offset: number): Token | null {
+    const tokens = tokenize(text);
+    return tokens.find(t => offset >= t.start && offset < t.end) || null;
+  }
+
+  private getTokensAroundOffset(text: string, offset: number, window: number = 5): Token[] {
+    const tokens = tokenize(text);
+    const idx = tokens.findIndex(t => offset >= t.start && offset < t.end);
+    if (idx === -1) return [];
+    // Return a window of tokens around the current one
+    return tokens.slice(Math.max(0, idx - window), Math.min(tokens.length, idx + window + 1));
   }
 }

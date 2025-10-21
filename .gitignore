@@ -21,7 +21,7 @@ dist/
 Thumbs.db
 
 # Environment files (if any secrets)
-.env
+*.env
 
 # Optional: temporary files
 *.tmp
