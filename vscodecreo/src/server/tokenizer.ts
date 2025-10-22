@@ -105,6 +105,10 @@ export interface Token {
  */
 export const TOKEN_DEFINITIONS: TokenDefinition[] = [
   {
+    type: "mapkey.block",
+    regex: /^mapkey\s+[\w\-$]+.*?(?:\n.*?(?:\\|;\\))*?\n.*?[^\\];(?:\n.*?)*?(?=\n\S)/gms,
+  },
+  {
     type: "mapkey.begin",
     regex: /^mapkey\s+/gm,
   },

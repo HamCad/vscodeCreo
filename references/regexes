@@ -1,21 +1,145 @@
-``` pro commands with arguments = (?<=`)ProCmd\w*(?=`\s+(?:`[^`]*`|\w+)\s*;) ```
-``` pro commands with arguments improved = (?<=`)ProCmd\w*(?=`\s+(?:(?:`[^`]*`|\w+)\s*)+;) ```
+# Quick Refs
+- Grab `mapkey  `**:** `^mapkey\s+` 
+- Grab mapkey keybinding **:** `^mapkey\s+([^\s;]+)`
+- Grab `mapkey  keybinding` as single match **:** `^mapkey\s+[\w\-$]+` 
+- Grabs mapkey and keybinding **:** `(^mapkey\s+)([\w\-$]+)`
+  - Match 1: `mapkey ` 
+  - Match 2: `mapkey_keybinding`
+- Grabs single words (separated by spaces) including words with `$` but NOT grab ``` `` () ; \ ~ @ ``` **:** `[\w\-$]+`
+- Grabs inside line and line ending semicolons but NOT `;\` **:**  `;(?!\\)` 
+- Grabs lines ending with a `;\` but does NOT match them **:**`(?:\\|;\\)\n` = `(?:\\|;\\)$`
 
-``` pro command with 2 args = (?<=`)ProCmd\w*(?=`(\s+(?:\w+\s+)*(`[^`]*`)(?:\s+`([^`]*)`)*)\s*;) ```
-``` pro command with 2 args = (?<=`)ProCmd\w*(?=`(\s+(?:\w+\s+)*(`[^`]*`)(?:\s+`([^`]*)`)*)\s*;) ```
-``` pro command with 2 args improved = `(ProCmd\w*)`\s+(\w*)\s`([^`]*)` ```
 
+
+# Mapkey Regexes
+
+### Mapkey Block
+``` /^mapkey\s+[\w\-$]+(?:.*?(?:\\|;\\)\n)*.*?;(?!\\)(?=\s*\n|$)/gmsi ``` 
+- Grabs single and multi line mapkeys
+
+``` 
+Only grabs all mapkey blocks 2 lines or greater.
+alt 1: /^mapkey\s+[\w\-$]+.*?(?:\n.*?(?:\\|;\\))*?\n.*?;(?!\\)(?:\n.*?)*?(?=\n\S)/gms
+alt 2: /^mapkey\s+[\w\-$]+.*?(?:\n.*?(?:\\|;\\))*?\n.*?[^\\];(?:\n.*?)*?(?=\n\S)/gms
+```
+
+### MultiLine Mapkey Stuff
+`(?:^mapkey\(continued\)\s)` **:** Grab but NOT match/store `mapkey(continued) `
+`(?:[^;](\\$))` **:** Grab the multiline backslash only
+`(?:[^;](?:\\$))` **:** Find the multiline backslash but do NOT store it
+`(?:[^;](?:\\$))\n(?:^mapkey\(continued\)\s)` **:** Grab the backslash and the `mapkey(continued) ` but do not store it
+
+#### Mapkey Action Line
+``` ~([^;]+); ```
+- Match = everything in between `~ ` and `;`
+- Does not grab internal mapkey comments or lines beginning with `mapkey(continued) @`
+
+`~\s(\w*)`
+- Find all `~` and match the immediate action word following it
 
 #### Inner Mapkey Stuff
 ``` (;\\$|\\$)\n(^mapkey\(continued\)) ```
 - Match 1 = `;\` or `\`
 - Match 2 = mapkey(continued)
 
-#### ProCmd
-``` pro commands without arguments = (?<=`)ProCmd\w*(?=`\s;) ```
+#### ProCmd (without args)
+``` (?<=`)ProCmd\w*(?=`\s;) ```
 
-#### ProCmd (args compatible)
+#### ProCmd (with args)
 ``` `(ProCmd\w*)`(?:\s+(\w+))?(?:\s+`([^`]*)`)? ```
 - Match 1 = ProCmd
 - Match 2 = non-backtick arg
 - Match 3 = backtick arg
+
+
+
+
+
+## Examples
+
+### Multiline Matching 
+
+mapkey code 
+```
+mapkey Z-SDC2 @MAPKEY_NAMEAdds the standard symbols to C size drawing sheets;\
+mapkey(continued) @MAPKEY_LABELStandard Drawing Symbols C Size Sheet 2;\
+mapkey(continued) ~ Command `ProCmdDwgCrSymInstCust` ;\
+mapkey(continued) ~ Activate `drawing_sym` `browse`;\
+mapkey(continued) ~ Update `file_open` `Inputname` \
+mapkey(continued) `\\\\<IP_REMOVED>\\Creo_Parametric2\\Symb\
+mapkey(continued) ols\\export_control.sym`;\
+```
+
+REGEX 1: = `/^(?:mapkey\s|mapkey\(continued\)\s)(.+?[^;])(?=\\$)/` (no `m` flag)
+
+Results in:
+```
+Match 1:
+1.	~ Update `file_open` `Inputname`
+Match 2:
+1.	`\\\\<IP_REMOVED>\\Creo_Parametric2\\Symb
+```
+
+REGEX 2: = `/(?:[^;](?:\\$))\n(?:^mapkey\(continued\)\s)(.*)(?:(?=;$|;\\$))/` (no `m` flag)
+
+Results in:
+```
+Match 1:
+1.	ols\\export_control.sym`
+```
+
+REGEX 2: = `/^(?:mapkey\s|mapkey\(continued\)\s)(.+?[^;])(?=\\$)|(?<=[^;]\\$)\nmapkey\(continued\)\s(.+?)(?=\\$|;\\?$)/` (no `m` flag)
+
+Results in:
+```
+Match 1
+1.	~ Update `file_open` `Inputname`
+2.	 
+Match 2
+1.	 
+2.	`\\\\<IP_REMOVED>\\Creo_Parametric2\\Symb
+Match 3
+1.	 
+2.	ols\\export_control.sym`
+```
+
+BEST: ``` /~\s*([^;]+?)(?=\\$)|(?<=[^;]\\$)\nmapkey\(continued\)\s(?!~)(.+?)(?=\\$|;)/ ``` (no `m` flag)
+
+Results in:
+```
+Match 1
+1.	Update `file_open` `Inputname`
+2.	 
+Match 2
+1.	 
+2.	`\\\\<IP_REMOVED>\\Creo_Parametric2\\Symb
+Match 3
+1.	 
+2.	ols\\export_control.sym`
+```
+
+REGEX 3: = `/~\s*([^;]+?)(?=\\$)|(?<=[^;]\\$)\nmapkey\(continued\)\s(?!~)(.+?)(?=\\$)|(?<=[^;]\\$)\nmapkey\(continued\)\s(?!~)(.+?)(?=;)/` (no `m` flag)
+
+Results in:
+```
+Match 1
+1.	Update `file_open` `Inputname`
+2.	 
+3.	 
+Match 2
+1.	 
+2.	`\\\\<IP_REMOVED>\\Creo_Parametric2\\Symb
+3.	 
+Match 3
+1.	 
+2.	ols\\export_control.sym`;
+3.	 
+```
+
+
+
+
+
+
+
+
