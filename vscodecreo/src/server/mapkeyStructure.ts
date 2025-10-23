@@ -1,130 +1,73 @@
-import { Token, tokenize } from './tokenizer';
+import { Token, getMapkeyBlocks, MapkeyBlock } from './tokenizer';
 
 /**
  * Represents a complete mapkey definition with all its components
+ * This extends MapkeyBlock with derived properties
  */
 export interface MapkeyDefinition {
   name: string;
-  nameToken: Token;
+  nameToken?: Token;
   description?: string;
   descriptionToken?: Token;
   label?: string;
   labelToken?: Token;
-  startToken: Token;  // mapkey.begin
-  endToken?: Token;   // mapkey.end
-  allTokens: Token[]; // All tokens within this mapkey
+  block: MapkeyBlock;  // Reference to the underlying block
   range: {
     start: number;
     end: number;
   };
+  allTokens: Token[];  // All tokens within this mapkey
+  calledMapkeys: string[];  // Mapkeys that this one calls
 }
 
 /**
  * Parse text and return structured mapkey definitions
  */
 export function parseMapkeys(text: string): MapkeyDefinition[] {
-  const tokens = tokenize(text);
+  const blocks = getMapkeyBlocks(text);
   const mapkeys: MapkeyDefinition[] = [];
   
-  let i = 0;
-  while (i < tokens.length) {
-    const token = tokens[i];
-    
-    // Look for mapkey.begin tokens
-    if (token.type === 'mapkey.begin') {
-      const mapkey = buildMapkeyDefinition(tokens, i);
-      if (mapkey) {
-        mapkeys.push(mapkey);
-        // Skip to the end of this mapkey
-        i = tokens.findIndex(t => t === mapkey.endToken);
-        if (i === -1) i = tokens.length;
-      }
-    }
-    i++;
+  for (const block of blocks) {
+    const mapkey = buildMapkeyDefinition(block);
+    mapkeys.push(mapkey);
   }
   
   return mapkeys;
 }
 
 /**
- * Build a complete MapkeyDefinition starting from a mapkey.begin token
+ * Build a complete MapkeyDefinition from a MapkeyBlock
  */
-function buildMapkeyDefinition(tokens: Token[], startIndex: number): MapkeyDefinition | null {
-  const beginToken = tokens[startIndex];
-  if (beginToken.type !== 'mapkey.begin') return null;
+function buildMapkeyDefinition(block: MapkeyBlock): MapkeyDefinition {
+  const tokens = block.tokens;
   
-  // Find the mapkey.name (should be right after begin)
-  let nameToken: Token | undefined;
-  let descriptionToken: Token | undefined;
-  let labelToken: Token | undefined;
-  let endToken: Token | undefined;
+  // Find the name token
+  const nameToken = tokens.find(t => t.type === 'mapkey.name');
   
-  // Collect all tokens that belong to this mapkey
-  const mapkeyTokens: Token[] = [beginToken];
+  // Find description
+  const descriptionToken = tokens.find(t => t.type === 'mapkey.description');
   
-  // Look ahead to find the name and end of this mapkey
-  for (let i = startIndex + 1; i < tokens.length; i++) {
-    const token = tokens[i];
-    
-    // Get the name (should be immediately after begin)
-    if (!nameToken && token.type === 'mapkey.name') {
-      nameToken = token;
-      mapkeyTokens.push(token);
-      continue;
-    }
-    
-    // Get description
-    if (token.type === 'mapkey.description') {
-      descriptionToken = token;
-      mapkeyTokens.push(token);
-      continue;
-    }
-    
-    // Get label
-    if (token.type === 'mapkey.label') {
-      labelToken = token;
-      mapkeyTokens.push(token);
-      continue;
-    }
-    
-    // Check if we've reached the end of this mapkey
-    if (token.type === 'mapkey.end') {
-      endToken = token;
-      mapkeyTokens.push(token);
-      break;
-    }
-    
-    // Check if we've hit the start of a new mapkey (no end found)
-    if (token.type === 'mapkey.begin') {
-      // This mapkey has no explicit end
-      break;
-    }
-    
-    // Add all tokens in between to this mapkey
-    mapkeyTokens.push(token);
-  }
+  // Find label
+  const labelToken = tokens.find(t => t.type === 'mapkey.label');
   
-  // Must have at least a name
-  if (!nameToken) return null;
-  
-  // Determine the range
-  const rangeStart = beginToken.start;
-  const rangeEnd = endToken ? endToken.end : mapkeyTokens[mapkeyTokens.length - 1].end;
+  // Find all nested mapkey calls
+  const nestedTokens = tokens.filter(t => t.type === 'mapkey.nested.name');
+  const calledMapkeys = nestedTokens.map(t => t.value);
   
   return {
-    name: nameToken.value,
+    name: block.name,
     nameToken,
     description: descriptionToken?.value,
     descriptionToken,
     label: labelToken?.value,
     labelToken,
-    startToken: beginToken,
-    endToken,
-    allTokens: mapkeyTokens,
+    block,
     range: {
-      start: rangeStart,
-      end: rangeEnd
-    }
+      start: block.start,
+      end: block.end
+    },
+    allTokens: tokens,
+    calledMapkeys
   };
 }
 
@@ -146,7 +89,6 @@ export function getAllMapkeyNames(text: string): string[] {
 
 /**
  * Find all references to a specific mapkey name
- * (This is a simple version - you'd expand this to search for actual usages)
  */
 export function findMapkeyReferences(text: string, mapkeyName: string): MapkeyDefinition[] {
   const mapkeys = parseMapkeys(text);
@@ -155,7 +97,6 @@ export function findMapkeyReferences(text: string, mapkeyName: string): MapkeyDe
 
 /**
  * Build a call graph of mapkey dependencies
- * (Looks for patterns like ~ Command `ProCmdMapkeys` followed by mapkey names)
  */
 export interface MapkeyCallGraph {
   [mapkeyName: string]: string[]; // mapkey name -> list of mapkeys it calls
@@ -165,28 +106,90 @@ export function buildCallGraph(text: string): MapkeyCallGraph {
   const mapkeys = parseMapkeys(text);
   const graph: MapkeyCallGraph = {};
   
-  // Simple pattern to find mapkey calls: look for other mapkey names in the body
-  const allNames = mapkeys.map(mk => mk.name);
-  
   for (const mapkey of mapkeys) {
-    graph[mapkey.name] = [];
-    
-    // Get the text content of this mapkey
-    const mapkeyText = text.substring(mapkey.range.start, mapkey.range.end);
-    
-    // Look for references to other mapkeys
-    for (const otherName of allNames) {
-      if (otherName === mapkey.name) continue;
-      
-      // Simple check: does the mapkey text contain the other mapkey's name?
-      // You might want to make this more sophisticated
-      if (mapkeyText.includes(otherName)) {
-        graph[mapkey.name].push(otherName);
-      }
-    }
+    graph[mapkey.name] = mapkey.calledMapkeys;
   }
   
   return graph;
+}
+
+/**
+ * Find which mapkeys use a specific mapkey
+ */
+export function findMapkeyUsages(text: string, targetMapkey: string): MapkeyDefinition[] {
+  const mapkeys = parseMapkeys(text);
+  return mapkeys.filter(mk => mk.calledMapkeys.includes(targetMapkey));
+}
+
+/**
+ * Get dependency depth (how many nested calls)
+ */
+export function getMapkeyDepth(text: string, mapkeyName: string): number {
+  const callGraph = buildCallGraph(text);
+  
+  function calculateDepth(name: string, visited: Set<string> = new Set()): number {
+    if (visited.has(name)) return 0; // Circular reference
+    visited.add(name);
+    
+    const callees = callGraph[name] || [];
+    if (callees.length === 0) return 0;
+    
+    const depths = callees.map(callee => calculateDepth(callee, new Set(visited)));
+    return 1 + Math.max(...depths, 0);
+  }
+  
+  return calculateDepth(mapkeyName);
+}
+
+/**
+ * Find circular dependencies
+ */
+export function findCircularDependencies(text: string): string[][] {
+  const callGraph = buildCallGraph(text);
+  const cycles: string[][] = [];
+  const visited = new Set<string>();
+  
+  function findCycles(name: string, path: string[] = []): void {
+    if (path.includes(name)) {
+      // Found a cycle
+      const cycleStart = path.indexOf(name);
+      cycles.push([...path.slice(cycleStart), name]);
+      return;
+    }
+    
+    if (visited.has(name)) return;
+    
+    const callees = callGraph[name] || [];
+    for (const callee of callees) {
+      findCycles(callee, [...path, name]);
+    }
+  }
+  
+  for (const mapkeyName of Object.keys(callGraph)) {
+    if (!visited.has(mapkeyName)) {
+      findCycles(mapkeyName);
+      visited.add(mapkeyName);
+    }
+  }
+  
+  return cycles;
+}
+
+/**
+ * Check if a mapkey exceeds the 5-layer nesting limit
+ */
+export function checkNestingDepth(text: string): { mapkey: string; depth: number }[] {
+  const mapkeys = parseMapkeys(text);
+  const violations: { mapkey: string; depth: number }[] = [];
+  
+  for (const mapkey of mapkeys) {
+    const depth = getMapkeyDepth(text, mapkey.name);
+    if (depth > 5) {
+      violations.push({ mapkey: mapkey.name, depth });
+    }
+  }
+  
+  return violations;
 }
 
 /**

@@ -61,6 +61,11 @@ export class CreoHoverProvider implements vscode.HoverProvider {
           md.appendMarkdown(`**Label:** ${mapkey.label}\n\n`);
         }
         
+        // Show nested mapkeys if any
+        if (mapkey.calledMapkeys && mapkey.calledMapkeys.length > 0) {
+          md.appendMarkdown(`**Calls:** ${mapkey.calledMapkeys.join(', ')}\n\n`);
+        }
+        
         md.appendMarkdown(`**Range:** Lines ${document.positionAt(mapkey.range.start).line + 1} - ${document.positionAt(mapkey.range.end).line + 1}\n\n`);
         
         md.appendMarkdown(`---\n\n`);
