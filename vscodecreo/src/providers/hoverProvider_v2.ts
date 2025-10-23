@@ -29,13 +29,26 @@ provideHover(
       const defUri = `${document.uri.toString()}#L${defLine}`;
       md.appendMarkdown(`**Defined at:** [Line ${defLine}](${defUri})\n\n`);
 
+      // Show nested mapkeys if any
+      if (current.calledMapkeys && current.calledMapkeys.length > 0) {
+        md.appendMarkdown(`**Calls:** ${current.calledMapkeys.join(', ')}\n\n`);
+      }
+      
+      md.appendMarkdown(`**Range:** Lines ${document.positionAt(current.range.start).line + 1} - ${document.positionAt(current.range.end).line + 1}\n\n`);
+      
+      md.appendMarkdown(`---\n\n`);
+          
 
       // find all mapkeys that call this one
       const refs = allMapkeys
-        .filter(mk => mk.calledMapkeys?.includes(current.name) && mk.name !== current.name)
-        .map(mk => `${mk.name} (line ${document.positionAt(mk.range.start).line + 1})`);
+        .filter(mk => mk.calledMapkeys?.includes(token.value))
+        .map(mk => {
+          const line = document.positionAt(mk.range.start).line + 1;
+          const uri = `${document.uri.toString()}#L${line}`;
+          return `[${mk.name}](${uri}) (line ${line})`;
+        });
       if (refs.length > 0)
-        md.appendMarkdown(`**Called by:** ${refs.join(', ')}\n\n`);
+        md.appendMarkdown(`**Called by:**\n\n${refs.join('\n\n')}\n\n`);
       else
         md.appendMarkdown(`**Called by:** none\n\n`);
     }
