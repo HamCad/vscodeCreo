@@ -1,406 +1,599 @@
 /**
-// SIMPLE TOKEN - Step 1 only
-{ type: "keyword", regex: /\bmapkey\b/g }
-
-// WITH GROUPS - Step 1 only
-{ 
-  type: "declaration", 
-  regex: /^(mapkey)\s+(\w+)/gm,
-  groups: [
-    { type: "keyword", index: 1 },
-    { type: "name", index: 2 }
-  ]
-}
-
-// MULTILINE - Step 1 + Step 2
-// Step 1: Define base token
-// Step 2: Add merging logic in addDerivedTokens()
-
-// DERIVED - Step 2 only
-// Extract content based on other tokens
-// SIMPLE TOKEN - Step 1 only
-{ type: "keyword", regex: /\bmapkey\b/g }
-
-// WITH GROUPS - Step 1 only
-{ 
-  type: "declaration", 
-  regex: /^(mapkey)\s+(\w+)/gm,
-  groups: [
-    { type: "keyword", index: 1 },
-    { type: "name", index: 2 }
-  ]
-}
-
-// MULTILINE - Step 1 + Step 2
-// Step 1: Define base token
-// Step 2: Add merging logic in addDerivedTokens()
-
-// DERIVED - Step 2 only
-// Extract content based on other tokens
-// SIMPLE TOKEN - Step 1 only
-{ type: "keyword", regex: /\bmapkey\b/g }
-
-// WITH GROUPS - Step 1 only
-{ 
-  type: "declaration", 
-  regex: /^(mapkey)\s+(\w+)/gm,
-  groups: [
-    { type: "keyword", index: 1 },
-    { type: "name", index: 2 }
-  ]
-}
-
-// MULTILINE - Step 1 + Step 2
-// Step 1: Define base token
-// Step 2: Add merging logic in addDerivedTokens()
-
-// DERIVED - Step 2 only
-// Extract content based on other tokensanguage server.
-// SIMPLE TOKEN - Step 1 only
-{ type: "keyword", regex: /\bmapkey\b/g }
-
-// WITH GROUPS - Step 1 only
-{ 
-  type: "declaration", 
-  regex: /^(mapkey)\s+(\w+)/gm,
-  groups: [
-    { type: "keyword", index: 1 },
-    { type: "name", index: 2 }
-  ]
-}
-
-// MULTILINE - Step 1 + Step 2
-// Step 1: Define base token
-// Step 2: Add merging logic in addDerivedTokens()
-
-// DERIVED - Step 2 only
-// Extract content based on other tokens
+ * ============================================================================
+ * CREO MAPKEY TOKENIZER - Two-Phase Design
+ * ============================================================================
+ * 
+ * DESIGN PHILOSOPHY:
+ * This tokenizer uses a two-phase approach optimized for Creo mapkey syntax:
+ * 
+ * Phase 1: Block-level tokenization
+ *   - Identifies complete mapkey definitions (start to end)
+ *   - Handles multiline continuations and edge cases
+ *   - Creates a structured boundary for each mapkey
+ * 
+ * Phase 2: Content-level tokenization
+ *   - Tokenizes within each mapkey block
+ *   - Identifies actions (~...;), nested mapkeys, commands, arguments
+ *   - Context-aware based on action verbs
+ * 
+ * WHY TWO PHASES?
+ * - Mapkeys have complex multiline rules that are easier to handle in isolation
+ * - Actions within mapkeys need context from the block structure
+ * - Prevents token overlap and ambiguity
+ * - Easier to debug and maintain
+ * - Better performance (only tokenize relevant sections)
+ * 
+ * ============================================================================
  */
 
-/**
-  
-  {
-    type: "",
-    regex: //
-  },
-
- */
-
-
-export interface TokenDefinition {
-  type: string;
-  regex: RegExp;
-  groups?: { type: string; index: number }[];
-}
+// ============================================================================
+// TYPE DEFINITIONS
+// ============================================================================
 
 export interface Token {
   type: string;
   value: string;
-  start: number;
-  end: number;
+  start: number;      // Absolute position in document
+  end: number;        // Absolute position in document
+  blockId?: string;   // Which mapkey block this token belongs to (if applicable)
 }
 
-/**
- * Step 1: Define your tokens here.
- */
-export const TOKEN_DEFINITIONS: TokenDefinition[] = [
-  {
-    type: "mapkey.block",
-    regex: /^mapkey\s+[\w\-$]+.*?(?:\n.*?(?:\\|;\\))*?\n.*?[^\\];(?:\n.*?)*?(?=\n\S)/gms,
-  },
-  {
-    type: "mapkey.begin",
-    regex: /^mapkey\s+/gm,
-  },
-  {
-    type: "mapkey.name",
-    // Captures the mapkey name (everything between "mapkey " and first whitespace/semicolon)
-    regex: /^mapkey\s+([^\s;]+)/gm,
-    groups: [
-      { type: "mapkey.name", index: 1 },
-    ],
-  },
-  {
-    type: "mapkey.line.begin",
-    regex: /^mapkey\(continued\)/gm,
-  },
-  {
-    type: "mapkey.line.break",
-    regex: /\\$/gm,
-  },
-  {
-    type: "mapkey.line.end",
-    regex: /;\\$/gm,
-  },
-  {
-    type: "mapkey.tag.label",
-    regex: /@MAPKEY_LABEL/g,
-  },
-  {
-    type: "mapkey.tag.name",
-    regex: /@MAPKEY_NAME/g,
-  },
-  {
-    type: "mapkey.nested",
-    regex: /(?<=%)[^;]*(?=;)/
-  },
-  {
-    type: "mapkey.procmd",
-    regex: /`(ProCmd\w*)`(?:\s+(\w+))?(?:\s+`([^`]*)`)?/,
-    groups: [
-      {type: "mapkey.procmd.func", index: 0},
-      {type: "mapkey.procmd.arg.default", index: 1},
-      {type: "mapkey.procmd.arg.user_input", index: 2},
-    ]
-  },
-//  {
-//    type: "",
-//    regex: //
-//  },
-  {
-    type: "comment.line",
-    regex: /!.*$/gm,
-  }
-];
+export interface MapkeyBlock {
+  id: string;         // Unique identifier for this block
+  name: string;       // Mapkey keybinding (e.g., "Z-MBD-MCS1")
+  start: number;      // Start position in document
+  end: number;        // End position in document
+  content: string;    // Raw text content of the block
+  tokens: Token[];    // All tokens within this block
+}
+
+// ============================================================================
+// PHASE 1: BLOCK-LEVEL TOKENIZATION
+// ============================================================================
 
 /**
- * Step 2: Tokenize input text using all definitions.
+ * Extract all mapkey blocks from the document
+ * 
+ * A mapkey block consists of:
+ * 1. Declaration line: ^mapkey <name> [metadata...]
+ * 2. Continuation lines: ^mapkey(continued) ... ;\
+ * 3. Final line: ^mapkey(continued) ... ; (no backslash)
+ * 4. Comments within blocks: ^! ... ;\
+ * 
+ * Rules:
+ * - Each continuation must start with "mapkey(continued)" or be a comment
+ * - Lines must end with ";\" to continue (except final line ends with ";")
+ * - Blank lines may terminate the mapkey
+ * - Comments don't need "mapkey(continued)" but must end with ";\"
  */
-export function tokenize(text: string): Token[] {
-  const tokens: Token[] = [];
-
-  for (const def of TOKEN_DEFINITIONS) {
-    // Create a fresh regex each time to avoid lastIndex issues
-    const regex = new RegExp(def.regex.source, def.regex.flags);
-    const { groups } = def;
+export function extractMapkeyBlocks(text: string): MapkeyBlock[] {
+  const blocks: MapkeyBlock[] = [];
+  const lines = text.split('\n');
+  
+  let i = 0;
+  while (i < lines.length) {
+    const line = lines[i];
     
-    let match: RegExpExecArray | null;
-
-    while ((match = regex.exec(text)) !== null) {
-      // If no groups, treat whole match as one token
-      if (!groups) {
-        const start = match.index;
-        const end = start + match[0].length;
-
-        if (!Number.isFinite(start) || !Number.isFinite(end) || end <= start) continue;
-
-        tokens.push({ type: def.type, value: match[0], start, end });
+    // Look for mapkey declaration: ^mapkey <name>
+    const declMatch = line.match(/^mapkey\s+([^\s;]+)/);
+    if (!declMatch) {
+      i++;
+      continue;
+    }
+    
+    // Found a mapkey declaration
+    const blockStartLine = i;
+    const mapkeyName = declMatch[1];
+    const blockId = `mapkey_${blockStartLine}_${mapkeyName}`;
+    
+    // Calculate absolute start position
+    const blockStart = lines.slice(0, blockStartLine).join('\n').length + 
+                       (blockStartLine > 0 ? 1 : 0);
+    
+    // Collect all lines belonging to this mapkey
+    let blockEndLine = i;
+    i++; // Move to next line
+    
+    while (i < lines.length) {
+      const currentLine = lines[i];
+      const trimmed = currentLine.trim();
+      
+      // Empty line - mapkey ends
+      if (trimmed === '') {
+        break;
+      }
+      
+      // Comment line - must end with ;\  to continue
+      if (trimmed.startsWith('!')) {
+        blockEndLine = i;
+        if (trimmed.endsWith(';\\')) {
+          i++;
+          continue;
+        } else {
+          // Comment without ;\ ends the mapkey
+          i++;
+          break;
+        }
+      }
+      
+      // Must be a continuation line
+      if (!trimmed.startsWith('mapkey(continued)')) {
+        // Not a valid continuation - mapkey ends
+        break;
+      }
+      
+      blockEndLine = i;
+      
+      // Check line ending
+      if (trimmed.endsWith(';\\')) {
+        // Continue to next line
+        i++;
         continue;
-      }
-
-      // Process capture groups
-      for (const g of groups) {
-        const value = match[g.index];
-        if (!value) continue;
-
-        // Calculate position based on the match position and the substring
-        // This is more reliable than indexOf
-        const groupStart = match.index + match[0].indexOf(value);
-        const groupEnd = groupStart + value.length;
-
-        if (!Number.isFinite(groupStart) || !Number.isFinite(groupEnd) || groupEnd <= groupStart) continue;
-
-        tokens.push({ type: g.type, value, start: groupStart, end: groupEnd });
+      } else if (trimmed.endsWith(';')) {
+        // Final line of mapkey
+        i++;
+        break;
+      } else {
+        // Invalid ending - mapkey ends
+        i++;
+        break;
       }
     }
+    
+    // Calculate absolute end position
+    const blockEnd = lines.slice(0, blockEndLine + 1).join('\n').length;
+    
+    // Extract block content
+    const blockContent = lines.slice(blockStartLine, blockEndLine + 1).join('\n');
+    
+    // Create the block
+    blocks.push({
+      id: blockId,
+      name: mapkeyName,
+      start: blockStart,
+      end: blockEnd,
+      content: blockContent,
+      tokens: [] // Will be filled in Phase 2
+    });
   }
+  
+  return blocks;
+}
 
-  // Sort tokens by position
-  let result = tokens.sort((a, b) => a.start - b.start);
+// ============================================================================
+// PHASE 2: CONTENT-LEVEL TOKENIZATION
+// ============================================================================
+
+/**
+ * Tokenize the contents of a mapkey block
+ * 
+ * This identifies:
+ * - Metadata tags (@MAPKEY_NAME, @MAPKEY_LABEL)
+ * - Actions (~ ... ;)
+ * - Action verbs (first element after ~)
+ * - Action arguments (backtick strings, integers)
+ * - System commands (@MANUAL_PAUSE, @SYSTEM)
+ * - Nested mapkeys (%)
+ * - Comments (!)
+ */
+function tokenizeMapkeyContent(block: MapkeyBlock): Token[] {
+  const tokens: Token[] = [];
+  const content = block.content;
+  const blockStart = block.start;
   
-  // Add derived tokens (label/description content and mapkey.end)
-  result = addDerivedTokens(text, result);
+  // -------------------------------------------------------------------------
+  // 1. TOKENIZE MAPKEY DECLARATION LINE
+  // -------------------------------------------------------------------------
   
-  return result;
+  // Match: mapkey <name>
+  const declMatch = content.match(/^mapkey\s+([^\s;]+)/);
+  if (declMatch) {
+    const keywordStart = 0;
+    const keywordEnd = 6; // "mapkey"
+    
+    tokens.push({
+      type: 'mapkey.keyword',
+      value: 'mapkey',
+      start: blockStart + keywordStart,
+      end: blockStart + keywordEnd,
+      blockId: block.id
+    });
+    
+    const nameStart = content.indexOf(declMatch[1], keywordEnd);
+    const nameEnd = nameStart + declMatch[1].length;
+    
+    tokens.push({
+      type: 'mapkey.name',
+      value: declMatch[1],
+      start: blockStart + nameStart,
+      end: blockStart + nameEnd,
+      blockId: block.id
+    });
+  }
+  
+  // -------------------------------------------------------------------------
+  // 2. TOKENIZE METADATA TAGS
+  // -------------------------------------------------------------------------
+  
+  // @MAPKEY_NAME with multiline content
+  const nameTagRegex = /@MAPKEY_NAME/g;
+  let match: RegExpExecArray | null;
+  
+  while ((match = nameTagRegex.exec(content)) !== null) {
+    const tagStart = match.index;
+    const tagEnd = tagStart + match[0].length;
+    
+    tokens.push({
+      type: 'mapkey.tag.name',
+      value: '@MAPKEY_NAME',
+      start: blockStart + tagStart,
+      end: blockStart + tagEnd,
+      blockId: block.id
+    });
+    
+    // Extract description content after tag
+    const descToken = extractMetadataContent(content, tagEnd, blockStart, block.id);
+    if (descToken) tokens.push(descToken);
+  }
+  
+  // @MAPKEY_LABEL with multiline content
+  const labelTagRegex = /@MAPKEY_LABEL/g;
+  
+  while ((match = labelTagRegex.exec(content)) !== null) {
+    const tagStart = match.index;
+    const tagEnd = tagStart + match[0].length;
+    
+    tokens.push({
+      type: 'mapkey.tag.label',
+      value: '@MAPKEY_LABEL',
+      start: blockStart + tagStart,
+      end: blockStart + tagEnd,
+      blockId: block.id
+    });
+    
+    // Extract label content after tag
+    const labelToken = extractMetadataContent(content, tagEnd, blockStart, block.id);
+    if (labelToken) {
+      labelToken.type = 'mapkey.label';
+      tokens.push(labelToken);
+    }
+  }
+  
+  // -------------------------------------------------------------------------
+  // 3. TOKENIZE SYSTEM COMMANDS
+  // -------------------------------------------------------------------------
+  
+  const systemCmdRegex = /(@MANUAL_PAUSE|@SYSTEM)/g;
+  
+  while ((match = systemCmdRegex.exec(content)) !== null) {
+    tokens.push({
+      type: 'mapkey.system.command',
+      value: match[0],
+      start: blockStart + match.index,
+      end: blockStart + match.index + match[0].length,
+      blockId: block.id
+    });
+  }
+  
+  // -------------------------------------------------------------------------
+  // 4. TOKENIZE NESTED MAPKEYS
+  // -------------------------------------------------------------------------
+  
+  // Pattern: %mapkeyname;
+  const nestedRegex = /%([^;]+);/g;
+  
+  while ((match = nestedRegex.exec(content)) !== null) {
+    const fullStart = match.index;
+    const fullEnd = fullStart + match[0].length;
+    
+    // Token for the % symbol
+    tokens.push({
+      type: 'mapkey.nested.marker',
+      value: '%',
+      start: blockStart + fullStart,
+      end: blockStart + fullStart + 1,
+      blockId: block.id
+    });
+    
+    // Token for the nested mapkey name
+    tokens.push({
+      type: 'mapkey.nested.name',
+      value: match[1],
+      start: blockStart + fullStart + 1,
+      end: blockStart + fullEnd - 1,
+      blockId: block.id
+    });
+    
+    // Token for the semicolon
+    tokens.push({
+      type: 'mapkey.nested.terminator',
+      value: ';',
+      start: blockStart + fullEnd - 1,
+      end: blockStart + fullEnd,
+      blockId: block.id
+    });
+  }
+  
+  // -------------------------------------------------------------------------
+  // 5. TOKENIZE ACTIONS (~ ... ;)
+  // -------------------------------------------------------------------------
+  
+  // Actions are the core of mapkeys
+  // Pattern: ~ <verb> <args...> ;
+  // Args can be: `string`, integer, or `string` integer combinations
+  const actionRegex = /~\s*([^\s;`]+)(.*?);/g;
+  
+  while ((match = actionRegex.exec(content)) !== null) {
+    const actionStart = match.index;
+    const actionEnd = actionStart + match[0].length;
+    const verb = match[1];
+    const argsString = match[2];
+    
+    // Token for ~ marker
+    tokens.push({
+      type: 'mapkey.action.marker',
+      value: '~',
+      start: blockStart + actionStart,
+      end: blockStart + actionStart + 1,
+      blockId: block.id
+    });
+    
+    // Token for action verb
+    const verbStart = content.indexOf(verb, actionStart + 1);
+    tokens.push({
+      type: 'mapkey.action.verb',
+      value: verb,
+      start: blockStart + verbStart,
+      end: blockStart + verbStart + verb.length,
+      blockId: block.id
+    });
+    
+    // Tokenize arguments
+    const argTokens = tokenizeActionArguments(
+      argsString, 
+      blockStart + verbStart + verb.length,
+      block.id,
+      verb
+    );
+    tokens.push(...argTokens);
+    
+    // Token for terminating semicolon
+    tokens.push({
+      type: 'mapkey.action.terminator',
+      value: ';',
+      start: blockStart + actionEnd - 1,
+      end: blockStart + actionEnd,
+      blockId: block.id
+    });
+  }
+  
+  // -------------------------------------------------------------------------
+  // 6. TOKENIZE COMMENTS
+  // -------------------------------------------------------------------------
+  
+  const commentRegex = /^!.*$/gm;
+  
+  while ((match = commentRegex.exec(content)) !== null) {
+    tokens.push({
+      type: 'comment.line',
+      value: match[0],
+      start: blockStart + match.index,
+      end: blockStart + match.index + match[0].length,
+      blockId: block.id
+    });
+  }
+  
+  // -------------------------------------------------------------------------
+  // 7. TOKENIZE CONTINUATION MARKERS
+  // -------------------------------------------------------------------------
+  
+  const contRegex = /^mapkey\(continued\)/gm;
+  
+  while ((match = contRegex.exec(content)) !== null) {
+    tokens.push({
+      type: 'mapkey.continuation',
+      value: match[0],
+      start: blockStart + match.index,
+      end: blockStart + match.index + match[0].length,
+      blockId: block.id
+    });
+  }
+  
+  return tokens;
 }
 
 /**
- * Add derived tokens:
- * 1. mapkey.label - content after @MAPKEY_LABEL
- * 2. mapkey.description - content after @MAPKEY_NAME
- * 3. mapkey.end - final semicolon of mapkey definition
+ * Extract metadata content after @MAPKEY_NAME or @MAPKEY_LABEL
+ * Handles multiline content with backslash continuations
  */
-export function addDerivedTokens(text: string, tokens: Token[]): Token[] {
-  const derived: Token[] = [...tokens];
+function extractMetadataContent(
+  content: string, 
+  tagEnd: number, 
+  blockStart: number,
+  blockId: string
+): Token | null {
+  // Find the line containing the tag
+  const beforeTag = content.substring(0, tagEnd);
+  const lineStart = beforeTag.lastIndexOf('\n') + 1;
+  const lineEnd = content.indexOf('\n', tagEnd);
+  const firstLine = content.substring(tagEnd, lineEnd !== -1 ? lineEnd : content.length);
   
-  // Find @MAPKEY_LABEL and @MAPKEY_NAME tags and create content tokens
-  for (const token of tokens) {
-    if (token.type === "mapkey.tag.label") {
-      const contentToken = extractContentAfterTag(text, token, "mapkey.label");
-      if (contentToken) derived.push(contentToken);
-    } else if (token.type === "mapkey.tag.name") {
-      const contentToken = extractContentAfterTag(text, token, "mapkey.description");
-      if (contentToken) derived.push(contentToken);
-    }
-  }
-  
-  // Add mapkey.end tokens
-  const withEnds = addMapkeyEndTokens(text, derived);
-  
-  return withEnds.sort((a, b) => a.start - b.start);
-}
-
-/**
- * Extract content after @MAPKEY_LABEL or @MAPKEY_NAME tag
- */
-function extractContentAfterTag(text: string, tagToken: Token, contentType: string): Token | null {
-  // Start position is right after the tag
-  let start = tagToken.end;
-  
-  // Find the end of this line
-  let lineEnd = text.indexOf('\n', start);
-  if (lineEnd === -1) lineEnd = text.length;
-  
-  // Get content from after tag to end of line
-  let content = text.substring(start, lineEnd);
-  let currentEnd = lineEnd;
-  
-  // Check if we hit a semicolon on the first line (before any backslash)
-  const firstLineSemicolon = content.indexOf(';');
-  if (firstLineSemicolon !== -1) {
-    // Stop at the semicolon
-    content = content.substring(0, firstLineSemicolon).trim();
-    currentEnd = start + firstLineSemicolon;
+  // Check for semicolon on first line
+  const semiPos = firstLine.indexOf(';');
+  if (semiPos !== -1) {
+    const value = firstLine.substring(0, semiPos).trim();
+    if (!value) return null;
     
-    // Don't create empty tokens
-    if (!content) return null;
-    
-    return { 
-      type: contentType, 
-      value: content, 
-      start: start,
-      end: currentEnd 
+    return {
+      type: 'mapkey.description',
+      value,
+      start: blockStart + tagEnd,
+      end: blockStart + tagEnd + semiPos,
+      blockId
     };
   }
   
-  // Remove trailing backslash and whitespace from first line
-  content = content.replace(/\s*\\+\s*$/g, '').trim();
+  // Multiline content - collect until we hit a line without backslash
+  let collectedContent = firstLine.replace(/\s*\\+\s*$/g, '').trim();
+  let currentPos = lineEnd !== -1 ? lineEnd : content.length;
   
-  // Check if line ends with backslash (continuation)
-  let prevLineEnd = lineEnd;
-  while (currentEnd < text.length) {
-    // Check if previous line ended with backslash
-    const prevLineContent = text.substring(start, prevLineEnd);
-    if (!prevLineContent.trim().endsWith('\\')) break;
+  while (currentPos < content.length) {
+    const nextLineStart = currentPos + 1;
+    const nextLineEnd = content.indexOf('\n', nextLineStart);
+    const nextLine = content.substring(
+      nextLineStart, 
+      nextLineEnd !== -1 ? nextLineEnd : content.length
+    );
     
-    // Find next line start
-    let nextLineStart = currentEnd + 1;
-    if (nextLineStart >= text.length) break;
+    // Skip mapkey(continued) prefix
+    const cleanLine = nextLine.replace(/^mapkey\(continued\)\s*/, '');
     
-    // Skip "mapkey(continued)" if present
-    const continuedMatch = text.substring(nextLineStart).match(/^mapkey\(continued\)\s*/);
-    if (continuedMatch) {
-      nextLineStart += continuedMatch[0].length;
-    }
-    
-    // Find next line end
-    let nextLineEnd = text.indexOf('\n', nextLineStart);
-    if (nextLineEnd === -1) nextLineEnd = text.length;
-    
-    // Get line content
-    const lineContent = text.substring(nextLineStart, nextLineEnd);
-    
-    // Check for semicolon in this line (end of content)
-    const semicolonPos = lineContent.indexOf(';');
-    if (semicolonPos !== -1) {
-      // Add content up to semicolon and stop
-      const partialLine = lineContent.substring(0, semicolonPos).trim();
-      if (partialLine) {
-        content += ' ' + partialLine;
-      }
-      currentEnd = nextLineStart + semicolonPos;
+    // Check for semicolon
+    const nextSemiPos = cleanLine.indexOf(';');
+    if (nextSemiPos !== -1) {
+      const partial = cleanLine.substring(0, nextSemiPos).trim();
+      if (partial) collectedContent += ' ' + partial;
       break;
     }
     
-    // No semicolon, add full line (removing trailing backslash and whitespace)
-    const cleanLine = lineContent.replace(/\s*\\+\s*$/g, '').trim();
-    if (cleanLine) {
-      content += ' ' + cleanLine;
-    }
+    // Check for backslash continuation
+    if (!cleanLine.trim().endsWith('\\')) break;
     
-    prevLineEnd = nextLineEnd;
-    currentEnd = nextLineEnd;
+    // Add this line to content
+    const cleaned = cleanLine.replace(/\s*\\+\s*$/g, '').trim();
+    if (cleaned) collectedContent += ' ' + cleaned;
+    
+    currentPos = nextLineEnd !== -1 ? nextLineEnd : content.length;
   }
   
-  // Final cleanup - remove any remaining trailing semicolons or backslashes
-  content = content.replace(/[;\\]+$/g, '').trim();
+  if (!collectedContent) return null;
   
-  // Don't create empty tokens
-  if (!content) return null;
-  
-  return { 
-    type: contentType, 
-    value: content, 
-    start: start,
-    end: currentEnd 
+  return {
+    type: 'mapkey.description',
+    value: collectedContent,
+    start: blockStart + tagEnd,
+    end: blockStart + currentPos,
+    blockId
   };
 }
 
 /**
- * Add mapkey.end tokens
- * A mapkey.end is the final semicolon of a mapkey definition,
- * which is NOT followed by another mapkey(continued) line.
+ * Tokenize arguments within an action
+ * 
+ * Arguments can be:
+ * - Backtick strings: `string`
+ * - Integers: 123 or `123`
+ * - Mixed combinations
+ * 
+ * The verb context helps identify what type of arguments to expect
  */
-function addMapkeyEndTokens(text: string, tokens: Token[]): Token[] {
-  const result = [...tokens];
-  const lines = text.split('\n');
+function tokenizeActionArguments(
+  argsString: string, 
+  baseOffset: number,
+  blockId: string,
+  verb: string
+): Token[] {
+  const tokens: Token[] = [];
   
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
+  // Match backtick-enclosed strings
+  const backtickRegex = /`([^`]*)`/g;
+  let match: RegExpExecArray | null;
+  
+  while ((match = backtickRegex.exec(argsString)) !== null) {
+    const start = match.index;
+    const end = start + match[0].length;
     
-    // Check if this line ends with a semicolon (but not semicolon-backslash)
-    const trimmed = line.trim();
-    if (!trimmed.endsWith(';') || trimmed.endsWith(';\\')) continue;
+    // Determine argument type based on verb context
+    let argType = 'mapkey.action.arg.string';
     
-    // Check if the next non-empty line is NOT a mapkey(continued) or comment continuation
-    let isMapkeyEnd = true;
-    for (let j = i + 1; j < lines.length; j++) {
-      const nextLine = lines[j].trim();
-      
-      // Skip empty lines
-      if (nextLine === '') continue;
-      
-      // If next line is mapkey(continued), this is NOT a mapkey.end
-      if (nextLine.startsWith('mapkey(continued)')) {
-        isMapkeyEnd = false;
-        break;
-      }
-      
-      // If next line is a comment ending with ;\, continue checking
-      if (nextLine.startsWith('!') && nextLine.endsWith(';\\')) {
-        continue;
-      }
-      
-      // Any other non-empty line means this is a mapkey.end
-      break;
+    // Context-aware typing (expandable based on verb)
+    if (verb === 'Command' || verb === 'ProCmdCommand') {
+      argType = 'mapkey.action.arg.command';
+    } else if (verb === 'Select' || verb === 'Activate') {
+      argType = 'mapkey.action.arg.ui_element';
     }
     
-    // If this is the last line, it's definitely a mapkey.end
-    if (i === lines.length - 1 && trimmed.endsWith(';')) {
-      isMapkeyEnd = true;
-    }
-    
-    if (isMapkeyEnd) {
-      // Find the position of the final semicolon
-      const lineStart = lines.slice(0, i).join('\n').length + (i > 0 ? 1 : 0);
-      const semicolonPos = lineStart + line.lastIndexOf(';');
-      
-      result.push({
-        type: 'mapkey.end',
-        value: ';',
-        start: semicolonPos,
-        end: semicolonPos + 1
-      });
-    }
+    tokens.push({
+      type: argType,
+      value: match[1], // Content without backticks
+      start: baseOffset + start + 1, // +1 to skip opening backtick
+      end: baseOffset + end - 1,     // -1 to skip closing backtick
+      blockId
+    });
   }
   
-  return result;
+  // Match standalone integers (not in backticks)
+  const integerRegex = /\s(\d+)(?=\s|$)/g;
+  
+  while ((match = integerRegex.exec(argsString)) !== null) {
+    tokens.push({
+      type: 'mapkey.action.arg.integer',
+      value: match[1],
+      start: baseOffset + match.index + 1, // +1 for the space
+      end: baseOffset + match.index + 1 + match[1].length,
+      blockId
+    });
+  }
+  
+  return tokens;
+}
+
+// ============================================================================
+// MAIN TOKENIZATION FUNCTION
+// ============================================================================
+
+/**
+ * Main entry point for tokenization
+ * 
+ * This performs two-phase tokenization:
+ * 1. Extract mapkey blocks
+ * 2. Tokenize contents of each block
+ * 
+ * Returns a flat array of all tokens, sorted by position
+ */
+export function tokenize(text: string): Token[] {
+  // Phase 1: Extract blocks
+  const blocks = extractMapkeyBlocks(text);
+  
+  // Phase 2: Tokenize each block
+  const allTokens: Token[] = [];
+  
+  for (const block of blocks) {
+    const blockTokens = tokenizeMapkeyContent(block);
+    block.tokens = blockTokens;
+    allTokens.push(...blockTokens);
+  }
+  
+  // Sort all tokens by position
+  return allTokens.sort((a, b) => a.start - b.start);
 }
 
 /**
- * Step 3: Optional helper for hover or diagnostics.
+ * Get all mapkey blocks (useful for structure analysis)
+ */
+export function getMapkeyBlocks(text: string): MapkeyBlock[] {
+  const blocks = extractMapkeyBlocks(text);
+  
+  // Tokenize each block
+  for (const block of blocks) {
+    block.tokens = tokenizeMapkeyContent(block);
+  }
+  
+  return blocks;
+}
+
+/**
+ * Get the token at a specific position
  */
 export function getTokenAtPosition(text: string, position: number): Token | null {
   const tokens = tokenize(text);
   return tokens.find(t => position >= t.start && position < t.end) || null;
+}
+
+/**
+ * Get the mapkey block at a specific position
+ */
+export function getBlockAtPosition(text: string, position: number): MapkeyBlock | null {
+  const blocks = getMapkeyBlocks(text);
+  return blocks.find(b => position >= b.start && position <= b.end) || null;
 }
