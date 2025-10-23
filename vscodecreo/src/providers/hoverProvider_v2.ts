@@ -25,7 +25,10 @@ provideHover(
     if (current) {
       md.appendMarkdown(`## Mapkey \`${current.name}\`\n`);      
       md.appendMarkdown(`${current.label}\n\n`);
-      md.appendMarkdown(`**Defined at:** Line ${document.positionAt(current.range.start).line + 1}\n\n`);
+      const defLine = document.positionAt(current.range.start).line + 1;
+      const defUri = `${document.uri.toString()}#L${defLine}`;
+      md.appendMarkdown(`**Defined at:** [Line ${defLine}](${defUri})\n\n`);
+
 
       // find all mapkeys that call this one
       const refs = allMapkeys
@@ -47,12 +50,20 @@ provideHover(
       if (def.label)
         md.appendMarkdown(`${def.label}\n\n`);
 
-      md.appendMarkdown(`**Defined at:** Line ${document.positionAt(def.range.start).line + 1}\n\n`);
+    const defLine = document.positionAt(def.range.start).line + 1;
+    const defUri = `${document.uri.toString()}#L${defLine}`;
+    md.appendMarkdown(`**Defined at:** [Line ${defLine}](${defUri})\n\n`);
+
     }
 
     const parents = allMapkeys
       .filter(mk => mk.calledMapkeys?.includes(token.value))
-      .map(mk => `${mk.name} (line ${document.positionAt(mk.range.start).line + 1})`);
+      .map(mk => {
+        const line = document.positionAt(mk.range.start).line + 1;
+        const uri = `${document.uri.toString()}#L${line}`;
+        return `[${mk.name}](${uri}) (line ${line})`;
+      });
+
     if (parents.length > 0)
       md.appendMarkdown(`**Used in:** \n\n${parents.join('\n\n')}\n\n`);
     else
