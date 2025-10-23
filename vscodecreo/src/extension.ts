@@ -1,5 +1,7 @@
 import * as vscode from 'vscode';
-import { CreoHoverProvider } from './providers/hoverProvider';
+//import { CreoHoverProvider } from './providers/hoverProvider';
+//import { CreoHoverProvider } from './providers/hoverProvider_v1';
+import { CreoHoverProvider } from './providers/hoverProvider_v2';
 import { parseMapkeys, getMapkeyAtPosition } from './server/mapkeyStructure';
 
 export function activate(context: vscode.ExtensionContext) {
