@@ -48,7 +48,7 @@ export class CreoHoverProvider implements vscode.HoverProvider {
     const md = new vscode.MarkdownString();
     
     // If hovering over a mapkey-related token, show the full mapkey structure
-    if (token.type.startsWith('mapkey.')) {
+    if (token.type.startsWith('mapkey.continuation')) {
       const mapkey = getMapkeyAtPosition(text, offset);
       if (mapkey) {
         md.appendMarkdown(`## Mapkey: \`${mapkey.name}\`\n\n`);
@@ -71,6 +71,27 @@ export class CreoHoverProvider implements vscode.HoverProvider {
         md.appendMarkdown(`---\n\n`);
       }
     }
+
+    // If hovering over a nested mapkey token, show the nested mapkey info
+    if (token.type === 'mapkey.nested.name') {
+      const mapkey = getMapkeyAtPosition(text, offset);
+      if (mapkey && mapkey.nestedTokens) {
+        // Use the stored tokens
+        md.appendMarkdown(`Found ${mapkey.nestedTokens.length} nested calls\n\n`);
+      }
+    
+        
+      // Find where this nested mapkey is defined
+      const allMapkeys = parseMapkeys(text);
+      const definition = allMapkeys.find(mk => mk.name === token.value);
+        
+      if (definition) {
+        md.appendMarkdown(`**Defined at:** Line ${document.positionAt(definition.range.start).line + 1}\n\n`);
+      }
+                
+        md.appendMarkdown(`---\n\n`);
+      }
+        
     
     md.appendCodeblock(token.value, 'plaintext');
     md.appendMarkdown(`\n**Token type:** \`${token.type}\``);

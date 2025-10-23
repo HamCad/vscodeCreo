@@ -18,6 +18,7 @@ export interface MapkeyDefinition {
   };
   allTokens: Token[];  // All tokens within this mapkey
   calledMapkeys: string[];  // Mapkeys that this one calls
+  nestedTokens?: Token[];  // Tokens for nested mapkey calls
 }
 
 /**
@@ -67,7 +68,8 @@ function buildMapkeyDefinition(block: MapkeyBlock): MapkeyDefinition {
       end: block.end
     },
     allTokens: tokens,
-    calledMapkeys
+    calledMapkeys,
+    nestedTokens
   };
 }
 
