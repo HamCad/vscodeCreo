@@ -266,25 +266,13 @@ function tokenizeMapkeyContent(block: MapkeyBlock): Token[] {
   const systemCmdRegex = /(@MANUAL_PAUSE|@SYSTEM)/g;
   
   while ((match = systemCmdRegex.exec(content)) !== null) {
-
-    const tagStart = match.index;
-    const tagEnd = tagStart + match[0].length;
-
     tokens.push({
       type: 'mapkey.system.command',
       value: match[0],
-      start: blockStart + tagStart,
-      end: blockStart + tagEnd,
+      start: blockStart + match.index,
+      end: blockStart + match.index + match[0].length,
       blockId: block.id
     });
-
-    // Extract label content after tag
-    const labelToken = extractMetadataContent(content, tagEnd, blockStart, block.id);
-    if (labelToken) {
-      labelToken.type = 'mapkey.system.instruction';
-      tokens.push(labelToken);
-    }
-
   }
   
   // -------------------------------------------------------------------------
@@ -409,6 +397,82 @@ function tokenizeMapkeyContent(block: MapkeyBlock): Token[] {
       end: blockStart + match.index + match[0].length,
       blockId: block.id
     });
+  }
+  
+  return tokens;
+}
+
+// ============================================================================
+// PHASE 3: DOCUMENT-LEVEL TOKENIZATION
+// ============================================================================
+
+/**
+ * Tokenize document-level markers that exist outside of mapkey blocks
+ * 
+ * This includes:
+ * - Region markers (!region, !endregion)
+ * - Standalone comments
+ * - Config options
+ * - Any other global markers
+ */
+function tokenizeDocumentLevel(text: string): Token[] {
+  const tokens: Token[] = [];
+  
+  // -------------------------------------------------------------------------
+  // 1. TOKENIZE REGION MARKERS (for folding)
+  // -------------------------------------------------------------------------
+  
+  const regionStartRegex = /^\s*!region/gm;
+  let match: RegExpExecArray | null;
+  
+  while ((match = regionStartRegex.exec(text)) !== null) {
+    tokens.push({
+      type: 'region.start',
+      value: match[0],
+      start: match.index,
+      end: match.index + match[0].length
+    });
+  }
+
+  const regionEndRegex = /^\s*!endregion/gm;
+  
+  while ((match = regionEndRegex.exec(text)) !== null) {
+    tokens.push({
+      type: 'region.end',
+      value: match[0],
+      start: match.index,
+      end: match.index + match[0].length
+    });
+  }
+  
+  // -------------------------------------------------------------------------
+  // 2. TOKENIZE STANDALONE COMMENTS (outside mapkeys)
+  // -------------------------------------------------------------------------
+  
+  // Find all mapkey block ranges to exclude them
+  const blocks = extractMapkeyBlocks(text);
+  const blockRanges = blocks.map(b => ({ start: b.start, end: b.end }));
+  
+  const commentRegex = /^!.*$/gm;
+  
+  while ((match = commentRegex.exec(text)) !== null) {
+    const commentStart = match.index;
+    const commentEnd = commentStart + match[0].length;
+    
+    // Check if this comment is inside a mapkey block
+    const isInsideBlock = blockRanges.some(
+      range => commentStart >= range.start && commentEnd <= range.end
+    );
+    
+    // Only add if it's NOT inside a mapkey block
+    if (!isInsideBlock) {
+      tokens.push({
+        type: 'comment.standalone',
+        value: match[0],
+        start: commentStart,
+        end: commentEnd
+      });
+    }
   }
   
   return tokens;
@@ -560,6 +624,7 @@ function tokenizeActionArguments(
  * This performs two-phase tokenization:
  * 1. Extract mapkey blocks
  * 2. Tokenize contents of each block
+ * 3. Tokenize document-level markers (regions, etc.)
  * 
  * Returns a flat array of all tokens, sorted by position
  */
@@ -576,6 +641,10 @@ export function tokenize(text: string): Token[] {
     allTokens.push(...blockTokens);
   }
   
+  // Phase 3: Tokenize document-level markers (outside mapkey blocks)
+  const documentTokens = tokenizeDocumentLevel(text);
+  allTokens.push(...documentTokens);
+  
   // Sort all tokens by position
   return allTokens.sort((a, b) => a.start - b.start);
 }
@@ -591,7 +660,7 @@ export function getMapkeyBlocks(text: string): MapkeyBlock[] {
     block.tokens = tokenizeMapkeyContent(block);
   }
   
-  return blocks;
+  return blocks; 
 }
 
 /**

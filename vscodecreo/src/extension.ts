@@ -2,6 +2,7 @@ import * as vscode from 'vscode';
 //import { CreoHoverProvider } from './providers/hoverProvider';
 //import { CreoHoverProvider } from './providers/hoverProvider_v1';
 import { CreoHoverProvider } from './providers/hoverProvider_v2';
+import { CreoFoldingProvider } from './providers/foldingProvider';
 import { parseMapkeys, getMapkeyAtPosition } from './server/mapkeyStructure';
 
 export function activate(context: vscode.ExtensionContext) {
@@ -12,18 +13,12 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.languages.registerHoverProvider(selector, new CreoHoverProvider())
   );
 
-   // // In extension.ts
-   // vscode.languages.registerFoldingRangeProvider(selector, {
-   //   provideFoldingRanges(document) {
-   //     const ranges = getMapkeyFoldingRanges(document.getText());
-   //     return ranges.map(r => 
-   //       new vscode.FoldingRange(
-   //         document.positionAt(r.start).line,
-   //         document.positionAt(r.end).line
-   //       )
-   //     );
-   //   }
-   // });
+  context.subscriptions.push(
+    vscode.languages.registerFoldingRangeProvider(
+      selector, 
+      new CreoFoldingProvider()  // ✅ Instantiate the class
+    )
+  );
    //
    // const mapkeys = parseMapkeys(text);
    // const diagnostics: vscode.Diagnostic[] = [];
