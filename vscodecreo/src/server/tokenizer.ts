@@ -266,13 +266,25 @@ function tokenizeMapkeyContent(block: MapkeyBlock): Token[] {
   const systemCmdRegex = /(@MANUAL_PAUSE|@SYSTEM)/g;
   
   while ((match = systemCmdRegex.exec(content)) !== null) {
+
+    const tagStart = match.index;
+    const tagEnd = tagStart + match[0].length;
+
     tokens.push({
       type: 'mapkey.system.command',
       value: match[0],
-      start: blockStart + match.index,
-      end: blockStart + match.index + match[0].length,
+      start: blockStart + tagStart,
+      end: blockStart + tagEnd,
       blockId: block.id
     });
+
+    // Extract label content after tag
+    const labelToken = extractMetadataContent(content, tagEnd, blockStart, block.id);
+    if (labelToken) {
+      labelToken.type = 'mapkey.system.instruction';
+      tokens.push(labelToken);
+    }
+
   }
   
   // -------------------------------------------------------------------------
