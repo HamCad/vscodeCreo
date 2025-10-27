@@ -91,11 +91,11 @@ provideHover(
 }
 
 
-  private getTokenAtOffset(text: string, offset: number): Token | null {
-    const tokens = tokenize(text);
-    return tokens.find(t => offset >= t.start && offset < t.end) || null;
-  }
-
+  // private getTokenAtOffset(text: string, offset: number): Token | null {
+  //   const tokens = tokenize(text);
+  //   return tokens.find(t => offset >= t.start && offset < t.end) || null;
+  // }
+  // 
   // Commented out for now
   // private getTokensAroundOffset(text: string, offset: number, window: number = 5): Token[] {
   //   const tokens = tokenize(text);

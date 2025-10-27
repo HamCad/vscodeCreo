@@ -232,8 +232,10 @@ function tokenizeMapkeyContent(block: MapkeyBlock): Token[] {
     });
     
     // Extract description content after tag
-    const descToken = extractMetadataContent(content, tagEnd, blockStart, block.id);
-    if (descToken) tokens.push(descToken);
+    const descToken = extractMultilineContent(content, tagEnd, blockStart, block.id);
+    if (descToken) {
+      descToken.type = 'mapkey.description'
+      tokens.push(descToken);}
   }
   
   // @MAPKEY_LABEL with multiline content
@@ -252,7 +254,7 @@ function tokenizeMapkeyContent(block: MapkeyBlock): Token[] {
     });
     
     // Extract label content after tag
-    const labelToken = extractMetadataContent(content, tagEnd, blockStart, block.id);
+    const labelToken = extractMultilineContent(content, tagEnd, blockStart, block.id);
     if (labelToken) {
       labelToken.type = 'mapkey.label';
       tokens.push(labelToken);
@@ -279,10 +281,10 @@ function tokenizeMapkeyContent(block: MapkeyBlock): Token[] {
     });
 
     // Extract label content after tag
-    const labelToken = extractMetadataContent(content, tagEnd, blockStart, block.id);
-    if (labelToken) {
-      labelToken.type = 'mapkey.system.instruction';
-      tokens.push(labelToken);
+    const systemCmdToken = extractMultilineContent(content, tagEnd, blockStart, block.id);
+    if (systemCmdToken) {
+      systemCmdToken.type = 'mapkey.system.instruction';
+      tokens.push(systemCmdToken);
     }
 
   }
@@ -491,10 +493,27 @@ function tokenizeDocumentLevel(text: string): Token[] {
 }
 
 /**
- * Extract metadata content after @MAPKEY_NAME or @MAPKEY_LABEL
- * Handles multiline content with backslash continuations
+ * Extract multiline content after a tag/marker
+ * 
+ * This is a generic function that handles content following any tag marker:
+ * - @MAPKEY_NAME, @MAPKEY_LABEL
+ * - @MANUAL_PAUSE, @SYSTEM
+ * - Any future multiline content
+ * 
+ * Rules:
+ * - Content starts immediately after the tag
+ * - Stops at the first semicolon (;)
+ * - Handles backslash continuations (\)
+ * - Skips "mapkey(continued)" prefixes
+ * - Trims whitespace and trailing backslashes
+ * 
+ * @param content - The block content to search within
+ * @param tagEnd - Position where the tag ends (start of content)
+ * @param blockStart - Absolute start position of the block
+ * @param blockId - ID of the containing mapkey block
+ * @returns Token for the extracted content, or null if empty
  */
-function extractMetadataContent(
+function extractMultilineContent(
   content: string, 
   tagEnd: number, 
   blockStart: number,
@@ -513,7 +532,7 @@ function extractMetadataContent(
     if (!value) return null;
     
     return {
-      type: 'mapkey.description',
+      type: 'multiline.content', // Will be overridden by caller
       value,
       start: blockStart + tagEnd,
       end: blockStart + tagEnd + semiPos,
@@ -521,7 +540,7 @@ function extractMetadataContent(
     };
   }
   
-  // Multiline content - collect until we hit a line without backslash
+  // Multiline content - collect until we hit a semicolon
   let collectedContent = firstLine.replace(/\s*\\+\s*$/g, '').trim();
   let currentPos = lineEnd !== -1 ? lineEnd : content.length;
   
@@ -557,7 +576,7 @@ function extractMetadataContent(
   if (!collectedContent) return null;
   
   return {
-    type: 'mapkey.description',
+    type: 'multiline.content', // Will be overridden by caller
     value: collectedContent,
     start: blockStart + tagEnd,
     end: blockStart + currentPos,
@@ -672,7 +691,7 @@ export function getMapkeyBlocks(text: string): MapkeyBlock[] {
     block.tokens = tokenizeMapkeyContent(block);
   }
   
-  return blocks; 
+  return blocks;
 }
 
 /**
