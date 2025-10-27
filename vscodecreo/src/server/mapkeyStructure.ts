@@ -11,6 +11,8 @@ export interface MapkeyDefinition {
   descriptionToken?: Token;
   label?: string;
   labelToken?: Token;
+  system?: string,
+  systemToken?: Token;
   block: MapkeyBlock;  // Reference to the underlying block
   range: {
     start: number;
@@ -50,6 +52,9 @@ function buildMapkeyDefinition(block: MapkeyBlock): MapkeyDefinition {
   
   // Find label
   const labelToken = tokens.find(t => t.type === 'mapkey.label');
+
+  // Find system commands
+  const systemToken = tokens.find(t => t.type === 'mapkey.system.instruction');
   
   // Find all nested mapkey calls
   const nestedTokens = tokens.filter(t => t.type === 'mapkey.nested.name');
@@ -62,6 +67,8 @@ function buildMapkeyDefinition(block: MapkeyBlock): MapkeyDefinition {
     descriptionToken,
     label: labelToken?.value,
     labelToken,
+    system: systemToken?.value,
+    systemToken,
     block,
     range: {
       start: block.start,
