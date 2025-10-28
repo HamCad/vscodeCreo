@@ -1,6 +1,6 @@
 const vscode = require("vscode");
 const tokenizer = require("../server/tokenizer");
-const mapkeyStructure = require("../server/mapkeyStructure");
+
 
 class ProHoverProvider {
     provideHover(document, position, _token) {
@@ -34,6 +34,8 @@ module.exports = {
 
 // Complete Hover Provider Below
 
+// const mapkeyStructure = require("../server/mapkeyStructure"); 
+//
 // class ProHoverProvider {
 //     provideHover(document, position, _token) {
 //         const text = document.getText();

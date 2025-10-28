@@ -34,6 +34,7 @@ function addSimpleToken(list, type, value, blockId = null) {
     list.push({ type, value, blockId });
 }
 
+
 // -----------------------------------------------------------------------------
 // HELPER: FLATTEN MULTILINE TOKEN
 // -----------------------------------------------------------------------------

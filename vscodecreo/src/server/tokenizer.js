@@ -29,6 +29,13 @@ function tokenize(text) {
     const blocks = extractMapkeyBlocks(text);
     const tokens = [];
 
+    // Phase 1: collect all tokens from each block
+    for (const block of blocks) {
+        if (block.tokens && Array.isArray(block.tokens)) {
+            tokens.push(...block.tokens);
+        }
+    }    
+
     // // Phase 2: mapkey content
     // for (const block of blocks) {
     //     const blockTokens = tokenizeMapkeyContent(block);
