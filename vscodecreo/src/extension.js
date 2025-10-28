@@ -1,10 +1,9 @@
 const vscode = require("vscode");
-const ProHoverProvider = require("./providers/hoverProvider");
-const MapkeyFoldingProvider = require("./providers/foldingProvider");
+const { ProHoverProvider } = require('./providers/hoverProvider');
+const { MapkeyFoldingProvider } = require('./providers/foldingProvider');
 
 function activate(context) {
-    const selector = [{ language: 'pro', scheme: 'file' }];
-
+    
     // --- 1. Diagnostics ---
 
 

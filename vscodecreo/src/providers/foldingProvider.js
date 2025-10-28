@@ -64,4 +64,7 @@ class MapkeyFoldingProvider {
         }
     }
 }
-exports.MapkeyFoldingProvider = MapkeyFoldingProvider;
+
+module.exports = {
+    MapkeyFoldingProvider
+};

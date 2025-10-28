@@ -72,4 +72,7 @@ class ProHoverProvider {
         return new vscode.Hover(md);
     }
 }
-exports.ProHoverProvider = ProHoverProvider;
+
+module.exports = {
+    ProHoverProvider
+};
