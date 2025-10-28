@@ -65,4 +65,3 @@ class MapkeyFoldingProvider {
     }
 }
 exports.MapkeyFoldingProvider = MapkeyFoldingProvider;
-//# sourceMappingURL=foldingProvider.js.map

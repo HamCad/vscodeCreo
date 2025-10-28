@@ -73,4 +73,3 @@ class ProHoverProvider {
     }
 }
 exports.ProHoverProvider = ProHoverProvider;
-//# sourceMappingURL=hoverProvider_v2.js.map
