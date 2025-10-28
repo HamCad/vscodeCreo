@@ -9,6 +9,7 @@
   "categories": [
     "Programming Languages"
   ],
+  "main": "./src/extension.js",
   "contributes": {
     "languages": [
       {
@@ -31,11 +32,5 @@
         "path": "./syntaxes/pro.tmLanguage.json"
       }
     ]
-  },
-  "main": "./out/extension.js",
-  "devDependencies": {
-    "@types/node": "^24.8.1",
-    "@types/vscode": "^1.105.0",
-    "typescript": "^5.9.3"
   }
 }
