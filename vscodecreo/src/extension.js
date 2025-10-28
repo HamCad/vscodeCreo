@@ -1,6 +1,6 @@
 const vscode = require("vscode");
-const CreoHoverProvider = require("./providers/hoverProvider");
-const foldingProvider = require("./providers/foldingProvider");
+const ProHoverProvider = require("./providers/hoverProvider");
+const MapkeyFoldingProvider = require("./providers/foldingProvider");
 
 function activate(context) {
     const selector = [{ language: 'pro', scheme: 'file' }];
@@ -13,7 +13,7 @@ function activate(context) {
         // Folding Providers
         vscode.languages.registerFoldingRangeProvider(
             { language: 'pro' },
-            new ProFoldingProvider()
+            new MapkeyFoldingProvider()
         ),
         // Hover Providers
         vscode.languages.registerHoverProvider(
