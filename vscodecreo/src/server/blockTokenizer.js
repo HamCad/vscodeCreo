@@ -18,6 +18,7 @@ const REGEX = {
     CONTINUATION_LINE_START: /^mapkey\(continued\)\s/,
     CONTINUATION_LINE_END: /[^;](\\$)/,
     CONTINUATION_COMMENT: /^\s*!.+;\\$/,
+    MACRO_END: /;/,
     NESTED_MAPKEY: /%(.*\w);/,
     MAPKEY_LABEL: /@MAPKEY_LABEL/,
     MAPKEY_NAME: /@MAPKEY_NAME/, 
