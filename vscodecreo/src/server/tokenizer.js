@@ -49,7 +49,6 @@ function tokenize(text) {
         acc[t.type] = (acc[t.type] || 0) + 1;
         return acc;
     }, {}));
-
     // tokens.forEach((t, i) => console.log(`${i}: ${t.type}`));
 
 

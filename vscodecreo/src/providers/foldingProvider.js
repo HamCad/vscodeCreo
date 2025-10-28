@@ -1,6 +1,6 @@
 const vscode = require("vscode");
 const tokenizer = require("../server/tokenizer");
-const mapkeyStructure = require("../server/mapkeyStructure");
+const blockTokenizer = require("../server/blockTokenizer");
 
 class MapkeyFoldingProvider {
     provideFoldingRanges(document, _context, _token) {
@@ -41,10 +41,6 @@ class MapkeyFoldingProvider {
             }
         }
 
-        // Begin Console Logging
-        console.log("Tokens found:", tokens.length);
-        // End Console Logging
-
     }
 
     /**
@@ -52,10 +48,10 @@ class MapkeyFoldingProvider {
      */
     addMapkeyFolding(document, foldingRanges) {
         const text = document.getText();
-        const mapkeys = mapkeyStructure.parseMapkeys(text);
+        const mapkeys = blockTokenizer.extractMapkeyBlocks(text);
         for (const mapkey of mapkeys) {
-            const startLine = document.positionAt(mapkey.range.start).line;
-            const endLine = document.positionAt(mapkey.range.end).line;
+            const startLine = document.positionAt(mapkey.start).line;
+            const endLine = document.positionAt(mapkey.end).line;
             if (endLine > startLine) {
                 foldingRanges.push(new vscode.FoldingRange(startLine, endLine, vscode.FoldingRangeKind.Region));
             }

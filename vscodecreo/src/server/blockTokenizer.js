@@ -13,8 +13,10 @@
 // -----------------------------------------------------------------------------
 const REGEX = {
     MAPKEY_START: /^mapkey\s/,
-    DECLARATION: /^mapkey\s+([^\s;]+)/,
-    CONTINUATION_LINE: /(?:^mapkey\(continued\)|@).*\\$/,
+    // DECLARATION: /^mapkey\s+([^\s;]+)/,
+    DECLARATION: /^mapkey\s+([^\s]+)/,
+    // CONTINUATION_LINE: /(?:^mapkey\(continued\)|@).*\\$/,
+    CONTINUATION_LINE: /^\s*(?:mapkey\(continued\)|@).*\\$/,
     CONTINUATION_LINE_START: /^mapkey\(continued\)\s/,
     CONTINUATION_LINE_END: /[^;](\\$)/,
     CONTINUATION_COMMENT: /^\s*!.+;\\$/,
@@ -22,7 +24,9 @@ const REGEX = {
     NESTED_MAPKEY: /%(.*\w);/,
     MAPKEY_LABEL: /@MAPKEY_LABEL/,
     MAPKEY_NAME: /@MAPKEY_NAME/, 
-    MAPKEY_END: /.+(?:[^\\]$)(?=\n)/ 
+    // MAPKEY_END: /.+(?:[^\\]$)(?=\n)/
+    MAPKEY_END: /.+(?:[^\\]$)/
+    // MAPKEY_END: /.+(?:[^\\]$)(?=\n\s*$|\n^mapkey\s|\n^!.+[^;\\](?:\\|\s)$)/ 
 };
 
 // -----------------------------------------------------------------------------
