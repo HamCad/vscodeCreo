@@ -4,16 +4,7 @@
 //
 // PURPOSE
 // Identifies and extracts complete mapkey definitions from raw document text.
-// A "block" is a contiguous set of lines belonging to one mapkey.
-//
-// Each block object returned contains:
-//   {
-//      id, name, start, end, content, tokens:[]
-//   }
-//
-// To add new block-level detection logic (for other structure types):
-//   1. Define new regex constants below.
-//   2. Extend the main loop with your detection logic.
+// Emits tokens for mapkey.name and mapkey.nested.
 //
 // ============================================================================
 
@@ -21,9 +12,12 @@
 // CONSTANTS
 // -----------------------------------------------------------------------------
 const REGEX = {
+    MAPKEY_START: /^mapkey\s/,
     DECLARATION: /^mapkey\s+([^\s;]+)/,
-    CONTINUATION: /^mapkey\(continued\)/,
-    COMMENT: /^\s*!/,
+    CONTINUATION_LINE: /(?:^mapkey\(continued\)|@).*\\$/,
+    CONTINUATION_COMMENT: /^\s*!.+;\\$/,
+    NESTED_MAPKEY: /%(.*\w);/,
+    MAPKEY_END: /.+(?:[^\\]$)(?=\n)/
 };
 
 // -----------------------------------------------------------------------------
@@ -33,6 +27,10 @@ function addToken(list, type, value, start, end, blockId = null) {
     list.push({ type, value, start, end, blockId });
 }
 
+function addSimpleToken(list, type, value, blockId = null) {
+    list.push({ type, value, blockId });
+}
+
 // -----------------------------------------------------------------------------
 // EXTRACT ALL MAPKEY BLOCKS
 // -----------------------------------------------------------------------------
@@ -40,7 +38,7 @@ function extractMapkeyBlocks(text) {
     const blocks = [];
     const lines = text.split("\n");
 
-    let currentOffset = 0; // Tracks absolute char index
+    let currentOffset = 0;
     let i = 0;
 
     while (i < lines.length) {
@@ -58,47 +56,42 @@ function extractMapkeyBlocks(text) {
         const blockStart = currentOffset;
         const blockId = `mapkey_${blockStartLine}_${mapkeyName}`;
 
-        // Collect all continuation lines
         const collected = [line];
+        const tokens = [];
+
+        // --- Emit mapkey.name token ---
+        const nameStart = line.indexOf(mapkeyName);
+        const nameEnd = nameStart + mapkeyName.length;
+        addToken(tokens, "mapkey.name", mapkeyName, currentOffset + nameStart, currentOffset + nameEnd, blockId);
+
         let blockEnd = currentOffset + line.length;
         i++;
 
+        // --- Collect continuation lines ---
         while (i < lines.length) {
             const nextLine = lines[i];
             const trimmed = nextLine.trim();
 
-            // stop on blank line
             if (trimmed === "") break;
 
-            // comment line
-            if (REGEX.COMMENT.test(trimmed)) {
+            if (REGEX.CONTINUATION_COMMENT.test(trimmed) || REGEX.CONTINUATION_LINE.test(trimmed)) {
                 collected.push(nextLine);
                 blockEnd += nextLine.length + 1;
+
+                // --- Emit nested mapkey tokens if any ---
+                const nestedMatch = nextLine.match(REGEX.NESTED_MAPKEY);
+                if (nestedMatch) {
+                    const nestedName = nestedMatch[1];
+                    addSimpleToken(tokens, "mapkey.nested", nestedName, blockId);
+                }
+
                 i++;
-                // continue only if line ends with ;\
-                if (trimmed.endsWith(";\\"))
-                    continue;
-                else
-                    break;
+                continue;
             }
 
-            // continuation lines
-            if (!REGEX.CONTINUATION.test(trimmed)) break;
-            collected.push(nextLine);
-            blockEnd += nextLine.length + 1;
-
-            if (trimmed.endsWith(";\\"))
-                i++;
-            else if (trimmed.endsWith(";")) {
-                i++;
-                break;
-            } else {
-                i++;
-                break;
-            }
+            break;
         }
 
-        // Combine block content
         const blockContent = collected.join("\n");
 
         blocks.push({
@@ -106,11 +99,12 @@ function extractMapkeyBlocks(text) {
             name: mapkeyName,
             start: blockStart,
             end: blockEnd,
+            startLine: blockStartLine,
             content: blockContent,
-            tokens: []
+            tokens
         });
 
-        // Update offset up to current line
+        // Update offset
         currentOffset = lines.slice(0, i).join("\n").length + (i > 0 ? 1 : 0);
     }
 
@@ -123,30 +117,6 @@ function extractMapkeyBlocks(text) {
 module.exports = {
     extractMapkeyBlocks,
     addToken,
+    addSimpleToken,
     REGEX
 };
-
-/**
- * ---------------------------------------------------------------------------
- * HOW TO EXTEND THIS MODULE
- * ---------------------------------------------------------------------------
- * Example: adding detection for custom top-level block type:
- *
- * 1. Define a new regex:
- *      const REGEX = { ... , CUSTOMBLOCK: /^custom\s+(\w+)/ };
- *
- * 2. Inside main while-loop, before DECLARATION test:
- *      const customMatch = line.match(REGEX.CUSTOMBLOCK);
- *      if (customMatch) {
- *          // Collect until terminator
- *          const block = collectCustomBlock(lines, i);
- *          blocks.push(block);
- *          continue;
- *      }
- *
- * 3. Define helper like collectCustomBlock() using same pattern as mapkey.
- *
- * 4. No other files need updates unless you want special tokenization later.
- *
- * ---------------------------------------------------------------------------
- */
