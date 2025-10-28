@@ -15,11 +15,13 @@ const REGEX = {
     MAPKEY_START: /^mapkey\s/,
     DECLARATION: /^mapkey\s+([^\s;]+)/,
     CONTINUATION_LINE: /(?:^mapkey\(continued\)|@).*\\$/,
+    CONTINUATION_LINE_START: /^mapkey\(continued\)\s/,
+    CONTINUATION_LINE_END: /[^;](\\$)/,
     CONTINUATION_COMMENT: /^\s*!.+;\\$/,
     NESTED_MAPKEY: /%(.*\w);/,
     MAPKEY_LABEL: /@MAPKEY_LABEL/,
-    MAPKEY_NAME: /@MAPKEY_NAME/,
-    MAPKEY_END: /.+(?:[^\\]$)(?=\n)/
+    MAPKEY_NAME: /@MAPKEY_NAME/, 
+    MAPKEY_END: /.+(?:[^\\]$)(?=\n)/ 
 };
 
 // -----------------------------------------------------------------------------
@@ -35,7 +37,7 @@ function addSimpleToken(list, type, value, blockId = null) {
 // -----------------------------------------------------------------------------
 // HELPER: FLATTEN MULTILINE TOKEN
 // -----------------------------------------------------------------------------
-function flattenMultiLine(lines, startIndex) {
+function flattenMultiLine(lines, startIndex, startRegex, endRegex) {
     const valueLines = [];
     let i = startIndex;
 
@@ -43,16 +45,19 @@ function flattenMultiLine(lines, startIndex) {
         let line = lines[i];
 
         // Remove continuation prefix if present
-        line = line.replace(/^mapkey\(continued\)\s*/, "");
+        line = line.replace(startRegex, "").trim();
 
-        // Remove trailing backslash
-        const endsWithBackslash = line.endsWith("\\");
-        if (endsWithBackslash) line = line.slice(0, -1);
+        // Check if line ends with continuation
+        const endsWithContinuation = endRegex.test(line);
+        if (endsWithContinuation) {
+            // Remove trailing backslash
+            line = line.replace(endRegex, "").trim();
+        }
 
-        valueLines.push(line.trim());
-
+        valueLines.push(line);
         i++;
-        if (!endsWithBackslash) break;
+
+        if (!endsWithContinuation) break;
     }
 
     return { value: valueLines.join(" "), linesConsumed: i - startIndex };
@@ -64,7 +69,6 @@ function flattenMultiLine(lines, startIndex) {
 function extractMapkeyBlocks(text) {
     const blocks = [];
     const lines = text.split("\n");
-
     let currentOffset = 0;
     let i = 0;
 
@@ -87,7 +91,7 @@ function extractMapkeyBlocks(text) {
         let blockEnd = currentOffset + line.length;
         const tokens = [];
 
-        // Emit mapkey.name token from declaration
+        // Emit mapkey.name from declaration
         const nameStart = line.indexOf(mapkeyName);
         const nameEnd = nameStart + mapkeyName.length;
         addToken(tokens, "mapkey.name", mapkeyName, currentOffset + nameStart, currentOffset + nameEnd, blockId);
@@ -101,14 +105,12 @@ function extractMapkeyBlocks(text) {
 
             if (trimmed === "") break;
 
+            // handle comment continuation lines (no need to check endsWith)
             if (REGEX.CONTINUATION_COMMENT.test(trimmed)) {
                 collected.push(nextLine);
                 blockEnd += nextLine.length + 1;
                 i++;
-                if (trimmed.endsWith(";\\"))
-                    continue;
-                else
-                    break;
+                continue;
             }
 
             if (!REGEX.CONTINUATION_LINE.test(trimmed)) break;
@@ -123,15 +125,25 @@ function extractMapkeyBlocks(text) {
         // Extract @MAPKEY_LABEL token
         const labelLineIndex = collected.findIndex(l => REGEX.MAPKEY_LABEL.test(l));
         if (labelLineIndex !== -1) {
-            const { value: labelValue } = flattenMultiLine(collected, labelLineIndex);
+            const { value: labelValue } = flattenMultiLine(
+                collected,
+                labelLineIndex,
+                REGEX.CONTINUATION_LINE_START,
+                REGEX.CONTINUATION_LINE_END
+            );
             addSimpleToken(tokens, "mapkey.label", labelValue, blockId);
         }
 
-        // Extract @MAPKEY_NAME token (if different from declaration)
-        const mapkeyNameLineIndex = collected.findIndex(l => REGEX.MAPKEY_NAME.test(l));
-        if (mapkeyNameLineIndex !== -1) {
-            const { value: mapkeyNameValue } = flattenMultiLine(collected, mapkeyNameLineIndex);
-            addSimpleToken(tokens, "mapkey.name", mapkeyNameValue, blockId);
+        // Extract @MAPKEY_NAME → mapkey.description
+        const descLineIndex = collected.findIndex(l => REGEX.MAPKEY_NAME.test(l));
+        if (descLineIndex !== -1) {
+            const { value: descValue } = flattenMultiLine(
+                collected,
+                descLineIndex,
+                REGEX.CONTINUATION_LINE_START,
+                REGEX.CONTINUATION_LINE_END
+            );
+            addSimpleToken(tokens, "mapkey.description", descValue, blockId);
         }
 
         blocks.push({
@@ -156,5 +168,6 @@ module.exports = {
     extractMapkeyBlocks,
     addToken,
     addSimpleToken,
+    flattenMultiLine,
     REGEX
 };
