@@ -3,18 +3,13 @@
 // ============================================================================
 //
 // PURPOSE
-// This file coordinates all tokenizer phases. Each submodule is responsible
-// for a distinct layer of the parsing pipeline:
-//
+// Coordinates all tokenizer phases. Each submodule handles one layer:
 //   1. blockTokenizer.js    → isolates full mapkey definitions
 //   2. contentTokenizer.js  → tokenizes inside each mapkey block
 //   3. documentTokenizer.js → processes global markers and regions
 //
-// Each module returns arrays of token objects with:
+// Each module returns arrays of token objects:
 //   { type, value, start, end, blockId? }
-//
-// New token categories can be added in their respective module, then
-// optionally referenced here for aggregation or ordering.
 //
 // ============================================================================
 
@@ -34,18 +29,29 @@ function tokenize(text) {
         if (block.tokens && Array.isArray(block.tokens)) {
             tokens.push(...block.tokens);
         }
-    }    
+    }
 
-    // // Phase 2: mapkey content
+    // // Phase 2: mapkey content (optional)
     // for (const block of blocks) {
     //     const blockTokens = tokenizeMapkeyContent(block);
-    //     block.tokens = blockTokens;
+    //     block.tokens.push(...blockTokens);
     //     tokens.push(...blockTokens);
     // }
-    // 
-    // // Phase 3: document-level
+
+    // // Phase 3: document-level (optional)
     // const documentTokens = tokenizeDocumentLevel(text, blocks);
     // tokens.push(...documentTokens);
+
+    
+    console.log("Tokens found:", tokens.length);
+    console.log("Token types:");
+    console.table(tokens.reduce((acc, t) => {
+        acc[t.type] = (acc[t.type] || 0) + 1;
+        return acc;
+    }, {}));
+
+    // tokens.forEach((t, i) => console.log(`${i}: ${t.type}`));
+
 
     return tokens.sort((a, b) => a.start - b.start);
 }
@@ -55,9 +61,7 @@ function tokenize(text) {
 // -----------------------------------------------------------------------------
 function getMapkeyBlocks(text) {
     const blocks = extractMapkeyBlocks(text);
-    for (const block of blocks) {
-        block.tokens = tokenizeMapkeyContent(block);
-    }
+    // if content tokenization is disabled, just return phase 1 tokens
     return blocks;
 }
 
