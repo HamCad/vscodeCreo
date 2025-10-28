@@ -51,7 +51,8 @@ alt 2: /^mapkey\s+[\w\-$]+.*?(?:\n.*?(?:\\|;\\))*?\n.*?[^\\];(?:\n.*?)*?(?=\n\S)
 - Match 2 = non-backtick arg
 - Match 3 = backtick arg
 
-
+### Grab middle of mapkey block line ending with semicolon (error checking) ###
+Grabs mid-block semicolon line endings: ``` /.+(?:[^\\]$)(?=\n.)/ ```
 
 
 
