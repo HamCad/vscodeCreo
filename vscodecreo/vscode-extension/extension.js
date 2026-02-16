@@ -1,35 +1,49 @@
-const vscode = require("vscode");
-const { ProHoverProvider } = require('./providers/hoverProvider');
-const { MapkeyFoldingProvider } = require('./providers/foldingProvider');
+const vscode = require('vscode');
 
 function activate(context) {
-    
-    // --- 1. Diagnostics ---
 
+    const collection = vscode.languages.createDiagnosticCollection('creo');
+    context.subscriptions.push(collection);
 
-    // --- 2. Language Providers ---
-    const providers = [
-        // Folding Providers
-        vscode.languages.registerFoldingRangeProvider(
-            { language: 'pro' },
-            new MapkeyFoldingProvider()
-        ),
-        // Hover Providers
-        vscode.languages.registerHoverProvider(
-            { language: 'pro' },
-            new ProHoverProvider()
-        )
-    ];
+    context.subscriptions.push(
+        vscode.workspace.onDidChangeTextDocument(event => {
+            if (event.document.languageId !== 'creo') return;
+            validate(event.document, collection);
+        })
+    );
 
-    context.subscriptions.push(...providers);
-
-    // --- 3. Commands ---
-
-    // --- 4. Views ---
-
-
-    // Information Message
-    vscode.window.showInformationMessage('Creo Mapkey extension active: hover ready.');
+    context.subscriptions.push(
+        vscode.workspace.onDidOpenTextDocument(document => {
+            if (document.languageId !== 'creo') return;
+            validate(document, collection);
+        })
+    );
 }
 
-module.exports = { activate }
+function validate(document, collection) {
+    const diagnostics = [];
+    const text = document.getText();
+    const lines = text.split('\n');
+
+    for (let i = 0; i < lines.length; i++) {
+        if (lines[i].includes('TODO')) {
+            const range = new vscode.Range(i, 0, i, lines[i].length);
+            const diagnostic = new vscode.Diagnostic(
+                range,
+                'Found TODO',
+                vscode.DiagnosticSeverity.Warning
+            );
+            diagnostics.push(diagnostic);
+        }
+    }
+
+    collection.set(document.uri, diagnostics);
+}
+
+function deactivate() {}
+
+module.exports = {
+    activate,
+    deactivate
+};
+

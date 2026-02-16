@@ -1,7 +1,7 @@
 {
   "name": "vscodecreo",
   "displayName": "vscodeCreo",
-  "description": "vscode extension to provide support for Creo config files, mapkeys.pro, and ModelCHECK",
+  "description": "vscode extension to provide support for Creo config.pro and mapkeys.pro",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.85.0"

@@ -4,69 +4,69 @@
   "scopeName": "source.pro",
 
   "repository": {
-    "mapkey-init":{
-      "begin": "^(mapkey\\s+)([^;\\s]+[^;]*?)",
-      "beginCaptures": { 
-        "1": { "name": "keyword.control"},
-        "2": { "name": "markup.bold"}
-      },
-      "end": "\\s",
-      "name": "meta"
+
+    "comment": {
+      "match": "#.*$",
+      "name": "comment.line.number-sign.pro"
     },
-    "mapkey-definition": {
-      "begin": "(@MAPKEY_LABEL|@MAPKEY_NAME)",
-      "beginCaptures": {
-        "1": { "name": "keyword.control" }
-      },
-      "end": "(?<!\\\\)$",
-      "name": "meta",
-      "patterns": [
-        {
-          "match": "(.+)(?=\\\\$)",
-          "captures": {
-            "1": { "name": "markup.bold" }
-          }
-        },
-        {
-          "begin": "^(?:mapkey\\(continued\\)\\s*)?",
-          "while": "^(?:mapkey\\(continued\\)\\s*)?.*\\\\$",
-          "end": ";",
-          "patterns": [
-            {
-              "match": "(?!mapkey\\(continued\\))(.*)",
-              "captures": {
-                "1": { "name": "markup.bold." }
-              }
-            }
-          ]
-        }
-      ]
+
+    "keyword-mapkey": {
+      "match": "\\bmapkey\\b",
+      "name": "keyword.control.pro"
     },
-    "mapkey-continued": {
-      "match": "^mapkey\\(continued\\)",
-      "name": "entity.name.function"
+
+    "directive": {
+      "match": "@[A-Za-z0-9_\\-\\(\\):]+",
+      "name": "keyword.other.directive.pro"
     },
-    "mapkey-syscmd": {
-      "match": "(@MANUAL_PAUSE|@SYSTEM)",
-      "name": "storage.modifier"
-    },   
-    "mapkey-body": {
-      "begin": "(~\\s\\w+|(?<=^mapkey\\(continued\\)\\s)`\\S+`?)([^;\\\\]+)(?=;|\\\\;|\\\\$)",
-      "beginCaptures": {
-        "1":{ "name": "string.regexp"},
-        "2":{ "name": "variable.parameter"}
-      },
-      "end": ";",
-      "name": "meta.mapkey.content"    
+
+    "identifier": {
+      "match": "[A-Za-z0-9_\\-\\+]+(?:\\:[A-Za-z0-9_\\-]+)?",
+      "name": "entity.name.function.pro"
+    },
+
+    "tilde": {
+      "match": "~",
+      "name": "punctuation.definition.command.pro"
+    },
+
+    "semicolon": {
+      "match": ";",
+      "name": "punctuation.terminator.statement.pro"
+    },
+
+    "backslash-eol": {
+      "match": "\\\\\\r?\\n",
+      "name": "constant.character.escape.line-continuation.pro"
+    },
+
+    "string-double": {
+      "match": "\"(?:\\\\.|[^\"\\\\])*\"?",
+      "name": "string.quoted.double.pro"
+    },
+
+    "string-single": {
+      "match": "'(?:\\\\.|[^'\\\\])*'?",
+      "name": "string.quoted.single.pro"
+    },
+
+    "argument": {
+      "match": "[^~;\\\\\\r\\n]+",
+      "name": "variable.parameter.pro"
     }
   },
+
   "patterns": [
-    { "name": "comment.line",      "match": "!.*$" },
-    { "name": "constant.numeric",  "match": "\\b\\-{0,1}\\d+\\b" },
-    { "include": "#mapkey-init" },
-    { "include": "#mapkey-definition" },
-    { "include": "#mapkey-continued" },
-    { "include": "#mapkey-syscmd" },
-    { "include": "#mapkey-body" }
+    { "include": "#comment" },
+    { "include": "#string-double" },
+    { "include": "#string-single" },
+    { "include": "#keyword-mapkey" },
+    { "include": "#directive" },
+    { "include": "#tilde" },
+    { "include": "#semicolon" },
+    { "include": "#backslash-eol" },
+    { "include": "#identifier" },
+    { "include": "#argument" }
   ]
 }
+

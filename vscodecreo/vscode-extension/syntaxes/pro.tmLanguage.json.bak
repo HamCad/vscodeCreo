@@ -1,0 +1,72 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Creo Pro",
+  "scopeName": "source.pro",
+
+  "repository": {
+    "mapkey-init":{
+      "begin": "^(mapkey\\s+)([^;\\s]+[^;]*?)",
+      "beginCaptures": { 
+        "1": { "name": "keyword.control"},
+        "2": { "name": "markup.bold"}
+      },
+      "end": "\\s",
+      "name": "meta"
+    },
+    "mapkey-definition": {
+      "begin": "(@MAPKEY_LABEL|@MAPKEY_NAME)",
+      "beginCaptures": {
+        "1": { "name": "keyword.control" }
+      },
+      "end": "(?<!\\\\)$",
+      "name": "meta",
+      "patterns": [
+        {
+          "match": "(.+)(?=\\\\$)",
+          "captures": {
+            "1": { "name": "markup.bold" }
+          }
+        },
+        {
+          "begin": "^(?:mapkey\\(continued\\)\\s*)?",
+          "while": "^(?:mapkey\\(continued\\)\\s*)?.*\\\\$",
+          "end": ";",
+          "patterns": [
+            {
+              "match": "(?!mapkey\\(continued\\))(.*)",
+              "captures": {
+                "1": { "name": "markup.bold." }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "mapkey-continued": {
+      "match": "^mapkey\\(continued\\)",
+      "name": "entity.name.function"
+    },
+    "mapkey-syscmd": {
+      "match": "(@MANUAL_PAUSE|@SYSTEM)",
+      "name": "storage.modifier"
+    },   
+    "mapkey-body": {
+      "begin": "(~\\s\\w+|(?<=^mapkey\\(continued\\)\\s)`\\S+`?)([^;\\\\]+)(?=;|\\\\;|\\\\$)",
+      "beginCaptures": {
+        "1":{ "name": "string.regexp"},
+        "2":{ "name": "variable.parameter"}
+      },
+      "end": ";",
+      "name": "meta.mapkey.content"    
+    }
+  },
+  "patterns": [
+    { "name": "comment.line",      "match": "!.*$" },
+    { "name": "constant.numeric",  "match": "\\b\\-{0,1}\\d+\\b" },
+    { "include": "#mapkey-init" },
+    { "include": "#mapkey-definition" },
+    { "include": "#mapkey-continued" },
+    { "include": "#mapkey-syscmd" },
+    { "include": "#mapkey-body" }
+  ]
+}
