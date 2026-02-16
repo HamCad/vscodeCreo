@@ -1,0 +1,13 @@
+{
+  "name": "my-lang-server",
+  "version": "0.1.0",
+  "main": "server.js",
+  "license": "MIT",
+  "dependencies": {
+    "vscode-languageserver": "^8.0.0"
+  },
+  "scripts": {
+    "start": "node server.js"
+  }
+}
+
