@@ -108,6 +108,7 @@ const handlers = {
   },
 
   'textDocument/hover': (params) => {
+    // FIX: params.textDocument is the document identifier, params.position is separate
     const uri = params.textDocument.uri;
     const position = params.position;
     const doc = getDocument(uri);
@@ -116,132 +117,13 @@ const handlers = {
       return null;
     }
 
-    try {
-      const ast = parse(doc.text);
-      const { tokenize } = require(path.join(__dirname, '..', 'src', 'shared', 'tokenizer'));
-      const tokens = tokenize(doc.text);
-      
-      // Convert line/character position to byte offset
-      const lines = doc.text.split('\n');
-      let offset = 0;
-      for (let i = 0; i < position.line && i < lines.length; i++) {
-        offset += lines[i].length + 1; // +1 for newline
+    // Simple hover implementation
+    return {
+      contents: {
+        kind: 'markdown',
+        value: `**Creo LSP Server**\n\nLine: ${position.line}, Character: ${position.character}`
       }
-      offset += position.character;
-      
-      // Find token at cursor position
-      const tokenAtCursor = tokens.find(t => 
-        t.start <= offset && t.end > offset
-      );
-      
-      // Find AST node at cursor position
-      let nodeAtCursor = null;
-      
-      function findNode(node) {
-        if (!node) return;
-        
-        // Check if cursor is within this node's range
-        if (node.start !== undefined && node.end !== undefined) {
-          if (node.start <= offset && node.end >= offset) {
-            nodeAtCursor = node;
-          }
-        }
-        
-        // Traverse child nodes
-        if (node.type === 'MapkeyFile') {
-          node.mapkeys.forEach(findNode);
-        } else if (node.type === 'MapkeyDefinition') {
-          node.directives.forEach(findNode);
-          node.commands.forEach(findNode);
-        } else if (node.type === 'CommandNode') {
-          node.rawParts.forEach(findNode);
-        }
-      }
-      
-      findNode(ast);
-      
-      // Build hover content
-      let content = '## Creo LSP Inspector\n\n';
-      
-      // Position info
-      content += `**Position:** Line ${position.line + 1}, Col ${position.character + 1}\n`;
-      content += `**Offset:** ${offset}\n\n`;
-      
-      // Token info
-      if (tokenAtCursor) {
-        content += '### Token\n';
-        content += `- **Type:** \`${tokenAtCursor.type}\`\n`;
-        content += `- **Value:** \`${tokenAtCursor.value}\`\n`;
-        content += `- **Range:** ${tokenAtCursor.start}-${tokenAtCursor.end}\n`;
-        content += `- **Line:** ${tokenAtCursor.line}, **Col:** ${tokenAtCursor.col}\n\n`;
-      } else {
-        content += '### Token\n*No token at cursor*\n\n';
-      }
-      
-      // AST node info
-      if (nodeAtCursor) {
-        content += '### AST Node\n';
-        content += `- **Type:** \`${nodeAtCursor.type}\`\n`;
-        
-        if (nodeAtCursor.name) {
-          content += `- **Name:** \`${nodeAtCursor.name}\`\n`;
-        }
-        
-        if (nodeAtCursor.value) {
-          content += `- **Value:** \`${nodeAtCursor.value}\`\n`;
-        }
-        
-        if (nodeAtCursor.rawText) {
-          const preview = nodeAtCursor.rawText.length > 50 
-            ? nodeAtCursor.rawText.substring(0, 50) + '...'
-            : nodeAtCursor.rawText;
-          content += `- **Text:** \`${preview}\`\n`;
-        }
-        
-        if (nodeAtCursor.commandType) {
-          content += `- **Command Type:** \`${nodeAtCursor.commandType}\`\n`;
-        }
-        
-        content += `- **Range:** ${nodeAtCursor.start}-${nodeAtCursor.end}\n\n`;
-        
-        // Add parent context
-        if (nodeAtCursor.type === 'CommandNode') {
-          content += '### Context\n';
-          content += 'This is a **command** inside a mapkey definition\n';
-        } else if (nodeAtCursor.type === 'DirectiveNode') {
-          content += '### Context\n';
-          content += 'This is a **directive** (starts with @)\n';
-        } else if (nodeAtCursor.type === 'MapkeyDefinition') {
-          content += '### Context\n';
-          const cmdCount = nodeAtCursor.commands.length;
-          const dirCount = nodeAtCursor.directives.length;
-          content += `- **Commands:** ${cmdCount}\n`;
-          content += `- **Directives:** ${dirCount}\n`;
-        }
-      } else {
-        content += '### AST Node\n*No AST node at cursor*\n\n';
-      }
-      
-      // Add helpful hints
-      content += '\n---\n\n';
-      content += '💡 **Tip:** Use this to debug your parser and understand the AST structure!\n';
-
-      return {
-        contents: {
-          kind: 'markdown',
-          value: content
-        }
-      };
-      
-    } catch (error) {
-      // Fallback if parsing fails
-      return {
-        contents: {
-          kind: 'markdown',
-          value: `**Creo LSP Server**\n\n⚠️ Parse Error: ${error.message}\n\nLine: ${position.line}, Char: ${position.character}`
-        }
-      };
-    }
+    };
   },
 
   'textDocument/diagnostic': (params) => {
