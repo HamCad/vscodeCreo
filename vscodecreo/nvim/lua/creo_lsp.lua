@@ -1,22 +1,39 @@
--- nvim/lua/mylang_lsp.lua
--- Example configuration for nvim-lspconfig. Put this file in ~/.config/nvim/lua/ and require it from init.lua:
--- require('mylang_lsp').setup('/absolute/path/to/repo/server/server.js')
+-- nvim/lua/creo_lsp.lua
+-- Neovim LSP configuration for Creo .pro files
+-- Usage: require('creo_lsp').setup('/absolute/path/to/repo/server/server.js')
+
 local M = {}
 
 function M.setup(server_path)
   local lspconfig = require('lspconfig')
+  
   if not server_path then
-    server_path = '/path/to/repo/server/server.js' -- change or pass explicitly
+    server_path = vim.fn.expand('~') .. '/path/to/repo/server/server.js'
+    vim.notify('Warning: using default server path: ' .. server_path, vim.log.levels.WARN)
   end
-  lspconfig.mylang = {
-    default_config = {
-      cmd = { 'node', server_path },
-      filetypes = { 'mylang' },
-      root_dir = lspconfig.util.root_pattern('.git', '.'),
-      settings = {}
+  
+  -- Define custom LSP config for 'pro' language
+  local configs = require('lspconfig.configs')
+  
+  if not configs.creo_lsp then
+    configs.creo_lsp = {
+      default_config = {
+        cmd = { 'node', server_path },
+        filetypes = { 'pro' },
+        root_dir = lspconfig.util.root_pattern('.git', '.'),
+        settings = {},
+        name = 'creo_lsp'
+      }
     }
-  }
-  lspconfig.mylang.setup({})
+  end
+  
+  lspconfig.creo_lsp.setup({
+    on_attach = function(client, bufnr)
+      vim.notify('Creo LSP attached to buffer ' .. bufnr, vim.log.levels.INFO)
+    end
+  })
+  
+  vim.notify('Creo LSP configured for filetype "pro"', vim.log.levels.INFO)
 end
 
 return M

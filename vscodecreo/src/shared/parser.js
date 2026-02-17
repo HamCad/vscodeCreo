@@ -1,177 +1,392 @@
-// parser.js
-// A minimal recursive-descent parser that consumes tokens from tokenizer.js
-// Produces AST nodes: MapkeyDefinition, DirectiveNode, CommandNode
-// Each node has .start, .end offsets and source text where practicable.
+// PATCH FOR server/server.js
+// Fix: "Method not found: textDocument/diagnostic" error
 
-const { tokenize } = require('./tokenizer');
+// Add this handler to the handlers object in server/server.js
+// Insert after the 'textDocument/hover' handler
 
-// Helper: peek & consume token stream
-function makeStream(tokens) {
-  let i = 0;
-  return {
-    peek(n = 0) { return tokens[i + n] || { type: 'T_EOF', value: '', start: tokens[tokens.length - 1].end }; },
-    next() { return tokens[i++] || { type: 'T_EOF', value: '', start: tokens[tokens.length - 1].end }; },
-    eof() { return i >= tokens.length || tokens[i].type === 'T_EOF'; },
-    index() { return i; }
-  };
-}
-
-// Diagnostic factory
-function diag(node, message, severity = 'error') {
-  return { node, message, severity };
-}
-
-// Parse whole document
-function parseTokens(tokens) {
-  const stream = makeStream(tokens);
-  const ast = { type: 'MapkeyFile', mapkeys: [] };
+'textDocument/diagnostic': (params) => {
+  const { uri } = params.textDocument;
+  const doc = getDocument(uri);
+  
+  if (!doc) {
+    return {
+      kind: 'full',
+      items: []
+    };
+  }
+  
   const diagnostics = [];
-
-  while (!stream.eof()) {
-    const tk = stream.peek();
-    if (tk.type === 'T_KEYWORD') {
-      const mk = parseMapkey(stream, diagnostics);
-      ast.mapkeys.push(mk);
-      continue;
+  
+  try {
+    const ast = parse(doc.text);
+    
+    // Walk AST and collect diagnostics
+    function traverse(node) {
+      if (!node) return;
+      
+      if (node.type === 'MapkeyFile') {
+        node.mapkeys.forEach(traverse);
+      } else if (node.type === 'MapkeyDefinition') {
+        // Example: warn if mapkey has no name
+        if (!node.name) {
+          diagnostics.push({
+            severity: 2, // Warning
+            range: {
+              start: { line: 0, character: node.start },
+              end: { line: 0, character: node.end }
+            },
+            message: 'Mapkey definition missing name',
+            source: 'creo-lsp'
+          });
+        }
+        node.directives.forEach(traverse);
+        node.commands.forEach(traverse);
+      } else if (node.type === 'CommandNode') {
+        // Example: warn if command type is unknown
+        if (node.commandType === 'unknown' && node.rawText.length > 0) {
+          diagnostics.push({
+            severity: 3, // Info
+            range: {
+              start: { line: 0, character: node.start },
+              end: { line: 0, character: node.end }
+            },
+            message: `Unknown command type: ${node.rawText.substring(0, 30)}...`,
+            source: 'creo-lsp'
+          });
+        }
+      }
     }
-    // skip tokens until keyword or EOF to recover
-    stream.next();
+    
+    traverse(ast);
+    
+  } catch (parseError) {
+    // Parser error - add diagnostic
+    diagnostics.push({
+      severity: 1, // Error
+      range: {
+        start: { line: 0, character: 0 },
+        end: { line: 0, character: 10 }
+      },
+      message: `Parse error: ${parseError.message}`,
+      source: 'creo-lsp'
+    });
   }
-
-  return { ast, diagnostics };
-}
-
-// parse: mapkey NAME { directives/text } commands...
-function parseMapkey(stream, diagnostics) {
-  const startTok = stream.next(); // consume T_KEYWORD
-  const node = {
-    type: 'MapkeyDefinition',
-    name: null,
-    directives: [],
-    commands: [],
-    start: startTok.start,
-    end: startTok.end
+  
+  return {
+    kind: 'full',
+    items: diagnostics
   };
+},
 
-  // name (IDENTIFIER expected)
-  const maybeName = stream.peek();
-  if (maybeName.type === 'T_IDENTIFIER') {
-    const id = stream.next();
-    node.name = id.value;
-    node.end = id.end;
-  } else {
-    diagnostics.push(diag(startTok, 'Expected mapkey identifier after keyword', 'error'));
-  }
 
-  // collect directives and inline text until first T_TILDE or T_EOF
-  while (!stream.eof()) {
-    const t = stream.peek();
-    if (t.type === 'T_TILDE' || t.type === 'T_EOF' || t.type === 'T_KEYWORD') break;
-    if (t.type === 'T_DIRECTIVE') {
-      const d = stream.next();
-      node.directives.push({ type: 'DirectiveNode', value: d.value, start: d.start, end: d.end });
-      node.end = d.end;
-      continue;
+// COMPLETE UPDATED server.js FILE
+// Replace your entire server/server.js with this:
+
+// server/server.js
+// Zero-dependency LSP server using raw JSON-RPC over stdio
+// Compatible with both VS Code (manual spawn) and Neovim (lspconfig)
+
+const path = require('path');
+const { parse } = require(path.join(__dirname, '..', 'src', 'shared', 'parser'));
+
+// --- JSON-RPC Message Handling ---
+
+let buffer = '';
+const contentLengthRegex = /Content-Length: (\d+)\r\n\r\n/;
+
+process.stdin.on('data', (chunk) => {
+  buffer += chunk.toString();
+  
+  while (true) {
+    const match = contentLengthRegex.exec(buffer);
+    if (!match) break;
+    
+    const contentLength = parseInt(match[1], 10);
+    const messageStart = match.index + match[0].length;
+    
+    if (buffer.length < messageStart + contentLength) break;
+    
+    const messageContent = buffer.slice(messageStart, messageStart + contentLength);
+    buffer = buffer.slice(messageStart + contentLength);
+    
+    try {
+      const message = JSON.parse(messageContent);
+      handleMessage(message);
+    } catch (err) {
+      console.error('JSON parse error:', err);
     }
-    // treat other tokens until commands as free text (label)
-    if (t.type === 'T_ARG' || t.type === 'T_STRING' || t.type === 'T_IDENTIFIER') {
-      const txt = stream.next();
-      node.directives.push({ type: 'TextNode', value: txt.value, start: txt.start, end: txt.end });
-      node.end = txt.end;
-      continue;
-    }
-    // skip whitespace/comments handled by tokenizer skipping
-    // EOL or unknown or others: consume and continue
-    stream.next();
   }
+});
 
-  // parse commands: zero or more commands starting with T_TILDE until next mapkey or EOF
-  while (!stream.eof()) {
-    const t = stream.peek();
-    if (t.type === 'T_TILDE') {
-      const cmd = parseCommand(stream, diagnostics);
-      node.commands.push(cmd);
-      node.end = cmd.end;
-      continue;
-    }
-    // If next mapkey starts, break to allow top-level loop to handle it
-    if (t.type === 'T_KEYWORD') break;
-    // otherwise consume and continue searching
-    if (t.type === 'T_EOF') break;
-    stream.next();
-  }
-
-  return node;
+function sendMessage(message) {
+  const content = JSON.stringify(message);
+  const header = `Content-Length: ${Buffer.byteLength(content, 'utf8')}\r\n\r\n`;
+  process.stdout.write(header + content, 'utf8');
 }
 
-// parse a command: starts with T_TILDE, consumes tokens until matching T_SEMICOLON,
-// joining across T_BACKSLASH_EOL tokens. If EOF before semicolon, returns partial node + diagnostic.
-function parseCommand(stream, diagnostics) {
-  const til = stream.next(); // consume T_TILDE
-  const cmd = {
-    type: 'CommandNode',
-    rawParts: [],
-    rawText: '',
-    start: til.start,
-    end: til.end,
-    commandType: 'unknown' // to be determined heuristically
-  };
+function sendResponse(id, result) {
+  sendMessage({ jsonrpc: '2.0', id, result });
+}
 
-  // collect tokens until semicolon
-  let sawSemicolon = false;
-  while (!stream.eof()) {
-    const t = stream.peek();
+function sendError(id, code, message) {
+  sendMessage({ jsonrpc: '2.0', id, error: { code, message } });
+}
 
-    if (t.type === 'T_SEMICOLON') {
-      const s = stream.next();
-      cmd.rawParts.push({ type: s.type, value: s.value, start: s.start, end: s.end });
-      cmd.end = s.end;
-      sawSemicolon = true;
-      break;
+function sendNotification(method, params) {
+  sendMessage({ jsonrpc: '2.0', method, params });
+}
+
+// --- Document Management ---
+
+const documents = new Map(); // uri -> { text, version }
+
+function getDocument(uri) {
+  return documents.get(uri);
+}
+
+function setDocument(uri, text, version) {
+  documents.set(uri, { text, version });
+}
+
+// --- Message Handlers ---
+
+const handlers = {
+  initialize: (params) => {
+    return {
+      capabilities: {
+        textDocumentSync: {
+          openClose: true,
+          change: 1, // Full sync
+          save: { includeText: false }
+        },
+        hoverProvider: true,
+        diagnosticProvider: {
+          interFileDependencies: false,
+          workspaceDiagnostics: false
+        }
+      },
+      serverInfo: {
+        name: 'creo-lsp-server',
+        version: '0.1.0'
+      }
+    };
+  },
+
+  'textDocument/didOpen': (params) => {
+    const { uri, text, version } = params.textDocument;
+    setDocument(uri, text, version);
+    validateDocument(uri, text);
+  },
+
+  'textDocument/didChange': (params) => {
+    const { uri, version } = params.textDocument;
+    const text = params.contentChanges[0].text; // Full sync
+    setDocument(uri, text, version);
+    validateDocument(uri, text);
+  },
+
+  'textDocument/didClose': (params) => {
+    const { uri } = params.textDocument;
+    documents.delete(uri);
+    sendNotification('textDocument/publishDiagnostics', { uri, diagnostics: [] });
+  },
+
+  'textDocument/hover': (params) => {
+    const { uri, position } = params.textDocument;
+    const doc = getDocument(uri);
+    
+    if (!doc) {
+      return null;
     }
 
-    if (t.type === 'T_BACKSLASH_EOL') {
-      // consume but join with next ARG if present
-      const b = stream.next();
-      cmd.rawParts.push({ type: b.type, value: '\\n', start: b.start, end: b.end }); // normalized
-      continue;
-    }
+    // Simple hover implementation
+    return {
+      contents: {
+        kind: 'markdown',
+        value: `**Creo LSP Server**\n\nLine: ${position.line}, Character: ${position.character}`
+      }
+    };
+  },
 
-    if (t.type === 'T_EOF') {
-      // unexpected EOF — partial command
-      diagnostics.push(diag(t, 'Unterminated command: missing semicolon', 'warning'));
-      cmd.end = t.end;
-      break;
+  'textDocument/diagnostic': (params) => {
+    const { uri } = params.textDocument;
+    const doc = getDocument(uri);
+    
+    if (!doc) {
+      return {
+        kind: 'full',
+        items: []
+      };
     }
+    
+    const diagnostics = [];
+    
+    try {
+      const ast = parse(doc.text);
+      
+      // Walk AST and collect diagnostics
+      function traverse(node) {
+        if (!node) return;
+        
+        if (node.type === 'MapkeyFile') {
+          node.mapkeys.forEach(traverse);
+        } else if (node.type === 'MapkeyDefinition') {
+          // Example: warn if mapkey has no name
+          if (!node.name) {
+            diagnostics.push({
+              severity: 2, // Warning
+              range: {
+                start: { line: 0, character: node.start },
+                end: { line: 0, character: node.end }
+              },
+              message: 'Mapkey definition missing name',
+              source: 'creo-lsp'
+            });
+          }
+          node.directives.forEach(traverse);
+          node.commands.forEach(traverse);
+        } else if (node.type === 'CommandNode') {
+          // Example: warn if command type is unknown
+          if (node.commandType === 'unknown' && node.rawText.length > 0) {
+            diagnostics.push({
+              severity: 3, // Info
+              range: {
+                start: { line: 0, character: node.start },
+                end: { line: 0, character: node.end }
+              },
+              message: `Unknown command type: ${node.rawText.substring(0, 30)}...`,
+              source: 'creo-lsp'
+            });
+          }
+        }
+      }
+      
+      traverse(ast);
+      
+    } catch (parseError) {
+      // Parser error - add diagnostic
+      diagnostics.push({
+        severity: 1, // Error
+        range: {
+          start: { line: 0, character: 0 },
+          end: { line: 0, character: 10 }
+        },
+        message: `Parse error: ${parseError.message}`,
+        source: 'creo-lsp'
+      });
+    }
+    
+    return {
+      kind: 'full',
+      items: diagnostics
+    };
+  },
 
-    // consume most tokens as part of command body
-    const part = stream.next();
-    cmd.rawParts.push({ type: part.type, value: part.value, start: part.start, end: part.end });
-    cmd.end = part.end;
+  shutdown: () => {
+    return null;
+  },
+
+  exit: () => {
+    process.exit(0);
+  }
+};
+
+function handleMessage(message) {
+  const { id, method, params } = message;
+
+  if (!method) {
+    console.error('Message missing method:', message);
+    return;
   }
 
-  // build rawText: join ARG/STRING/IDENTIFIER parts and normalize continuation into space
-  cmd.rawText = cmd.rawParts
-    .map(p => {
-      if (p.type === 'T_BACKSLASH_EOL') return ' '; // continuation collapsed to space
-      return p.value;
-    })
-    .join('').trim();
+  const handler = handlers[method];
+  
+  if (!handler) {
+    // Unknown method - send error if request, ignore if notification
+    if (id !== undefined && id !== null) {
+      sendError(id, -32601, `Method not found: ${method}`);
+    }
+    return;
+  }
 
-  // heuristics: determine commandType from rawText prefix (e.g., gui:main => session)
-  if (/^\s*gui:main\b/i.test(cmd.rawText)) cmd.commandType = 'session';
-  else if (/^\s*gui:popup\b/i.test(cmd.rawText)) cmd.commandType = 'popup';
-  else if (/^\s*sidebar\b/i.test(cmd.rawText)) cmd.commandType = 'sidebar';
-  else cmd.commandType = 'unknown';
-
-  return cmd;
+  try {
+    const result = handler(params);
+    
+    // Only send response for requests (have id), not notifications
+    if (id !== undefined && id !== null) {
+      sendResponse(id, result);
+    }
+  } catch (err) {
+    console.error(`Error handling ${method}:`, err);
+    if (id !== undefined && id !== null) {
+      sendError(id, -32603, err.message);
+    }
+  }
 }
 
-// top-level parse helper accepting text
-function parseTextToAst(text) {
-  const tokens = tokenize(text);
-  return parseTokens(tokens);
+// --- Validation Logic ---
+
+function validateDocument(uri, text) {
+  const diagnostics = [];
+  
+  try {
+    const ast = parse(text);
+    
+    // Walk AST and collect diagnostics
+    function traverse(node) {
+      if (!node) return;
+      
+      if (node.type === 'MapkeyFile') {
+        node.mapkeys.forEach(traverse);
+      } else if (node.type === 'MapkeyDefinition') {
+        // Example: warn if mapkey has no name
+        if (!node.name) {
+          diagnostics.push({
+            severity: 2, // Warning
+            range: {
+              start: { line: 0, character: node.start },
+              end: { line: 0, character: node.end }
+            },
+            message: 'Mapkey definition missing name',
+            source: 'creo-lsp'
+          });
+        }
+        node.directives.forEach(traverse);
+        node.commands.forEach(traverse);
+      } else if (node.type === 'CommandNode') {
+        // Example: warn if command type is unknown
+        if (node.commandType === 'unknown' && node.rawText.length > 0) {
+          diagnostics.push({
+            severity: 3, // Info
+            range: {
+              start: { line: 0, character: node.start },
+              end: { line: 0, character: node.end }
+            },
+            message: `Unknown command type: ${node.rawText.substring(0, 30)}...`,
+            source: 'creo-lsp'
+          });
+        }
+      }
+    }
+    
+    traverse(ast);
+    
+  } catch (parseError) {
+    // Parser error - add diagnostic
+    diagnostics.push({
+      severity: 1, // Error
+      range: {
+        start: { line: 0, character: 0 },
+        end: { line: 0, character: 10 }
+      },
+      message: `Parse error: ${parseError.message}`,
+      source: 'creo-lsp'
+    });
+  }
+  
+  sendNotification('textDocument/publishDiagnostics', { uri, diagnostics });
 }
 
-module.exports = { parseTokens, parseTextToAst };
+// --- Startup ---
 
+console.error('Creo LSP Server starting...');
