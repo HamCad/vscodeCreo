@@ -22,7 +22,7 @@ function compileSpecs(specs) {
 const TOKEN_SPECS = [
   // Order: more specific first.
   { type: 'T_KEYWORD',      pattern: '\\bmapkey\\b' },
-  { type: 'T_DIRECTIVE',    pattern: '@[A-Za-z0-9_\\-\\(\\):]+' }, // e.g., @MAPKEY_LABEL
+  { type: 'T_DIRECTIVE',    pattern: '@[A-Z-0-9_\\-\\(\\):]+' }, // e.g., @MAPKEY_LABEL
   { type: 'T_TILDE',        pattern: '~' },
   { type: 'T_SEMICOLON',    pattern: ';' },
   { type: 'T_BACKSLASH_EOL',pattern: '\\\\\\r?\\n' }, // backslash then newline (line continuation)
