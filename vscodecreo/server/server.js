@@ -1,87 +1,3 @@
-// PATCH FOR server/server.js
-// Fix: "Method not found: textDocument/diagnostic" error
-
-// Add this handler to the handlers object in server/server.js
-// Insert after the 'textDocument/hover' handler
-
-'textDocument/diagnostic': (params) => {
-  const { uri } = params.textDocument;
-  const doc = getDocument(uri);
-  
-  if (!doc) {
-    return {
-      kind: 'full',
-      items: []
-    };
-  }
-  
-  const diagnostics = [];
-  
-  try {
-    const ast = parse(doc.text);
-    
-    // Walk AST and collect diagnostics
-    function traverse(node) {
-      if (!node) return;
-      
-      if (node.type === 'MapkeyFile') {
-        node.mapkeys.forEach(traverse);
-      } else if (node.type === 'MapkeyDefinition') {
-        // Example: warn if mapkey has no name
-        if (!node.name) {
-          diagnostics.push({
-            severity: 2, // Warning
-            range: {
-              start: { line: 0, character: node.start },
-              end: { line: 0, character: node.end }
-            },
-            message: 'Mapkey definition missing name',
-            source: 'creo-lsp'
-          });
-        }
-        node.directives.forEach(traverse);
-        node.commands.forEach(traverse);
-      } else if (node.type === 'CommandNode') {
-        // Example: warn if command type is unknown
-        if (node.commandType === 'unknown' && node.rawText.length > 0) {
-          diagnostics.push({
-            severity: 3, // Info
-            range: {
-              start: { line: 0, character: node.start },
-              end: { line: 0, character: node.end }
-            },
-            message: `Unknown command type: ${node.rawText.substring(0, 30)}...`,
-            source: 'creo-lsp'
-          });
-        }
-      }
-    }
-    
-    traverse(ast);
-    
-  } catch (parseError) {
-    // Parser error - add diagnostic
-    diagnostics.push({
-      severity: 1, // Error
-      range: {
-        start: { line: 0, character: 0 },
-        end: { line: 0, character: 10 }
-      },
-      message: `Parse error: ${parseError.message}`,
-      source: 'creo-lsp'
-    });
-  }
-  
-  return {
-    kind: 'full',
-    items: diagnostics
-  };
-},
-
-
-// COMPLETE UPDATED server.js FILE
-// Replace your entire server/server.js with this:
-
 // server/server.js
 // Zero-dependency LSP server using raw JSON-RPC over stdio
 // Compatible with both VS Code (manual spawn) and Neovim (lspconfig)
@@ -192,7 +108,9 @@ const handlers = {
   },
 
   'textDocument/hover': (params) => {
-    const { uri, position } = params.textDocument;
+    // FIX: params.textDocument is the document identifier, params.position is separate
+    const uri = params.textDocument.uri;
+    const position = params.position;
     const doc = getDocument(uri);
     
     if (!doc) {
@@ -209,7 +127,7 @@ const handlers = {
   },
 
   'textDocument/diagnostic': (params) => {
-    const { uri } = params.textDocument;
+    const uri = params.textDocument.uri;
     const doc = getDocument(uri);
     
     if (!doc) {

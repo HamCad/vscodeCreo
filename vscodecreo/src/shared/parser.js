@@ -1,392 +1,174 @@
-// PATCH FOR server/server.js
-// Fix: "Method not found: textDocument/diagnostic" error
+// src/shared/parser.js
+// Parser for Creo mapkey .pro files
+// Uses tokenizer.js and ast.js
 
-// Add this handler to the handlers object in server/server.js
-// Insert after the 'textDocument/hover' handler
+const { tokenize } = require('./tokenizer');
+const {
+  MapkeyFile,
+  MapkeyDefinition,
+  DirectiveNode,
+  TextNode,
+  CommandNode
+} = require('./ast');
 
-'textDocument/diagnostic': (params) => {
-  const { uri } = params.textDocument;
-  const doc = getDocument(uri);
-  
-  if (!doc) {
-    return {
-      kind: 'full',
-      items: []
-    };
+/**
+ * Parse Creo .pro file text into AST
+ * @param {string} text - Source code
+ * @returns {MapkeyFile} Root AST node
+ */
+function parse(text) {
+  const tokens = tokenize(text);
+  const parser = new Parser(tokens);
+  return parser.parseFile();
+}
+
+class Parser {
+  constructor(tokens) {
+    this.tokens = tokens;
+    this.pos = 0;
   }
-  
-  const diagnostics = [];
-  
-  try {
-    const ast = parse(doc.text);
+
+  current() {
+    return this.tokens[this.pos];
+  }
+
+  peek(offset = 1) {
+    return this.tokens[this.pos + offset];
+  }
+
+  advance() {
+    if (this.pos < this.tokens.length - 1) {
+      this.pos++;
+    }
+    return this.current();
+  }
+
+  consume(type) {
+    const tok = this.current();
+    if (tok.type !== type) {
+      throw new Error(`Expected ${type} but got ${tok.type} at position ${tok.start}`);
+    }
+    this.advance();
+    return tok;
+  }
+
+  match(...types) {
+    return types.includes(this.current().type);
+  }
+
+  parseFile() {
+    const file = new MapkeyFile();
     
-    // Walk AST and collect diagnostics
-    function traverse(node) {
-      if (!node) return;
+    while (!this.match('T_EOF')) {
+      // Skip comments and empty lines
+      if (this.match('T_COMMENT', 'T_EOL')) {
+        this.advance();
+        continue;
+      }
       
-      if (node.type === 'MapkeyFile') {
-        node.mapkeys.forEach(traverse);
-      } else if (node.type === 'MapkeyDefinition') {
-        // Example: warn if mapkey has no name
-        if (!node.name) {
-          diagnostics.push({
-            severity: 2, // Warning
-            range: {
-              start: { line: 0, character: node.start },
-              end: { line: 0, character: node.end }
-            },
-            message: 'Mapkey definition missing name',
-            source: 'creo-lsp'
-          });
-        }
-        node.directives.forEach(traverse);
-        node.commands.forEach(traverse);
-      } else if (node.type === 'CommandNode') {
-        // Example: warn if command type is unknown
-        if (node.commandType === 'unknown' && node.rawText.length > 0) {
-          diagnostics.push({
-            severity: 3, // Info
-            range: {
-              start: { line: 0, character: node.start },
-              end: { line: 0, character: node.end }
-            },
-            message: `Unknown command type: ${node.rawText.substring(0, 30)}...`,
-            source: 'creo-lsp'
-          });
-        }
+      // Parse mapkey definition
+      if (this.match('T_MAPKEY')) {
+        const mapkey = this.parseMapkey();
+        file.addMapkey(mapkey);
+      } else {
+        // Skip unknown content
+        this.advance();
       }
     }
     
-    traverse(ast);
-    
-  } catch (parseError) {
-    // Parser error - add diagnostic
-    diagnostics.push({
-      severity: 1, // Error
-      range: {
-        start: { line: 0, character: 0 },
-        end: { line: 0, character: 10 }
-      },
-      message: `Parse error: ${parseError.message}`,
-      source: 'creo-lsp'
-    });
+    return file;
   }
-  
-  return {
-    kind: 'full',
-    items: diagnostics
-  };
-},
 
-
-// COMPLETE UPDATED server.js FILE
-// Replace your entire server/server.js with this:
-
-// server/server.js
-// Zero-dependency LSP server using raw JSON-RPC over stdio
-// Compatible with both VS Code (manual spawn) and Neovim (lspconfig)
-
-const path = require('path');
-const { parse } = require(path.join(__dirname, '..', 'src', 'shared', 'parser'));
-
-// --- JSON-RPC Message Handling ---
-
-let buffer = '';
-const contentLengthRegex = /Content-Length: (\d+)\r\n\r\n/;
-
-process.stdin.on('data', (chunk) => {
-  buffer += chunk.toString();
-  
-  while (true) {
-    const match = contentLengthRegex.exec(buffer);
-    if (!match) break;
+  parseMapkey() {
+    const startTok = this.consume('T_MAPKEY');
+    const mapkey = new MapkeyDefinition(startTok.start);
     
-    const contentLength = parseInt(match[1], 10);
-    const messageStart = match.index + match[0].length;
-    
-    if (buffer.length < messageStart + contentLength) break;
-    
-    const messageContent = buffer.slice(messageStart, messageStart + contentLength);
-    buffer = buffer.slice(messageStart + contentLength);
-    
-    try {
-      const message = JSON.parse(messageContent);
-      handleMessage(message);
-    } catch (err) {
-      console.error('JSON parse error:', err);
+    // Expect opening parenthesis
+    if (!this.match('T_LPAREN')) {
+      throw new Error(`Expected '(' after 'mapkey' at position ${this.current().start}`);
     }
+    this.advance();
+    
+    // Parse mapkey name (optional - could be continued line)
+    if (this.match('T_IDENTIFIER', 'T_STRING')) {
+      const nameTok = this.current();
+      mapkey.setName(nameTok.value, nameTok.start, nameTok.end);
+      this.advance();
+    }
+    
+    // Parse optional label/description
+    while (this.match('T_IDENTIFIER', 'T_STRING', 'T_ARG')) {
+      const tok = this.current();
+      mapkey.addDirective(new TextNode(tok.value, tok.start, tok.end));
+      this.advance();
+    }
+    
+    // Expect closing parenthesis
+    if (this.match('T_RPAREN')) {
+      this.advance();
+    }
+    
+    // Parse directives (@MAPKEY_NAME, @SYSTEM, etc.)
+    while (this.match('T_DIRECTIVE')) {
+      const tok = this.current();
+      mapkey.addDirective(new DirectiveNode(tok.value, tok.start, tok.end));
+      this.advance();
+    }
+    
+    // Skip EOL
+    if (this.match('T_EOL')) {
+      this.advance();
+    }
+    
+    // Parse commands (lines starting with ~)
+    while (this.match('T_TILDE')) {
+      const cmd = this.parseCommand();
+      mapkey.addCommand(cmd);
+    }
+    
+    return mapkey;
   }
-});
 
-function sendMessage(message) {
-  const content = JSON.stringify(message);
-  const header = `Content-Length: ${Buffer.byteLength(content, 'utf8')}\r\n\r\n`;
-  process.stdout.write(header + content, 'utf8');
-}
-
-function sendResponse(id, result) {
-  sendMessage({ jsonrpc: '2.0', id, result });
-}
-
-function sendError(id, code, message) {
-  sendMessage({ jsonrpc: '2.0', id, error: { code, message } });
-}
-
-function sendNotification(method, params) {
-  sendMessage({ jsonrpc: '2.0', method, params });
-}
-
-// --- Document Management ---
-
-const documents = new Map(); // uri -> { text, version }
-
-function getDocument(uri) {
-  return documents.get(uri);
-}
-
-function setDocument(uri, text, version) {
-  documents.set(uri, { text, version });
-}
-
-// --- Message Handlers ---
-
-const handlers = {
-  initialize: (params) => {
-    return {
-      capabilities: {
-        textDocumentSync: {
-          openClose: true,
-          change: 1, // Full sync
-          save: { includeText: false }
-        },
-        hoverProvider: true,
-        diagnosticProvider: {
-          interFileDependencies: false,
-          workspaceDiagnostics: false
-        }
-      },
-      serverInfo: {
-        name: 'creo-lsp-server',
-        version: '0.1.0'
-      }
-    };
-  },
-
-  'textDocument/didOpen': (params) => {
-    const { uri, text, version } = params.textDocument;
-    setDocument(uri, text, version);
-    validateDocument(uri, text);
-  },
-
-  'textDocument/didChange': (params) => {
-    const { uri, version } = params.textDocument;
-    const text = params.contentChanges[0].text; // Full sync
-    setDocument(uri, text, version);
-    validateDocument(uri, text);
-  },
-
-  'textDocument/didClose': (params) => {
-    const { uri } = params.textDocument;
-    documents.delete(uri);
-    sendNotification('textDocument/publishDiagnostics', { uri, diagnostics: [] });
-  },
-
-  'textDocument/hover': (params) => {
-    const { uri, position } = params.textDocument;
-    const doc = getDocument(uri);
+  parseCommand() {
+    const startTok = this.consume('T_TILDE');
+    const cmd = new CommandNode(startTok.start);
     
-    if (!doc) {
-      return null;
-    }
-
-    // Simple hover implementation
-    return {
-      contents: {
-        kind: 'markdown',
-        value: `**Creo LSP Server**\n\nLine: ${position.line}, Character: ${position.character}`
-      }
-    };
-  },
-
-  'textDocument/diagnostic': (params) => {
-    const { uri } = params.textDocument;
-    const doc = getDocument(uri);
-    
-    if (!doc) {
-      return {
-        kind: 'full',
-        items: []
-      };
-    }
-    
-    const diagnostics = [];
-    
-    try {
-      const ast = parse(doc.text);
-      
-      // Walk AST and collect diagnostics
-      function traverse(node) {
-        if (!node) return;
-        
-        if (node.type === 'MapkeyFile') {
-          node.mapkeys.forEach(traverse);
-        } else if (node.type === 'MapkeyDefinition') {
-          // Example: warn if mapkey has no name
-          if (!node.name) {
-            diagnostics.push({
-              severity: 2, // Warning
-              range: {
-                start: { line: 0, character: node.start },
-                end: { line: 0, character: node.end }
-              },
-              message: 'Mapkey definition missing name',
-              source: 'creo-lsp'
-            });
-          }
-          node.directives.forEach(traverse);
-          node.commands.forEach(traverse);
-        } else if (node.type === 'CommandNode') {
-          // Example: warn if command type is unknown
-          if (node.commandType === 'unknown' && node.rawText.length > 0) {
-            diagnostics.push({
-              severity: 3, // Info
-              range: {
-                start: { line: 0, character: node.start },
-                end: { line: 0, character: node.end }
-              },
-              message: `Unknown command type: ${node.rawText.substring(0, 30)}...`,
-              source: 'creo-lsp'
-            });
-          }
-        }
+    // Collect all parts until semicolon or EOF
+    while (!this.match('T_SEMICOLON', 'T_EOF', 'T_MAPKEY')) {
+      // Handle line continuations
+      if (this.match('T_BACKSLASH_EOL')) {
+        const tok = this.current();
+        cmd.addPart(tok);
+        this.advance();
+        continue;
       }
       
-      traverse(ast);
-      
-    } catch (parseError) {
-      // Parser error - add diagnostic
-      diagnostics.push({
-        severity: 1, // Error
-        range: {
-          start: { line: 0, character: 0 },
-          end: { line: 0, character: 10 }
-        },
-        message: `Parse error: ${parseError.message}`,
-        source: 'creo-lsp'
-      });
-    }
-    
-    return {
-      kind: 'full',
-      items: diagnostics
-    };
-  },
-
-  shutdown: () => {
-    return null;
-  },
-
-  exit: () => {
-    process.exit(0);
-  }
-};
-
-function handleMessage(message) {
-  const { id, method, params } = message;
-
-  if (!method) {
-    console.error('Message missing method:', message);
-    return;
-  }
-
-  const handler = handlers[method];
-  
-  if (!handler) {
-    // Unknown method - send error if request, ignore if notification
-    if (id !== undefined && id !== null) {
-      sendError(id, -32601, `Method not found: ${method}`);
-    }
-    return;
-  }
-
-  try {
-    const result = handler(params);
-    
-    // Only send response for requests (have id), not notifications
-    if (id !== undefined && id !== null) {
-      sendResponse(id, result);
-    }
-  } catch (err) {
-    console.error(`Error handling ${method}:`, err);
-    if (id !== undefined && id !== null) {
-      sendError(id, -32603, err.message);
-    }
-  }
-}
-
-// --- Validation Logic ---
-
-function validateDocument(uri, text) {
-  const diagnostics = [];
-  
-  try {
-    const ast = parse(text);
-    
-    // Walk AST and collect diagnostics
-    function traverse(node) {
-      if (!node) return;
-      
-      if (node.type === 'MapkeyFile') {
-        node.mapkeys.forEach(traverse);
-      } else if (node.type === 'MapkeyDefinition') {
-        // Example: warn if mapkey has no name
-        if (!node.name) {
-          diagnostics.push({
-            severity: 2, // Warning
-            range: {
-              start: { line: 0, character: node.start },
-              end: { line: 0, character: node.end }
-            },
-            message: 'Mapkey definition missing name',
-            source: 'creo-lsp'
-          });
-        }
-        node.directives.forEach(traverse);
-        node.commands.forEach(traverse);
-      } else if (node.type === 'CommandNode') {
-        // Example: warn if command type is unknown
-        if (node.commandType === 'unknown' && node.rawText.length > 0) {
-          diagnostics.push({
-            severity: 3, // Info
-            range: {
-              start: { line: 0, character: node.start },
-              end: { line: 0, character: node.end }
-            },
-            message: `Unknown command type: ${node.rawText.substring(0, 30)}...`,
-            source: 'creo-lsp'
-          });
-        }
+      // Skip standalone EOL (end of command)
+      if (this.match('T_EOL')) {
+        break;
       }
+      
+      // Add token to command
+      const tok = this.current();
+      cmd.addPart(tok);
+      this.advance();
     }
     
-    traverse(ast);
+    // Consume semicolon if present
+    if (this.match('T_SEMICOLON')) {
+      const tok = this.current();
+      cmd.addPart(tok);
+      this.advance();
+    }
     
-  } catch (parseError) {
-    // Parser error - add diagnostic
-    diagnostics.push({
-      severity: 1, // Error
-      range: {
-        start: { line: 0, character: 0 },
-        end: { line: 0, character: 10 }
-      },
-      message: `Parse error: ${parseError.message}`,
-      source: 'creo-lsp'
-    });
+    // Skip trailing EOL
+    if (this.match('T_EOL')) {
+      this.advance();
+    }
+    
+    cmd.finalize();
+    return cmd;
   }
-  
-  sendNotification('textDocument/publishDiagnostics', { uri, diagnostics });
 }
 
-// --- Startup ---
-
-console.error('Creo LSP Server starting...');
+module.exports = { parse };
